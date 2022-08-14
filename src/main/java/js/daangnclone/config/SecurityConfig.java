@@ -1,43 +1,61 @@
-//package js.daangnclone.config;
-//
-//import lombok.RequiredArgsConstructor;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.web.SecurityFilterChain;
-//
-//@Configuration
-//@EnableWebSecurity
-//@RequiredArgsConstructor
-//public class SecurityConfig {
-//
-//    @Bean
-//    public SecurityFilterChain configure(HttpSecurity http) throws Exception {
-//        http .csrf().disable();
-//
-//        http    .authorizeRequests()
-//                //.antMatchers("/board/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-//                .antMatchers("/signup/**").permitAll()
-//                .antMatchers("/login/**").permitAll()
-//                //.antMatchers("/confirm-email/**").permitAll()
-//                //다른 요청은 누구든지 접근 가능
-//                .anyRequest().authenticated()
-//                .anyRequest().permitAll()
+package js.daangnclone.config;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+
+
+@EnableWebSecurity
+@Configuration
+@RequiredArgsConstructor
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Override
+    public void configure(WebSecurity web){
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+                .antMatchers("/favicon.ico", "/resources/**", "/error");
+    }
+
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.csrf().disable();
+//        http
+//                .rememberMe()
+//                .key("rememberMe")
+//                .userDetailsService(userDetailsService)
+//                .tokenRepository(persistentTokenRepository())
+//                .tokenValiditySeconds(60*60*24);
+        http
+                .authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/login/**").permitAll()
+                .antMatchers("/signup/**").permitAll()
+                .anyRequest()
+                .authenticated()
+        .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+        .and()
+                .formLogin()
+                .loginPage("/login") //사용자 정의 loginPage
+                .loginProcessingUrl("/login_proc") ///login_proc 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줌
+                .defaultSuccessUrl("/")
+//                .successHandler(successHandler)
+//                .failureHandler(failureHandler)
+                .permitAll();
 //        .and()
-//                .formLogin()
-//                .loginPage("/login") //사용자 정의 loginPage
-//                .loginProcessingUrl("/login_proc") ///login_proc 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줌
-//                .defaultSuccessUrl("/")
-//                //.successHandler(successHandler)
-//                //.failureHandler(failureHandler)
-//                .permitAll()
-//        .and()
-//                .oauth2Login().loginPage("/token/expired"); // Authentication 객체가 springSecurityContextHolder 들어오면 모든 시큐리티 체인이 종료가 되면서 login 서비스 종료
-//                //.successHandler(successHandler)
-//                //.userInfoEndpoint().userService(oAuth2UserService);
-//
-//        return http.build();
-//    }
-//
-//}
+//                .oauth2Login() //구글 로그인이 완료된 뒤의 후처리가 필요 1.코드받기(인증됬다는것) 2.엑세스토큰(권한) 3.사용자프로필 정보를 가져옴 4-1.그 정보를 토대로 회원가입 자동진행 4-2. 집주소, vip(일반)등급같은 추가할 정보가 있을 경우 또 입력이 가능해야함
+//                //중요! 구글 로그인이 완료가 되면 엑세스 토큰 + 사용자프로필 정보를 받음
+//                .loginPage("/login")
+//                .userInfoEndpoint()
+//                .userService(principalOauth2UserService);
+    }
+}
