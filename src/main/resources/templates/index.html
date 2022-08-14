@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/header::userHead"></head>
+<body class="hoian-kr">
+<!-- Google Tag Manager (noscript) -->
+<div th:replace="fragments/top::header"></div>
+
+<section id="home-main-section-top" class="background-pale-peach">
+    <div id="home-main-top">
+        <div class="home-main-desc">
+            <h1 class="home-main-title">당신 근처의<br>당근마켓</h1>
+            <p class="text-m">
+                중고 거래부터 동네 정보까지, 이웃과 함께해요.<br>가깝고 따뜻한 당신의 근처를 만들어요.
+            </p>
+        </div>
+        <div class="home-main-image-top">
+            <img srcset="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-top-d6869a79bc4cb58ea59aa5a408decfdf4a4ba60ac639837081da12861083cdbb.webp " class="home-main-image-top" alt="중고거래, 동네생활 질문글과 동네가게" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-top-68ba12f0da7b5af9a574ed92ca8b3a9c0068db176b566dd374ee50359693358b.png" />
+        </div>
+    </div>
+</section>
+<section class="home-main-section">
+    <div class="home-main-content">
+        <div class="home-main-image home-main-image-01">
+            <img srcset="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-1-cc678e9a217b96f5cb459f7f0684f5ba67706f9889801618b8cf879fbc2c0ea7.webp " class="home-main-image-01" alt="우리동네 중고 직거래 사진" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-1-39ac203e8922f615aa3843337871cb654b81269e872494128bf08236157c5f6a.png" />
+        </div>
+        <div>
+            <h1 class="home-main-title">우리 동네<br>중고 직거래 마켓</h1>
+            <p class="text-m">
+                동네 주민들과 가깝고 따뜻한 거래를
+
+                지금 경험해보세요.
+            </p>
+            <div class="home-buttons">
+                <a class="home-button text-l text-bold" href="/hot_articles">인기매물 보기</a>
+                <a class="home-button text-l text-bold ml-3" href="/trust">믿을 수 있는 중고거래</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="home-main-section background-pale-green">
+    <div class="home-main-content home-main-reverse">
+        <div class="home-main-image home-main-image-02">
+            <img srcset="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-2-91a2286453bdf82dea16a7f0ee4ceb9dd325eae0e5a2a9967ba72c344bf8f2fc.webp " class="home-main-image-02" loading="lazy" alt="이웃과 함께하는 동네생활" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-2-f286322ab98acedf914a05bf77e84c67dcb897c8ccb543e66f6afea9d366d06d.png" />
+        </div>
+        <div>
+            <h1 class="home-main-title">이웃과 함께 하는<br>동네생활</h1>
+            <p class="text-m">
+                우리 동네의 다양한 이야기를
+
+                이웃과 함께 나누어요.
+            </p>
+            <ul class="home-story-list">
+                <li class="home-story-list-item">
+                    <div class="icon-story icon-story-01"></div>
+                    <div class="text-s text-bold mt-3 mb-2">우리동네질문</div>
+                    <div class="text-xs">궁금한 게 있을 땐 이웃에게 물어보세요.</div>
+                </li>
+                <li class="home-story-list-item">
+                    <div class="icon-story icon-story-02"></div>
+                    <div class="text-s text-bold mt-3 mb-2">동네분실센터</div>
+                    <div class="text-xs">무언가를 잃어버렸을 때, 함께 찾을 수 있어요.</div>
+                </li>
+                <li class="home-story-list-item">
+                    <div class="icon-story icon-story-03"></div>
+                    <div class="text-s text-bold mt-3 mb-2">동네모임</div>
+                    <div class="text-xs">관심사가 비슷한 이웃과 온오프라인으로 만나요.</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="home-main-section">
+    <div class="home-main-content">
+        <div class="home-main-image home-main-image-03">
+            <img srcset="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-3-5fd6fb61d603ab919a45566b2ea6b505c83a93ec218f34ddcd5cb482543e2317.webp " class="home-main-image-03" loading="lazy" alt="내 근처에서 찾는 동네가게" src="https://d1unjqcospf8gs.cloudfront.net/assets/home/main/3x/image-3-0c8b631ac2294ac5a3b3e7a3a5580c3e68a3303ad2aded1e84aa57a2e1442786.png" />
+        </div>
+        <div>
+            <h1 class="home-main-title">내 근처에서 찾는<br>동네가게</h1>
+            <p class="text-m">
+                우리 동네 가게를 찾고 있나요?<br>동네 주민이 남긴 진짜 후기를 함께 확인해보세요!
+            </p>
+            <div class="home-buttons">
+                <a target="_blank" id="town-link-button" class="ga-click home-button text-l text-bold" data-event-category="town_link_from" data-event-action="index_base" data-event-label="main_town" href="https://town.daangn.com">당근마켓 동네가게 찾기</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="home-main-section background-gray">
+    <div class="home-hot-content">
+        <h1 class="home-main-title text-center home-hot-title">
+            중고거래 인기매물
+        </h1>
+        <div class="cards-wrap">
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445522053" href="/articles/445522053">
+                    <div class="card-photo ">
+                        <img alt="임영웅콘서트티켓" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/125cbc3df9309f7c061bdd0e5b673fd12a1e2dcadb6aecc356ec120eb934079f.webp?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">임영웅콘서트티켓</h2>
+                        <div class="card-price ">
+                            150,000원
+                        </div>
+                        <div class="card-region-name">
+                            서울 송파구 가락2동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 2
+          </span>
+                            ∙
+                            <span>
+            채팅 29
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="444807507" href="/articles/444807507">
+                    <div class="card-photo ">
+                        <img alt="타이틀리스트 남자골프백" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/61126b7c6e2136e6cb188668bcc1ee41da56019100019703d69b51a067c32c6a.webp?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">타이틀리스트 남자골프백</h2>
+                        <div class="card-price ">
+                            100,000원
+                        </div>
+                        <div class="card-region-name">
+                            부산 연제구 연산제1동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 22
+          </span>
+                            ∙
+                            <span>
+            채팅 39
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445484060" href="/articles/445484060">
+                    <div class="card-photo ">
+                        <img alt="나주중흥골드스파 이용권 3장" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/3BA66776A9F7F0E8DEE070025D5E624952D87BF9A2A796FFD6131BA147FE4A18.jpg?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">나주중흥골드스파 이용권 3장</h2>
+                        <div class="card-price ">
+                            30,000원
+                        </div>
+                        <div class="card-region-name">
+                            광주 북구 동림동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 0
+          </span>
+                            ∙
+                            <span>
+            채팅 18
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445470284" href="/articles/445470284">
+                    <div class="card-photo ">
+                        <img alt="경주 엘라포니시 호텔 1박 떨이" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/39D509464E13DE8E453C15EAB477ED7AE069A5DF3F1D0DD33ABB8999D5D70BA3.jpg?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">경주 엘라포니시 호텔 1박 떨이</h2>
+                        <div class="card-price ">
+                            200,000원
+                        </div>
+                        <div class="card-region-name">
+                            부산 부산진구 초읍동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 10
+          </span>
+                            ∙
+                            <span>
+            채팅 21
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445665642" href="/articles/445665642">
+                    <div class="card-photo ">
+                        <img alt="스토케 트립트랩 하이체어 내츄럴" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/995f9ba81e0020f9b087b8ff4a5f321f57c1f0c739b94a64e25129275f356fc1.webp?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">스토케 트립트랩 하이체어 내츄럴</h2>
+                        <div class="card-price blank-price">
+
+                        </div>
+                        <div class="card-region-name">
+                            서울 송파구 잠실3동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 4
+          </span>
+                            ∙
+                            <span>
+            채팅 25
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445615297" href="/articles/445615297">
+                    <div class="card-photo ">
+                        <img alt="스팸 팝니다" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/8558385DD2C80F49EE16D85A4C6C28C2D66CABA92004D23A64A54FBFBFAC52F1.jpg?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">스팸 팝니다</h2>
+                        <div class="card-price ">
+                            9,000원
+                        </div>
+                        <div class="card-region-name">
+                            서울 강서구 화곡제6동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 3
+          </span>
+                            ∙
+                            <span>
+            채팅 15
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445535727" href="/articles/445535727">
+                    <div class="card-photo ">
+                        <img alt="맥스포츠 접이식 카트 웨건" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/9A26FCD445D1029E831D3002DA5C4DBB1236A5F851600E539864903932487485.jpg?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">맥스포츠 접이식 카트 웨건</h2>
+                        <div class="card-price ">
+                            20,000원
+                        </div>
+                        <div class="card-region-name">
+                            부산 해운대구 재송제1동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 7
+          </span>
+                            ∙
+                            <span>
+            채팅 21
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+            <article class="card-top ">
+                <a class="card-link " data-event-label="445559389" href="/articles/445559389">
+                    <div class="card-photo ">
+                        <img alt="엘지 제습기" src="https://dnvefa72aowie.cloudfront.net/origin/article/202208/1168e73414cc1d0001cdb5cd286a877880343c77e8144d73188ecf2be1183d9b.webp?q=82&amp;s=300x300&amp;t=crop" />
+                    </div>
+                    <div class="card-desc">
+                        <h2 class="card-title">엘지 제습기</h2>
+                        <div class="card-price ">
+                            30,000원
+                        </div>
+                        <div class="card-region-name">
+                            경기도 의정부시 신곡동
+                        </div>
+                        <div class="card-counts">
+          <span>
+            관심 4
+          </span>
+                            ∙
+                            <span>
+            채팅 16
+          </span>
+                        </div>
+                    </div>
+                </a></article>
+
+        </div>
+        <div class="text-center">
+            <a class="text-bold text-black text-m" id="hot-articles-more" data-url="/hot_articles" href="/hot_articles"> 인기매물 더 보기</a>
+        </div>
+    </div>
+</section>
+
+<section class="home-keywords-content">
+    <h3 class="home-main-title">
+        <a class="text-m text-bold text-black " href="/top_keywords">중고거래 인기검색어</a>
+    </h3>
+    <ul class="top-keywords-list">
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%ED%8F%AC%EC%BC%93%EB%AA%AC%EB%B9%B5">포켓몬빵</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%9E%90%EC%A0%84%EA%B1%B0">자전거</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%9D%98%EC%9E%90">의자</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EB%83%89%EC%9E%A5%EA%B3%A0">냉장고</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%BA%A0%ED%95%91">캠핑</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%95%84%EC%9D%B4%ED%8C%A8%EB%93%9C">아이패드</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%95%84%EC%9D%B4%ED%8F%B0">아이폰</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EB%85%B8%ED%8A%B8%EB%B6%81">노트북</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%95%8C%EB%B0%94">알바</a>
+        </li>
+        <li class="keyword-item text-m">
+            <a class="keyword-link" href="/search/%EC%98%A4%ED%86%A0%EB%B0%94%EC%9D%B4">오토바이</a>
+        </li>
+    </ul>
+</section>
+
+<script>
+    //<![CDATA[
+    facebookClickEvent("ViewContent");
+    //]]>
+</script>
+
+<style>
+    #gnb-root .light-theme{--color-white: #fff;--color-gray100: #f2f3f6;--color-gray200: #eaebee;--color-gray300: #dcdee3;--color-gray400: #d1d3d8;--color-gray500: #adb1ba;--color-gray600: #868b94;--color-gray700: #4d5159;--color-gray900: #212124;--color-carrot50: #fff5f0;--color-carrot100: #ffe2d2;--color-carrot200: #ffd2b9;--color-carrot300: #ffbc97;--color-carrot400: #ff9e66;--color-carrot500: #ff7e36;--color-carrot600: #fa6616;--color-yellow50: #fff7e6;--color-yellow500: #ffc552;--color-yellow800: #ce6400;--color-green50: #e8faf6;--color-green500: #00b493;--color-green800: #008c72;--color-red50: #fff3f2;--color-red800: #e81300;--color-blue50: #ebf7fa;--color-blue800: #0a86b7;--color-background: var(--color-white);--color-background-low: var(--color-gray100)}#gnb-root .r14vym0{background:none;appearance:none;border:0;padding:0;display:flex;justify-content:center;align-items:center;cursor:pointer;white-space:nowrap}#gnb-root .r14vym1{color:var(--color-white);background-color:var(--color-carrot500)}#gnb-root .r14vym1:hover,#gnb-root .r14vym1:active{background-color:var(--color-carrot600)}#gnb-root .r14vym2{color:var(--color-carrot500);background-color:var(--color-white);border:1px solid var(--color-carrot300)}#gnb-root .r14vym2:hover,#gnb-root .r14vym2:active{background-color:var(--color-carrot100)}#gnb-root .r14vym3{color:var(--color-gray900);background-color:transparent;border:1px solid var(--color-gray400)}#gnb-root .r14vym3:hover,#gnb-root .r14vym3:active{background-color:var(--color-gray100);opacity:.7}#gnb-root .r14vym4{font-weight:700;line-height:1.32;font-size:1.8rem;letter-spacing:-2%;width:100%;min-height:5.6rem;padding:1.6rem 0;border-radius:0.6rem}#gnb-root .r14vym5{font-weight:700;line-height:1.4;font-size:1.4rem;width:100%;min-height:3.6rem;padding:0.85rem 0;border-radius:0.4rem}#gnb-root .r14vym6{font-weight:700;line-height:1.3;font-size:1.2rem;width:fit-content;min-height:2.8rem;padding:0.5rem 1rem;border-radius:0.3rem}@media screen and (min-width: 768px){#gnb-root .r14vym4{line-height:1.3;font-size:2.4rem;letter-spacing:-1%;min-height:4.8rem;padding:1.3rem 0}#gnb-root .r14vym5{line-height:1.32;font-size:1.8rem;letter-spacing:-2%}#gnb-root .r14vym6{line-height:1.5;font-size:1.3008rem}}#gnb-root ._1s38h9c0{display:flex;align-items:center}#gnb-root ._1s38h9c1{display:flex;justify-content:center}#gnb-root ._1s38h9c2{cursor:pointer;-webkit-tap-highlight-color:transparent}#gnb-root ._1s38h9c3{appearance:none;border:0;background:none;padding:0}#gnb-root ._1s38h9c4{text-decoration:none}#gnb-root ._1knjz490{background-color:var(--color-white);color:var(--color-gray900);position:fixed;top:0;left:0;width:100%;max-width:100vw;z-index:999}#gnb-root ._1knjz491{padding:1.2rem 1.6rem;height:5.6rem;box-sizing:border-box;justify-content:space-between;width:100%;margin:0 auto;position:relative}#gnb-root ._1knjz493{margin:-0.1rem 0}#gnb-root ._1knjz497{margin-right:1.6rem}#gnb-root ._1knjz498{position:absolute;left:0;width:100%;padding:0 1.6rem;box-sizing:border-box;background-color:var(--color-white)}#gnb-root ._1knjz499{display:none}#gnb-root ._1knjz49a{display:block;margin-right:1.6rem;position:relative;width:100%;box-sizing:border-box}#gnb-root ._1knjz49b{line-height:1.4;font-size:1.4rem;background-color:var(--color-gray100);box-sizing:border-box;height:4rem;padding:0.9rem 1.2rem;border:none;border-radius:0.6rem;width:100%;color:var(--color-gray900)}#gnb-root ._1knjz49b:focus{outline:0}#gnb-root ._1knjz49b::placeholder{color:var(--color-gray600)}#gnb-root ._1knjz49c{position:absolute;height:100%;top:0;right:1.2rem;display:flex;align-items:center;cursor:pointer}#gnb-root ._1knjz49d{line-height:1.36;font-size:1.6rem;color:var(--color-gray900);white-space:nowrap;cursor:pointer}#gnb-root ._1knjz49e{margin-left:0.4rem;transition:all ease .3s}#gnb-root ._1knjz49f{transform:rotate(-180deg);transition:all ease .3s}#gnb-root ._1knjz49g{flex:1}#gnb-root ._1knjz49h{font-weight:700;line-height:150%;font-size:1.4rem;padding:0.55rem 1rem;border:1px solid #868B94;border-radius:0.6rem;margin-right:0.8rem}#gnb-root ._1knjz49j{display:none;font-weight:700;line-height:1.36;font-size:1.6rem}#gnb-root ._1knjz49k{display:none}#gnb-root ._1knjz49l{font-weight:700;line-height:1.42;font-size:1.1008rem;background-color:var(--color-carrot500);color:var(--color-white);padding:0.4rem 1.2rem;display:flex;white-space:nowrap;justify-content:center;align-items:center;border:1px solid var(--color-carrot500);border-radius:0.4rem;cursor:pointer}#gnb-root ._1knjz49m{font-weight:700;line-height:1.4;font-size:1.4rem;color:var(--color-gray700);font-style:normal;margin-right:3rem}#gnb-root ._1knjz49m:hover{color:var(--color-gray600)}#gnb-root ._1knjz49n{color:var(--color-carrot500)}#gnb-root ._1knjz49n:hover{color:var(--color-carrot600)}#gnb-root ._1knjz49o{background-color:var(--color-white);display:flex;flex-direction:column;width:100%;overflow:hidden;transform:translateY(-1.6rem);opacity:0;transition:transform .3s,opacity .1s;padding:0.8rem 1.6rem;box-sizing:border-box}#gnb-root ._1knjz49p{font-weight:700;line-height:1.4;font-size:1.4rem;margin:0;padding-top:0.4rem;padding-right:0;padding-bottom:0.4rem;padding-left:0;color:var(--color-gray600)}#gnb-root ._1knjz49q{width:100%;display:flex;flex-wrap:wrap;padding:0}#gnb-root ._1knjz49r{line-height:1.4;font-size:1.4rem;outline:0;margin:0;width:50%;padding:1.6rem 0;border-bottom:1px solid var(--color-gray200);cursor:pointer;list-style:none}#gnb-root ._1knjz49r:last-child{border-bottom:none}#gnb-root ._1knjz49r:nth-last-child(2){border-bottom:none}#gnb-root ._1knjz49s{background-color:var(--color-white);display:block;width:100%;overflow:hidden;transform:translateY(-1.6rem);opacity:0;transition:transform .3s,opacity .1s;border-top:1px solid var(--color-gray200)}#gnb-root ._1knjz49t{opacity:1;transform:translateY(0)}#gnb-root ._1knjz49u{display:none}#gnb-root ._1knjz49v{color:var(--color-gray700);text-decoration:none;padding:1.6rem;display:block;opacity:1;transition:opacity .3s;font-size:1.6rem}#gnb-root ._1knjz49v:hover{background-color:var(--color-gray200)}#gnb-root ._1knjz49w{color:#ff7e36}#gnb-root ._1knjz49x{opacity:1}#gnb-root ._1knjz49z{background:rgba(23,23,26);opacity:.5;position:absolute;width:100%;height:100vh}#gnb-root ._1knjz497>svg>path{fill:var(--color-gray900)}#gnb-root ._1knjz496>svg>path{fill:var(--color-gray900)}@media screen and (min-width: 768px){#gnb-root ._1knjz491{max-width:120rem;height:6.4rem}#gnb-root ._1knjz496{display:none}#gnb-root ._1knjz49b{line-height:1.36;font-size:1.6rem;letter-spacing:-1%}#gnb-root ._1knjz49d{line-height:1.32;font-size:1.8rem;letter-spacing:-1%}#gnb-root ._1knjz49j{line-height:1.3;font-size:1.6rem;letter-spacing:-2%;display:block;white-space:nowrap;background-color:var(--color-white);color:var(--color-gray900);height:4rem}#gnb-root ._1knjz49k{display:block;width:100%;padding-top:0;padding-right:4rem;padding-bottom:0;padding-left:4rem}#gnb-root ._1knjz49l{line-height:1.4;font-size:1.4rem;display:none}#gnb-root ._1knjz49m,#gnb-root ._1knjz49p,#gnb-root ._1knjz49r{line-height:1.32;font-size:1.8rem;letter-spacing:-2%}#gnb-root ._1knjz49s{display:none}}@media screen and (min-width: 992px){#gnb-root ._1knjz497,#gnb-root ._1knjz498{display:none}#gnb-root ._1knjz499{display:block;position:relative;margin-right:1.2rem}#gnb-root ._1knjz49a{display:none}#gnb-root ._1knjz49b{width:28.8rem}#gnb-root ._1knjz49o{display:none}}
+    #footer-root .light-theme{--color-white: #fff;--color-gray100: #f2f3f6;--color-gray200: #eaebee;--color-gray300: #dcdee3;--color-gray400: #d1d3d8;--color-gray500: #adb1ba;--color-gray600: #868b94;--color-gray700: #4d5159;--color-gray900: #212124;--color-carrot50: #fff5f0;--color-carrot100: #ffe2d2;--color-carrot200: #ffd2b9;--color-carrot300: #ffbc97;--color-carrot400: #ff9e66;--color-carrot500: #ff7e36;--color-carrot600: #fa6616;--color-yellow50: #fff7e6;--color-yellow500: #ffc552;--color-yellow800: #ce6400;--color-green50: #e8faf6;--color-green500: #00b493;--color-green800: #008c72;--color-red50: #fff3f2;--color-red800: #e81300;--color-blue50: #ebf7fa;--color-blue800: #0a86b7;--color-background: var(--color-white);--color-background-low: var(--color-gray100)}#footer-root ._1s38h9c0{display:flex;align-items:center}#footer-root ._1s38h9c1{display:flex;justify-content:center}#footer-root ._1s38h9c2{cursor:pointer;-webkit-tap-highlight-color:transparent}#footer-root ._1s38h9c3{appearance:none;border:0;background:none;padding:0}#footer-root ._1s38h9c4{text-decoration:none}#footer-root ._1y9kelh0{background-color:var(--color-white);color:var(--color-gray900);padding:0 1.6rem 2rem}#footer-root ._1y9kelh0:not(:last-child){margin-bottom:0.8rem}#footer-root ._1y9kelh1{font-weight:700;line-height:1.36;font-size:1.6rem;padding:1.6rem 0}#footer-root ._1y9kelh2{max-width:76.8rem;margin:0 auto}@media screen and (min-width: 768px){#footer-root ._1y9kelh0{padding:0}#footer-root ._1y9kelh0:not(:last-child){margin-bottom:5.6rem}#footer-root ._1y9kelh1{line-height:1.3;font-size:2rem;letter-spacing:-2%}}#footer-root ._1trxeqs0{background-color:var(--color-white);color:var(--color-gray900);border-top:1px solid var(--color-gray200);padding:0 1.6rem;box-sizing:border-box;width:100%;max-width:100vw}#footer-root ._1trxeqs1{display:flex;flex-direction:column}#footer-root ._1trxeqs2{display:flex;margin-bottom:2rem}#footer-root ._1trxeqs3{font-weight:700;line-height:1.5;font-size:1.3008rem}#footer-root ._1trxeqs4{display:flex;margin-left:2.4rem}#footer-root ._1trxeqs4:not(:first-child){margin-left:1.6rem}#footer-root ._1trxeqs5{font-weight:700;line-height:1.5;font-size:1.3008rem;color:var(--color-gray900);margin-right:0.8rem}#footer-root ._1trxeqs6{color:var(--color-gray900);margin-right:0.6rem}#footer-root ._1trxeqs7{display:flex}#footer-root ._1trxeqs8{display:none}#footer-root ._1trxeqs8>svg>rect{fill:var(--color-gray100)}#footer-root ._1trxeqs8>svg>path{fill:var(--color-gray900)}#footer-root ._1trxeqs8:hover>svg>path{opacity:.5}#footer-root ._1trxeqs9{line-height:1.5;font-size:1.3008rem;display:flex;max-width:76.8rem}#footer-root ._1trxeqsa{display:flex;flex-direction:column;padding-inline-start:0;margin-block-start:0;margin-block-end:0;width:33%}#footer-root ._1trxeqsa:last-child{margin-right:15%}#footer-root ._1trxeqsb{line-height:1.3;font-size:1.2rem;margin-bottom:1.6rem;flex-wrap:wrap;color:var(--color-gray600)}#footer-root ._1trxeqsc{margin:0 0.4rem}#footer-root ._1trxeqsd{font-style:normal}#footer-root ._1trxeqse{flex-wrap:wrap;display:flex}#footer-root ._1trxeqsf{font-weight:700;line-height:1.3;font-size:1.2rem;white-space:nowrap;color:var(--color-gray600)}#footer-root ._1trxeqsf:not(:last-child){margin-right:1.6rem}#footer-root ._1trxeqsf:hover{text-decoration:underline}#footer-root ._1trxeqsg{color:var(--color-gray700)}#footer-root ._1trxeqsh{padding:4.8rem 0}#footer-root ._1trxeqsi{padding:2.4rem 0 10rem;border-top:1px solid var(--color-gray200)}#footer-root ._1trxeqsj{margin-bottom:1.6rem}#footer-root ._1trxeqsk{margin-top:2.4rem;display:flex;align-items:center}#footer-root ._1trxeqsl{padding-top:0.4rem}#footer-root ._1trxeqsl:hover{opacity:64%}#footer-root ._1trxeqsm{color:var(--color-gray600);display:flex;align-items:center;padding:0.8rem;border-radius:0.4rem;cursor:pointer}#footer-root ._1trxeqsm:hover{background-color:var(--color-gray100)}#footer-root ._1trxeqsn{background-color:var(--color-white);color:var(--color-gray600);padding-left:0.4rem;border:none;-webkit-appearance:none;-moz-appearance:none;text-indent:0.1rem;cursor:pointer}#footer-root ._1trxeqsn:focus{outline:0}#footer-root ._1trxeqsn:hover{background-color:var(--color-gray100)}#footer-root ._1trxeqso{text-decoration:none;outline:0}#footer-root ._1trxeqs3>._1trxeqso{color:var(--color-gray900)}#footer-root ._1trxeqs9 ._1trxeqso{color:var(--color-gray900)}#footer-root ._1trxeqsk>._1trxeqso:not(:last-child){margin-right:1.6rem}#footer-root ._1trxeqsp{width:fit-content;list-style:none}#footer-root ._1trxeqsa ._1trxeqsp:not(:last-child){margin-bottom:1.6rem}#footer-root ._1trxeqsa ._1trxeqsp:hover{text-decoration:underline}@media screen and (min-width: 768px){#footer-root ._1trxeqs2{float:right;margin-bottom:0;display:flex;flex-direction:column}#footer-root ._1trxeqs3{line-height:1.4;font-size:1.4rem}#footer-root ._1trxeqs4{margin-top:0.8rem;margin-left:0}#footer-root ._1trxeqs4:not(:first-child){margin-left:1rem}#footer-root ._1trxeqs5{line-height:1.4;font-size:1.4rem;display:none}#footer-root ._1trxeqs6{display:none}#footer-root ._1trxeqs8{display:block}#footer-root ._1trxeqs9{line-height:1.4;font-size:1.4rem}#footer-root ._1trxeqsb,#footer-root ._1trxeqsf{line-height:1.5;font-size:1.3008rem}#footer-root ._1trxeqsi{display:flex;justify-content:space-between;align-items:flex-start}#footer-root ._1trxeqsk{margin-top:0}}
+</style>
+
+<div th:replace="fragments/footer::footer"></div>
+</body>
+</html>
