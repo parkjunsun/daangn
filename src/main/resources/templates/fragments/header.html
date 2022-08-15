@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
-<Myheader th:fragment="header">
+<header th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
@@ -17,11 +17,12 @@
                 </form>
             </div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <button type="button" class="btn btn-outline-secondary btn-space">회원가입</button>
+                <button type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
                 <button type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button type="button" class="btn btn-outline-secondary btn-space">채팅하기</button>
             </ul>
         </div>
     </nav>
-</Myheader>
+<br><br><br><br>
+</header>
 </html>

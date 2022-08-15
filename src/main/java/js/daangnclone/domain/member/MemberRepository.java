@@ -1,4 +1,13 @@
 package js.daangnclone.domain.member;
 
-public interface MemberRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
+@Repository
+public interface MemberRepository extends JpaRepository<Member, Long> {
+
+    Optional<Member> findByUsername(String username);
+
 }

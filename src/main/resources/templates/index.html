@@ -1,11 +1,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
-    <link rel="stylesheet" th:href="@{/css/styles.css}">
-    <script type="text/javascript" th:src="@{/js/bootstrap.js}"></script>
-</head>
+<head th:replace="fragments/head::head"></head>
 <body>
-    <Myheader th:replace="fragments/header::Myheader"></Myheader>
+    <header th:replace="fragments/header::header"></header>
     <section id="" class="">
 
     </section>
