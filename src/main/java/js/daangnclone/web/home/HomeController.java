@@ -10,10 +10,6 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
-
-        System.out.println("@@@@@@@@@@@@@@");
-        System.out.println(principalUserDetails.getMember().getUsername());
-
         return "index";
     }
 
