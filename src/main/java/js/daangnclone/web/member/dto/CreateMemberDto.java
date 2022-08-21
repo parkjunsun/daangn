@@ -11,8 +11,8 @@ public class CreateMemberDto {
     private String nickname;
     private String password;
     private String email;
-    private String address;
-    private String address2;
+    private String state;
+    private String city;
 
     public Member toEntity() {
         return Member.builder()
@@ -20,8 +20,8 @@ public class CreateMemberDto {
                 .password(password)
                 .nickname(nickname)
                 .email(email)
-                .address(address)
-                .address2(address2)
+                .state(state)
+                .city(city)
                 .memberRole(MemberRole.ROLE_ADMIN)
                 .build();
     }

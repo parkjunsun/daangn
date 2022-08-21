@@ -67,15 +67,18 @@
                     </div>
                 </div>
                 <div class="mb-3">
-                    <label th:for="address">주소</label>
-                    <input type="text" class="form-control" th:field="*{address}" placeholder="서울특별시 강남구" required>
+                    <label th:for="state">주소</label>
+                    <select class="form-select" th:field="*{state}">
+                        <option value=""> --시도-- </option>
+                        <option th:each="pprArea : ${pprAreaList}" th:value="${pprArea.areaCd}" th:text="${pprArea.areaName}"></option>
+                    </select>
+                    <label th:for="city">주소</label>
+                    <select class="form-select" th:field="*{city}">
+                        <option value="--시군구--"> --시군구-- </option>
+                    </select>
                     <div class="invalid-feedback">
                         주소를 입력해주세요.
                     </div>
-                </div>
-                <div class="mb-3">
-                    <label th:for="address2">상세주소<span class="text-muted">&nbsp;(필수 아님)</span></label>
-                    <input type="text" class="form-control" th:field="*{address2}" placeholder="상세주소를 입력해주세요.">
                 </div>
                 <hr class="mb-4">
                 <div class="custom-control custom-checkbox">
@@ -88,7 +91,32 @@
         </div>
     </div>
 </div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+    $("#state").on('change', function () {
+        $.ajax({
+             url: "/signup/getPsAreaCd.do"
+            ,type: "post"
+            ,data: {"pprAreaCd" : $(this).val()}
+            ,sync: false
+            ,success: function (areaList) {
+                $("#city").empty();
+                $("#city").append("<option value=\"--시군구--\"> --시군구-- </option>");
+                $.each(areaList, function (idx, area) {
+                    $("#city").append($("<option>", {
+                         value: area.areaCd
+                        ,text: area.areaName
+                    }));
+                })
+            }
+        })
+    })
+    /*]]>*/
+</script>
+
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
 
 </html>
+

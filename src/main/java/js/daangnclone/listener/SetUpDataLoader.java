@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static js.daangnclone.cmn.CmnCons.*;
@@ -77,7 +78,15 @@ public class SetUpDataLoader {
         Area area45 = new Area(HANAM_CODE, HANAM_NAME, GYEONGGI_CODE);
         Area area46 = new Area(HWASUNG_CODE, HWASUNG_NAME, GYEONGGI_CODE);
 
-        Arrays.asList(area1, area2, area3, area4, area5, area6);
+        Area area47 = new Area(SEOUL_CODE, SEOUL_NAME, KOREA_CODE);
+        Area area48 = new Area(GANGNAM_CODE, GANGNAM_NAME, SEOUL_CODE);
+
+        List<Area> areaList = Arrays.asList(area1, area2, area3, area4, area5, area6, area7, area8, area9, area10, area11, area12, area13, area14,
+                area15, area16, area17, area18, area19, area20, area21, area22, area23, area24, area25, area26, area27,
+                area28, area29, area30, area31, area32, area33, area34, area35, area36, area37, area38, area39, area40,
+                area41, area42, area43, area44, area45, area46, area47, area48);
+
+        areaRepository.saveAll(areaList);
 
     }
 

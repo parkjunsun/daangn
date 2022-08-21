@@ -4,8 +4,10 @@ public class CmnCons {
 
     public static final Long KOREA_CODE = 100000L;
 
-    public static final Long GYEONGGI_CODE = 102000L;
+    public static final Long SEOUL_CODE = 101000L;
+    public static final Long GANGNAM_CODE = 101010L;
 
+    public static final Long GYEONGGI_CODE = 102000L;
     public static final Long GAPYEONG_CODE = 102010L;
     public static final Long GOYANG_DUKYANG_CODE = 102020L;
     public static final Long GOYANG_ILSANDONG_CODE = 102030L;
@@ -53,6 +55,9 @@ public class CmnCons {
 
 
     public static final String KOREA_NAME = "대한민국";
+
+    public static final String SEOUL_NAME = "서울시";
+    public static final String GANGNAM_NAME = "강남구";
 
     public static final String GYEONGGI_NAME = "경기도";
 

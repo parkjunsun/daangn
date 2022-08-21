@@ -17,21 +17,21 @@ public class Member {
     private String nickname;
     private String password;
     private String email;
-    private String address;
-    private String address2;
+    private String state;
+    private String city;
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
     @Builder
-    public Member(String username, String password, String nickname, String email, String address, String address2, MemberRole memberRole)
+    public Member(String username, String password, String nickname, String email, String state, String city, MemberRole memberRole)
     {
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
-        this.address = address;
-        this.address2 = address2;
+        this.state = state;
+        this.city = city;
         this.memberRole = memberRole;
     }
 

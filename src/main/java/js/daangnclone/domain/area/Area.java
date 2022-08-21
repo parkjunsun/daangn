@@ -15,7 +15,7 @@ import javax.persistence.Id;
 public class Area {
     @Id
     private Long areaCd;
-    private String name;
+    private String areaName;
 
     private Long pprAreaCd;
 
