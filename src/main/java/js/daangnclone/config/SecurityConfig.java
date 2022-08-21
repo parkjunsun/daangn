@@ -60,12 +60,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/signup/**").permitAll()
+                .antMatchers("/certify").permitAll()
                 .anyRequest()
                 .authenticated()
+        // 인가되지 않은 url 접속시 /login 으로 redirect
+        .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
         .and()
                 .formLogin()
                 .loginPage("/login") //사용자 정의 loginPage
-                .loginProcessingUrl("/login_proc") ///login_proc 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줌
+                .loginProcessingUrl("/login_proc") ///login_proc 주소가 호출이 되면 시큐리티가 낚아채서 대신 로그인을 진행해줌(필터 다 타면서 db검증까지..)
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)

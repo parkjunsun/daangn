@@ -31,7 +31,7 @@ public class MemberController {
     private final AreaRepository areaRepository;
 
     @GetMapping("/signup")
-    public String getCreateMemberForm(Model model) {
+    public String ShowMemberForm(Model model) {
 
         List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
 
@@ -45,14 +45,20 @@ public class MemberController {
     public String createMember(@ModelAttribute("memberForm") CreateMemberDto createMemberDto) {
         createMemberDto.setPassword(passwordEncoder.encode(createMemberDto.getPassword()));
         memberService.save(createMemberDto.toEntity());
-        return "redirect:/login";
+        return "redirect:/certify";
     }
 
+    //ajax 데이터
     @PostMapping("/signup/getPsAreaCd.do")
     @ResponseBody
     public List<Area> getPsAreaList(@RequestParam Long pprAreaCd) {
         List<Area> areaList = areaRepository.findAreaByPprAreaCd(pprAreaCd);
         return areaList;
+    }
+
+    @GetMapping("/certify")
+    public String certifyMember() {
+        return "member/CertifyMemberAddress";
     }
 
 
