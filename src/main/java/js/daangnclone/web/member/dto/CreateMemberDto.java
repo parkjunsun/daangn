@@ -11,8 +11,8 @@ public class CreateMemberDto {
     private String nickname;
     private String password;
     private String email;
-    private String state;
-    private String city;
+    private Long state;
+    private Long city;
 
     public Member toEntity() {
         return Member.builder()
@@ -23,6 +23,7 @@ public class CreateMemberDto {
                 .state(state)
                 .city(city)
                 .memberRole(MemberRole.ROLE_ADMIN)
+                .certifyYn("N")
                 .build();
     }
 

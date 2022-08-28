@@ -2,10 +2,12 @@ package js.daangnclone.web.member.controller;
 
 import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.area.AreaRepository;
+import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.MemberService;
 import js.daangnclone.web.member.dto.CreateMemberDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +26,7 @@ import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class MemberController {
 
     private final MemberService memberService;
@@ -45,7 +48,7 @@ public class MemberController {
     public String createMember(@ModelAttribute("memberForm") CreateMemberDto createMemberDto) {
         createMemberDto.setPassword(passwordEncoder.encode(createMemberDto.getPassword()));
         memberService.save(createMemberDto.toEntity());
-        return "redirect:/certify";
+        return "redirect:/";
     }
 
     //ajax 데이터
@@ -57,8 +60,19 @@ public class MemberController {
     }
 
     @GetMapping("/certify")
-    public String certifyMember() {
+    public String getCertifyMember(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        Long id = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(id);
+
+        Area area = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
+        model.addAttribute("city", area.getAreaName());
         return "member/CertifyMemberAddress";
+    }
+
+    @PostMapping("/certify")
+    public String setCertifyMember(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
+        memberService.updateMemberCertifyYn(principalUserDetails.getMember().getId());
+        return "redirect:/";
     }
 
 

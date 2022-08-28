@@ -17,10 +17,10 @@
                 </form>
             </div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <button type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
+                <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/logout'|">로그아웃</button>
-                <button type="button" class="btn btn-outline-secondary btn-space">채팅하기</button>
+                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
             </ul>
         </div>
     </nav>

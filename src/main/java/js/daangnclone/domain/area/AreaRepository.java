@@ -10,5 +10,6 @@ import java.util.Optional;
 public interface AreaRepository extends JpaRepository<Area, Long> {
 
     List<Area> findAreaByPprAreaCd(Long pprAreaCd);
+    Optional<Area> findByAreaCd(Long areaCd);
 
 }

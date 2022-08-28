@@ -33,6 +33,99 @@
 <header th:replace="fragments/header::header"></header>
 <body>
 
+<section class="vh-100">
+    <div class="container-fluid h-custom">
+        <div class="row d-flex justify-content-center align-items-center h-100 wrapper">
+            <div id="map" style="height:350px;"></div>
+            <p id="crtText"></p><br><br><br><br><br><br><br>
+            <form action="/certify" method="post">
+                <button id="crtBtn" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">동네 인증 완료하기</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5b38eaa8823aec9cb0315315dfcb0d10&libraries=services"></script>
+<script th:inline="javascript">
+
+    /* <![CDATA[ */
+    var Mycity = /*[[${city}]]*/
+    /* ]]> */
+
+    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+        mapOption = {
+            center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+            level: 3 // 지도의 확대 레벨
+        };
+
+    var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+    // 주소-좌표 변환 객체를 생성합니다
+    var geocoder = new kakao.maps.services.Geocoder();
+
+    // HTML5의 geolocation으로 사용할 수 있는지 확인합니다
+    if (navigator.geolocation) {
+
+        // GeoLocation을 이용해서 접속 위치를 얻어옵니다
+        navigator.geolocation.getCurrentPosition(function(position) {
+
+            var lat = position.coords.latitude // 위도
+            var lon = position.coords.longitude; // 경도
+
+            var locPosition = new kakao.maps.LatLng(lat, lon); // 마커가 표시될 위치를 geolocation으로 얻어온 좌표로 생성합니다
+            var callback = function (result, status) {
+                if (status === kakao.maps.services.Status.OK) {
+                    var locate = result[0].address_name;
+                    var loReplace = locate.replace(/ /gi, "|");
+                    var loSplit = loReplace.split("|");
+
+                    var state = loSplit[0];
+                    var city = loSplit[1] + " " + loSplit[2];
+                    var dong = loSplit[3];
+
+                    if (city === Mycity) {
+                        $("#crtText").text("현재 위치가 내 동네로 설정한 '" + city + "'에 있습니다.").css("color","blue");
+                        $("#certifyYn").val("Y");
+                        $("#crtBtn").attr("disabled", false);
+                    } else {
+                        $("#crtText").text("현재 내 동네로 설정되어 있는 '" + Mycity + "'에서만 동네인증을 할 수 있어요. 현재 위치는 '" + city + "' 입니다.").css("color","red");
+                        $("#certifyYn").val("N");
+                        $("#crtBtn").attr("disabled", true);
+                    }
+                }
+            }
+
+            // 마커와 인포윈도우를 표시합니다
+            displayMarker(locPosition);
+            geocoder.coord2RegionCode(lon, lat, callback);
+        });
+
+
+    } else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정합니다
+
+        var locPosition = new kakao.maps.LatLng(33.450701, 126.570667),
+            message = 'geolocation을 사용할수 없어요..'
+
+        displayMarker(locPosition);
+    }
+
+    // 지도에 마커와 인포윈도우를 표시하는 함수입니다
+    function displayMarker(locPosition) {
+
+        // 마커를 생성합니다
+        var marker = new kakao.maps.Marker({
+            map: map,
+            position: locPosition
+        });
+
+        // 지도 중심좌표를 접속위치로 변경합니다
+        map.setCenter(locPosition);
+    }
+</script>
+<div id="hiddenField" style="display: none">
+    <input type="hidden" id="certifyYn" />
+</div>
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
 </html>
