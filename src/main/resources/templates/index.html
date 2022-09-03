@@ -2,6 +2,21 @@
 <head th:replace="fragments/head::head"></head>
 <header th:replace="fragments/header::header"></header>
 <body>
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    var errorMessage = /*[[${errorMsg}]]*/
+    var successMessage = /*[[${successMsg}]]*/
+    /* ]]> */
+
+    if (errorMessage != null) {
+        //swal("Error", errorMessage, "error");
+        Swal.fire("Error", errorMessage, "error");
+    } else if (successMessage != null) {
+        //swal("Success", successMessage, "success");
+        Swal.fire("Success", successMessage, "success");
+    }
+
+</script>
 <section class="vh-100">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">

@@ -3,7 +3,7 @@
 <header th:fragment="header">
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="https://img.icons8.com/color/48/000000/cutting-a-carrot.png"/>
 
             </a>
@@ -21,6 +21,7 @@
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/logout'|">로그아웃</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
+                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/items/new'|">내 물건 팔기</button>
             </ul>
         </div>
     </nav>
