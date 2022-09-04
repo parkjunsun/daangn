@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+
+
+<head th:replace="fragments/head::head">
+</head>
+
+<header th:replace="fragments/header::header"></header>
+<body>
+<section class="min-vh-100">
+    <div class="container">
+        <div class="input-form-background row">
+            <div class="input-form col-lg-12 mx-auto">
+                <form th:action="@{/board/new}" th:object="${boardForm}" method="post">
+                    <div class="mb-5">
+                        <div style="margin-left: 12px; color:#dc3545">
+                            대표이미지
+                        </div>
+                        <div class="image-box" style="display: inline-block; margin-right: 30px;">
+                            <div class="image-show" id="image-show">
+                                <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 100px; height: 100px;">
+                            </div>
+                        </div>
+                        <div class="filebox" style="display: inline-block;">
+                            <label th:for="image">업로드</label>
+                            <input th:type="file" th:field="*{image}" accept=".gif, .jpg, .png" onchange="return loadFile(this)" style="display: none;">
+                        </div>
+                    </div>
+                    <div class="mb-5">
+                        <label th:for="title">글 제목</label>
+                        <input th:type="text" th:field="*{title}" class="form-control" placeholder="글 제목">
+                    </div>
+                    <div class="mb-5">
+                        <label th:for="category">카테고리</label>
+                        <select class="form-select" th:field="*{category}">
+                            <option value=""> --카테고리 선택-- </option>
+                            <option th:each="category : ${categoryList}" th:value="${category.categoryCd}" th:text="${category.categoryName}"></option>
+                        </select>
+                    </div>
+                    <div class="mb-5">
+                        <label th:for="price">가격</label>
+                        <input th:type="text" th:field="*{price}" class="form-control" placeholder="￦ 가격">
+                    </div>
+                    <div class="mb-5" id="contentBox" style="display: none">
+                        <textarea th:rows="10" th:type="text" th:field="*{content}" class="form-control" placeholder="글 제목"></textarea>
+                    </div>
+                    <div class="mb-5" id="detailBox" style="display: none">
+                        <label th:for="detail" id="detailLabel"></label>
+                        <input th:type="text" th:field="*{detail}" class="form-control" placeholder="">
+                    </div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">등록 완료</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script async th:inline="javascript">
+    $("#category").on('change', function () {
+        let categoryCd = $(this).val();
+        let contentBox = document.getElementById("contentBox");
+        let content = document.getElementById("content");
+        let defaultMsg = "신뢰할 수 있는 거래를 위해 자세한 정보를 제공해주세요. 과학기술정보통신부, 한국인터넷진흥원과 함께 해요.";
+
+        let detailBox = document.getElementById("detailBox");
+        let detailLabel = document.getElementById("detailLabel");
+        let detail = document.getElementById("detail");
+
+        if (categoryCd === "") {
+            contentBox.style.display = "none";
+            content.placeholder = "";
+            detailBox.style.display = "none";
+            detailLabel.innerText = "";
+            detail.placeholder = "";
+        }
+        else if (categoryCd >= 101000 && categoryCd < 102000) {
+            contentBox.style.display = "block";
+            content.placeholder = "-구매시기\n"
+                                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                                + "-구성품 포함 여부\n"
+                                + "-제조일자\n"
+                                + "-브랜드 및 모델명\n"
+                                + "-정상 작동여부, 사용감(흠집, 파손 여부, 상세 사진), 과거 수리여부, 전자파 인증번호 등\n\n\n"
+                                + defaultMsg;
+
+            detailBox.style.display = "block";
+            detailLabel.innerText = "브랜드";
+            detail.placeholder = "브랜드를 입력해주세요."
+        } else if (categoryCd >= 102000 && categoryCd < 103000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-크기 (가로/세로/높이) 및 무게"
+                + "-구성품 포함 여부\n"
+                + "-제조일자\n"
+                + "-브랜드 및 모델명\n"
+                + "-사용감(흠집, 파손 여부, 상세 사진), 과거 수리여부, 전자파 인증번호 등\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "block";
+            detailLabel.innerText = "크기";
+            detail.placeholder = "가로 X 세로 X 높이";
+        } else if (categoryCd >= 103000 && categoryCd < 104000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-사용감(흠집, 파손 여부, 상세 사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "none";
+            detailLabel.innerText = "";
+            detail.placeholder = "";
+        } else if (categoryCd >= 104000 && categoryCd < 105000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-사용나이 (OO개월, OO세)\n"
+                + "-제조일자\n"
+                + "브랜드\n"
+                + "제조사 또는 제품에 명시된 사이즈표\n"
+                + "-사용감(색바램, 얼룩, 뜯어짐 등 상세사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "block";
+            detailLabel.innerText = "나이";
+            detail.placeholder = "나이를 입력해주세요.";
+        } else if (categoryCd >= 105000 && categoryCd < 106000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-도서제목\n"
+                + "-권수 (전집의 경우 누락여부)\n"
+                + "-사용감(찢김, 색바램, 낙서 등 파손 여부, 상세사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "block";
+            detailLabel.innerText = "전집명";
+            detail.placeholder = "전집명을 입력해 주세요.";
+        } else if (categoryCd >= 106000 && categoryCd < 107000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-제조일자\n"
+                + "-브랜드 및 모델명\n"
+                + "-제조사 또는 제품에 명시된 사이즈표\n"
+                + "-사용감(색바램, 얼룩, 뜯어짐 등 상세사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "block";
+            detailLabel.innerText = "브랜드";
+            detail.placeholder = "브랜드를 입력해주세요.";
+        } else if (categoryCd >= 107000 && categoryCd < 108000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-제조일자\n"
+                + "-브랜드 및 모델명\n"
+                + "-사용감(흠집, 파손여부, 상세사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "none";
+            detailLabel.innerText = "";
+            detail.placeholder = "";
+        } else if (categoryCd >= 108000 && categoryCd < 109000) {
+            contentBox.style.display = "block";
+            content.placeholder =
+                "-구매시기\n"
+                + "-사용여부\n"
+                + "-권수 (전집 누락 여부)\n"
+                + "-사용감(찢김, 색바램, 낙서 등 파손 여부, 상세사진)\n\n\n"
+                + defaultMsg;
+
+            detailBox.style.display = "none";
+            detailLabel.innerText = "";
+            detail.placeholder = "";
+        }
+    });
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

@@ -2,6 +2,10 @@ package js.daangnclone.cmn;
 
 public class CmnCons {
 
+    /**
+     * 지역코드
+     */
+
     public static final Long KOREA_CODE = 100000L;
 
     public static final Long SEOUL_CODE = 101000L;
@@ -105,5 +109,32 @@ public class CmnCons {
     public static final String POCHUN_NAME = "포천시";
     public static final String HANAM_NAME = "하남시";
     public static final String HWASUNG_NAME = "화성시";
+
+
+    /**
+     * 카테고리 코드
+     */
+
+    public static final Long DIGITAL_DEVICE_CODE = 101000L;
+    public static final Long HOUSEHOLD_APPLIANCES_CODE = 101001L;
+    public static final Long FURNITURE_CODE = 102000L;
+    public static final Long LIVING_KITCHEN_CODE = 103000L;
+    public static final Long CHILD_ITEM_CODE = 104000L;
+    public static final Long CHILD_BOOKS_CODE = 105000L;
+    public static final Long WOMEN_CLOTHING_CODE = 106000L;
+    public static final Long MEN_CLOTHING_CODE = 106001L;
+    public static final Long SPORT_LEISURE_CODE = 107000L;
+    public static final Long BOOKS_CODE = 108000L;
+
+    public static final String DIGITAL_DEVICE_NAME = "디지털기기";
+    public static final String HOUSEHOLD_APPLIANCES_NAME = "생활가전";
+    public static final String FURNITURE_NAME = "가구/인테리어";
+    public static final String LIVING_KITCHEN_NAME = "생활/주방";
+    public static final String CHILD_ITEM_NAME = "유아동";
+    public static final String CHILD_BOOKS_NAME = "유아도서";
+    public static final String WOMEN_CLOTHING_NAME = "여성의류";
+    public static final String MEN_CLOTHING_NAME = "남성의류";
+    public static final String SPORT_LEISURE_NAME = "스포츠/레저";
+    public static final String BOOKS_NAME = "도서";
 
 }

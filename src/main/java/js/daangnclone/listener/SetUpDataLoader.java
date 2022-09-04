@@ -3,6 +3,8 @@ package js.daangnclone.listener;
 
 import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.area.AreaRepository;
+import js.daangnclone.domain.category.Category;
+import js.daangnclone.domain.category.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
@@ -19,12 +21,18 @@ import static js.daangnclone.cmn.CmnCons.*;
 public class SetUpDataLoader {
 
     private final AreaRepository areaRepository;
+    private final CategoryRepository categoryRepository;
 
     @EventListener(ApplicationReadyEvent.class)
     public void initDateLoad() {
         Optional<Area> findArea = areaRepository.findById(KOREA_CODE);
         if (findArea.isEmpty()) {
             createAreaCode();
+        }
+
+        Optional<Category> findCategory = categoryRepository.findById(DIGITAL_DEVICE_CODE);
+        if (findCategory.isEmpty()) {
+            createCategoryCode();
         }
     }
 
@@ -87,6 +95,23 @@ public class SetUpDataLoader {
                 area41, area42, area43, area44, area45, area46, area47, area48);
 
         areaRepository.saveAll(areaList);
+
+    }
+
+    private void createCategoryCode() {
+        Category category1 = new Category(DIGITAL_DEVICE_CODE, DIGITAL_DEVICE_NAME);
+        Category category2 = new Category(HOUSEHOLD_APPLIANCES_CODE, HOUSEHOLD_APPLIANCES_NAME);
+        Category category3 = new Category(FURNITURE_CODE, FURNITURE_NAME);
+        Category category4 = new Category(LIVING_KITCHEN_CODE, LIVING_KITCHEN_NAME);
+        Category category5 = new Category(CHILD_ITEM_CODE, CHILD_ITEM_NAME);
+        Category category6 = new Category(CHILD_BOOKS_CODE, CHILD_BOOKS_NAME);
+        Category category7 = new Category(WOMEN_CLOTHING_CODE, WOMEN_CLOTHING_NAME);
+        Category category8 = new Category(MEN_CLOTHING_CODE, MEN_CLOTHING_NAME);
+        Category category9 = new Category(SPORT_LEISURE_CODE, SPORT_LEISURE_NAME);
+        Category category10 = new Category(BOOKS_CODE, BOOKS_NAME);
+
+        List<Category> categoryList = Arrays.asList(category1, category2, category3, category4, category5, category6, category7, category8, category9, category10);
+        categoryRepository.saveAll(categoryList);
 
     }
 

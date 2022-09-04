@@ -1,13 +1,18 @@
 package js.daangnclone.domain.member;
 
+import js.daangnclone.domain.TimeEntity;
+import js.daangnclone.domain.board.Board;
 import lombok.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
 @NoArgsConstructor
-public class Member {
+public class Member extends TimeEntity {
 
     @Id @GeneratedValue
     @Column(name = "member_id")
@@ -23,6 +28,9 @@ public class Member {
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Board> boardList = new ArrayList<>();
 
     @Builder
     public Member(String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)

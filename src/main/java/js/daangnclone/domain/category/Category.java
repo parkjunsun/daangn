@@ -1,4 +1,4 @@
-package js.daangnclone.domain.area;
+package js.daangnclone.domain.category;
 
 import js.daangnclone.domain.TimeEntity;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,9 @@ import javax.persistence.Id;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Area extends TimeEntity {
+public class Category extends TimeEntity {
+
     @Id
-    private Long areaCd;
-    private String areaName;
-
-    private Long pprAreaCd;
-
+    private Long categoryCd;
+    private String categoryName;
 }
