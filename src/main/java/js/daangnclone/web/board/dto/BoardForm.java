@@ -1,4 +1,4 @@
-package js.daangnclone.domain.board;
+package js.daangnclone.web.board.dto;
 
 import lombok.Data;
 

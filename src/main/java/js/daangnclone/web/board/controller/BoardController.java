@@ -1,11 +1,11 @@
-package js.daangnclone.web.item.controller;
+package js.daangnclone.web.board.controller;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.domain.board.BoardForm;
 import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.category.CategoryRepository;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.MemberService;
+import js.daangnclone.web.board.dto.BoardForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

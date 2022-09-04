@@ -1,7 +1,5 @@
 package js.daangnclone.security;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;

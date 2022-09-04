@@ -3,7 +3,6 @@ package js.daangnclone.domain.member;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
