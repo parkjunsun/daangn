@@ -37,7 +37,7 @@ public class BoardController {
     }
 
     @ExceptionHandler
-    public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes, HttpServletRequest request) {
+    public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
         return "redirect:/";
     }

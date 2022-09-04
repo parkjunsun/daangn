@@ -15,10 +15,12 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Optional;
 
 import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
 
@@ -68,8 +70,10 @@ public class MemberController {
     }
 
     @PostMapping("/certify")
-    public String setCertifyMember(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
+    public String setCertifyMember(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, RedirectAttributes redirectAttributes) {
         memberService.updateMemberCertifyYn(principalUserDetails.getMember().getId());
+        Area findArea = areaRepository.findByAreaCd(principalUserDetails.getMember().getCity()).orElse(null);
+        redirectAttributes.addFlashAttribute("successMsg", findArea.getAreaName() + " 동네 인증 성공!!");
         return "redirect:/";
     }
 
