@@ -4,7 +4,7 @@ import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
-import js.daangnclone.service.MemberService;
+import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.member.dto.CreateMemberDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
-import java.util.Optional;
 
 import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
 

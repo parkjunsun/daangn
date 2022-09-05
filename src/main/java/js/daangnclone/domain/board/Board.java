@@ -16,8 +16,8 @@ public class Board extends TimeEntity {
     private Long id;
 
     private String title;
-    private String category;
-    private String price;
+    private Long category;
+    private int price;
     private String image;
     private String content;
     private String detail;

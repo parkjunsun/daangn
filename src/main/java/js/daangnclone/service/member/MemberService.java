@@ -1,4 +1,4 @@
-package js.daangnclone.service;
+package js.daangnclone.service.member;
 
 import js.daangnclone.domain.member.Member;
 

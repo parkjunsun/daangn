@@ -7,8 +7,8 @@ public class BoardForm {
 
     private String image;
     private String title;
-    private String category;
-    private String price;
+    private Long category;
+    private int price;
     private String content;
     private String detail;
 

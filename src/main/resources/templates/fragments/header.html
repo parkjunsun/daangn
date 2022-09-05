@@ -12,8 +12,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <input class="form-control me-2" type="search" placeholder="물품을 검색해보세요." aria-label="Search">
+                    <button class="btn btn-link" type="submit">
+                        <img src="https://img.icons8.com/dusk/30/000000/search--v1.png"/>
+                    </button>
                 </form>
             </div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
@@ -21,7 +23,7 @@
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/logout'|">로그아웃</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
-                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/boards/new'|">내 물건 팔기</button>
+                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/board/new'|">내 물건 팔기</button>
             </ul>
         </div>
     </nav>
