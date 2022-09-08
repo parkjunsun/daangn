@@ -2,14 +2,16 @@ package js.daangnclone.domain.board;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.member.Member;
-import lombok.Getter;
-import lombok.Setter;
+import js.daangnclone.web.board.dto.InquireBoardDto;
+import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
 @Entity
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board extends TimeEntity {
 
     @Id @GeneratedValue
@@ -32,6 +34,10 @@ public class Board extends TimeEntity {
     public void setMember(Member member) {
         this.member = member;
         member.getBoardList().add(this);
+    }
+
+    public InquireBoardDto toInquireBoardDto (Board board) {
+        return new InquireBoardDto(board.getTitle(), board.getImage(), board.getCategory(), board.getPrice(), board.getContent(), board.getDetail(), board.getCreatedAt(), board.getUpdatedAt());
     }
 
 }

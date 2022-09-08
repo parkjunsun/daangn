@@ -22,4 +22,10 @@ public class BoardServiceImpl implements BoardService{
     public List<Board> inquireAllBoardList() {
         return boardRepository.findAll();
     }
+
+    @Override
+    public Board inquireBoard(Long id) {
+        Board board = boardRepository.findById(id).orElse(null);
+        return board;
+    }
 }

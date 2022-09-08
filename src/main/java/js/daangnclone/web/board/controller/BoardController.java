@@ -9,15 +9,13 @@ import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
+import js.daangnclone.web.board.dto.InquireBoardDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.naming.ldap.PagedResultsControl;
@@ -56,6 +54,14 @@ public class BoardController {
 
         boardService.registerItem(board);
         return "redirect:/";
+    }
+
+    @GetMapping("/board/{id}")
+    public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long id, Model model) {
+        Board findBoard = boardService.inquireBoard(id);
+        InquireBoardDto boardDto = findBoard.toInquireBoardDto(findBoard);
+        model.addAttribute("board", boardDto);
+        return "board/InquireBoard";
     }
 
     @ExceptionHandler

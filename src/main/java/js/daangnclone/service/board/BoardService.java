@@ -8,4 +8,5 @@ public interface BoardService {
 
     Board registerItem(Board board);
     List<Board> inquireAllBoardList();
+    Board inquireBoard(Long id);
 }

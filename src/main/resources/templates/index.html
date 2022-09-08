@@ -18,28 +18,28 @@
         Swal.fire("Success", successMessage, "success");
     }
 </script>
-<section class="vh-100">
-    <div class="container">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="card-deck">
-                <th:block th:each="board, boardStat : ${boardList}">
-                    <div th:if="${boardStat.count % 4 eq 0}" class="row">
-                        <div th:each="board : ${boardList}" class="card border-info mb-3" style="width: 18rem;">
-                            <img class="card-img-top" th:src="${board.image}" alt="Card image cap">
-                            <div class="card-body">
-                                <h5 class="card-title" th:text="${board.title}">Card title</h5>
-                                <p class="card-text"><small class="text-muted" th:text="${board.updatedAt}">Last updated 3 mins ago</small></p>
-                                <p class="card-text" th:text="${board.price}">750,000원</p>
-                            </div>
+
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="card-deck">
+            <th:block th:each="i : ${#numbers.sequence(0, boardList.size() - 1)}">
+                <div th:if="${i % 4 eq 0}" class="row">
+                    <th:block th:each="j : ${#numbers.sequence(i, i+3)}">
+                        <div th:if="${j le boardList.size() - 1}" class="card border-info mb-3" style="width: 16rem; cursor: pointer;" th:onclick="|location.href='/board/${boardList[j].id}'|">
+                                <img class="card-img-top" th:src="${boardList[j].image}" alt="Card image cap" style="width: 200px; height: 150px;">
+                                <div class="card-body">
+                                    <h5 class="card-title" th:text="${boardList[j].title}">Card title</h5>
+                                    <p class="card-text"><small class="text-muted" th:text="${boardList[j].updatedAt}">Last updated 3 mins ago</small></p>
+                                    <p class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</p>
+                                </div>
                         </div>
-                    </div>
-                </th:block>
+                    </th:block>
                 </div>
-                </div>
-            </div>
+            </th:block>
         </div>
     </div>
-</section>
+</div>
+
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
 </html>

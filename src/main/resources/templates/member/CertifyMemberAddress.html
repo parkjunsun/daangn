@@ -4,10 +4,8 @@
 
 <header th:replace="fragments/header::header"></header>
 <body>
-
-<section class="vh-100">
-    <div class="container h-custom">
-        <div class="row d-flex justify-content-center align-items-center h-100 wrapper">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center h-100" style="text-align: center">
             <div id="map" style="height:350px;"></div>
             <p id="crtText"></p><br><br><br><br><br><br><br>
             <form action="/certify" method="post">
@@ -15,9 +13,6 @@
             </form>
         </div>
     </div>
-</section>
-
-
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5b38eaa8823aec9cb0315315dfcb0d10&libraries=services"></script>
 <script th:inline="javascript">
 
