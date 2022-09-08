@@ -17,12 +17,26 @@
         //swal("Success", successMessage, "success");
         Swal.fire("Success", successMessage, "success");
     }
-
 </script>
 <section class="vh-100">
-    <div class="container-fluid h-custom">
+    <div class="container">
         <div class="row d-flex justify-content-center align-items-center h-100">
-
+            <div class="card-deck">
+                <th:block th:each="board, boardStat : ${boardList}">
+                    <div th:if="${boardStat.count % 4 eq 0}" class="row">
+                        <div th:each="board : ${boardList}" class="card border-info mb-3" style="width: 18rem;">
+                            <img class="card-img-top" th:src="${board.image}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${board.title}">Card title</h5>
+                                <p class="card-text"><small class="text-muted" th:text="${board.updatedAt}">Last updated 3 mins ago</small></p>
+                                <p class="card-text" th:text="${board.price}">750,000원</p>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
+                </div>
+                </div>
+            </div>
         </div>
     </div>
 </section>

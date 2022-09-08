@@ -4,6 +4,7 @@ import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.member.Member;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -19,6 +20,8 @@ public class Board extends TimeEntity {
     private Long category;
     private int price;
     private String image;
+    @Lob
+    @Type(type = "org.hibernate.type.TextType")
     private String content;
     private String detail;
 
