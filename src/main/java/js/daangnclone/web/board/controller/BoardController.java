@@ -30,6 +30,13 @@ public class BoardController {
     private final CategoryRepository categoryRepository;
     private final BoardService boardService;
 
+    @GetMapping("/")
+    public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        List<BoardResponse> boardResponsesList = boardService.inquireAllBoardList();
+        model.addAttribute("boardList", boardResponsesList);
+        return "board/InquireBoardList";
+    }
+
     @GetMapping("/board/new")
     public String createBoardForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         memberService.validateCertifyLocation(principalUserDetails.getMember().getId());
@@ -41,7 +48,7 @@ public class BoardController {
     }
 
     @PostMapping("/board/new")
-    public String createBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute BoardForm boardForm) {
+    public String createBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute BoardForm boardForm, RedirectAttributes redirectAttributes) {
 
         Member member = memberService.findMember(principalUserDetails.getMember().getId());
         Board board = new Board();
@@ -53,6 +60,7 @@ public class BoardController {
         board.setMember(member);
 
         boardService.registerItem(board);
+        redirectAttributes.addFlashAttribute("successMsg", "상품 등록 성공!!");
         return "redirect:/";
     }
 

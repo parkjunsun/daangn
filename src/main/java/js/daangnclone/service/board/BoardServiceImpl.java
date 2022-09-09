@@ -32,7 +32,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public List<BoardResponse> inquireAllBoardList() {
-        List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "updatedAt"));
+        List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
 
         return findBoardList.stream()
                 .map(board -> BoardResponse.builder()
@@ -43,7 +43,7 @@ public class BoardServiceImpl implements BoardService{
                         .content(board.getContent())
                         .detail(board.getDetail())
                         .category(categoryRepository.findById(board.getCategory()).get().getCategoryName())
-                        .diffUpdatedAt(DateUtil.diffDate(board.getUpdatedAt()))
+                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
                         .nickname(board.getMember().getNickname())
                         .city(areaRepository.findByAreaCd(board.getMember().getCity()).get().getAreaName())
                         .build())
@@ -64,7 +64,7 @@ public class BoardServiceImpl implements BoardService{
                 .content(findBoard.getContent())
                 .detail(findBoard.getDetail())
                 .category(category.getCategoryName())
-                .diffUpdatedAt(DateUtil.diffDate(findBoard.getUpdatedAt()))
+                .diffCreatedAt(DateUtil.diffDate(findBoard.getCreatedAt()))
                 .nickname(findBoard.getMember().getNickname())
                 .city(city.getAreaName())
                 .view(findBoard.getView())

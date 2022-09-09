@@ -6,16 +6,16 @@
 <body>
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="card mb-3" style="width: 30rem;">
+        <div class="card mb-3" style="width: 30rem; padding-top: 12px;">
             <img th:src="${board.image}" class="card-img-top" alt="...">
             <div class="card-header bg-transparent">
                 <p class="card-title" th:text="${board.nickname}" style="font-weight: bold"></p>
                 <p class="card-text" th:text="${board.city}"></p>
             </div>
             <div class="card-body">
-                <h5 class="card-title" th:text="${board.title}" style="font-weight: bold">Card title</h5>
+                <h5 class="card-title" th:text="${board.title}" style="font-weight: bold; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">Card title</h5>
                 <small th:class="text-muted" th:text="${board.category}"></small> ·
-                <small th:class="text-muted" th:text="${board.diffUpdatedAt}"></small>
+                <small th:class="text-muted" th:text="${board.diffCreatedAt}"></small>
                 <br><br>
                 <p class="card-text" th:utext="${board.content}"></p>
                 <br><br>
@@ -26,7 +26,7 @@
             <div class="card-footer bg-transparent">
                 <a href="#" class="card-link" style="margin-right: 5px;"><img src="https://img.icons8.com/ios/50/000000/hearts--v1.png"/></a>
                 <span class="card-text" th:text="|${#numbers.formatInteger(board.price, 0, 'COMMA')}￦|"></span>
-                <a href="#" class="btn btn-primary" style="margin-left: 180px; background-color: orange;">채팅하기</a>
+                <a href="#" class="btn btn-primary" style="float:right; background-color: orange; border-color: orange">채팅하기</a>
             </div>
         </div>
     </div>

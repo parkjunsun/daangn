@@ -13,14 +13,14 @@ public class BoardResponse {
     private String content;
     private String detail;
     private String category;
-    private String diffUpdatedAt;
+    private String diffCreatedAt;
     private int view;
 
     private String nickname;
     private String city;
 
     @Builder
-    private BoardResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffUpdatedAt, int view) {
+    private BoardResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -30,7 +30,7 @@ public class BoardResponse {
         this.nickname = nickname;
         this.category = category;
         this.city = city;
-        this.diffUpdatedAt = diffUpdatedAt;
+        this.diffCreatedAt = diffCreatedAt;
         this.view = view;
     }
 

@@ -21,11 +21,36 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
-                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/logout'|">로그아웃</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/board/new'|">내 물건 팔기</button>
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://img.icons8.com/fluency/32/000000/person-at-home.png"/>
+                        [[${#authentication.name}]]
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">나의 당근</a></li>
+                        <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>
+<!--        <ul class="me-auto mb-2 mb-lg-0">-->
+<!--            <li sec:authorize="isAuthenticated()" class="nav-item dropdown">-->
+<!--                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                    <img src="https://img.icons8.com/fluency/32/000000/person-at-home.png"/>-->
+<!--                    [[${#authentication.name}]]-->
+<!--                </a>-->
+<!--                <ul class="dropdown-menu">-->
+<!--                    <li><a class="dropdown-item" href="#">나의 당근</a></li>-->
+<!--                    <li><a class="dropdown-item" href="/logout">로그아웃</a></li>-->
+<!--                    <li><hr class="dropdown-divider"></li>-->
+<!--                    <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--                </ul>-->
+<!--            </li>-->
+<!--        </ul>-->
     </nav>
 <br><br><br><br>
 </header>
