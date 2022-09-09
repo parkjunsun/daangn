@@ -2,7 +2,6 @@ package js.daangnclone.domain.board;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.member.Member;
-import js.daangnclone.web.board.dto.InquireBoardDto;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
@@ -27,6 +26,9 @@ public class Board extends TimeEntity {
     private String content;
     private String detail;
 
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
@@ -35,9 +37,4 @@ public class Board extends TimeEntity {
         this.member = member;
         member.getBoardList().add(this);
     }
-
-    public InquireBoardDto toInquireBoardDto (Board board) {
-        return new InquireBoardDto(board.getTitle(), board.getImage(), board.getCategory(), board.getPrice(), board.getContent(), board.getDetail(), board.getCreatedAt(), board.getUpdatedAt());
-    }
-
 }

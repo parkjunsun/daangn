@@ -1,6 +1,7 @@
 package js.daangnclone.web.board.controller;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.category.CategoryRepository;
@@ -9,7 +10,7 @@ import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
-import js.daangnclone.web.board.dto.InquireBoardDto;
+import js.daangnclone.web.board.dto.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -18,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.naming.ldap.PagedResultsControl;
 import java.util.List;
 
 @Controller
@@ -47,7 +47,7 @@ public class BoardController {
         Board board = new Board();
         board.setTitle(boardForm.getTitle());
         board.setCategory(boardForm.getCategory());
-        board.setContent(boardForm.getContent());
+        board.setContent(boardForm.getContent().replace("\r\n", "<br>"));
         board.setDetail(boardForm.getDetail());
         board.setPrice(boardForm.getPrice());
         board.setMember(member);
@@ -58,11 +58,12 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long id, Model model) {
-        Board findBoard = boardService.inquireBoard(id);
-        InquireBoardDto boardDto = findBoard.toInquireBoardDto(findBoard);
-        model.addAttribute("board", boardDto);
+        boardService.updateView(id);
+        BoardResponse boardResponse = boardService.inquireBoard(id);
+        model.addAttribute("board", boardResponse);
         return "board/InquireBoard";
     }
+
 
     @ExceptionHandler
     public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
