@@ -10,5 +10,5 @@ public interface BoardService {
     Board registerItem(Board board);
     List<BoardResponse> inquireAllBoardList();
     BoardResponse inquireBoard(Long id);
-    int updateView(Long id);
+    void updateView(Long id);
 }

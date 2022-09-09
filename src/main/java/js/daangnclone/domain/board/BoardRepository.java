@@ -22,7 +22,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = {"member"})
     Optional<Board> findById(Long id);
 
-    @Modifying
-    @Query("update Board b set b.view = b.view + 1 where b.id = :id")
-    int updateView(@Param("id") Long id);
 }

@@ -37,4 +37,8 @@ public class Board extends TimeEntity {
         this.member = member;
         member.getBoardList().add(this);
     }
+
+    public void addView() {
+        this.view += 1;
+    }
 }

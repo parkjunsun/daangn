@@ -73,7 +73,8 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     @Transactional
-    public int updateView(Long id) {
-        return boardRepository.updateView(id);
+    public void updateView(Long id) {
+        Board findBoard = boardRepository.findById(id).orElse(null);
+        findBoard.addView();
     }
 }
