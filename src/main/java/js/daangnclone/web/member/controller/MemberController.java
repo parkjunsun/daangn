@@ -5,7 +5,7 @@ import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
-import js.daangnclone.web.member.dto.CreateMemberDto;
+import js.daangnclone.web.member.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
@@ -14,11 +14,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.List;
 
 import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
@@ -37,16 +39,21 @@ public class MemberController {
 
         List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
 
-        model.addAttribute("memberForm", new CreateMemberDto());
+        model.addAttribute("memberForm", new MemberForm());
         model.addAttribute("pprAreaList", pprAreaList);
 
         return "member/CreateMemberForm";
     }
 
     @PostMapping("/signup")
-    public String createMember(@ModelAttribute("memberForm") CreateMemberDto createMemberDto) {
-        createMemberDto.setPassword(passwordEncoder.encode(createMemberDto.getPassword()));
-        memberService.save(createMemberDto.toEntity());
+    public String createMember(@Valid @ModelAttribute("memberForm") MemberForm memberForm, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return "member/CreateMemberForm";
+        }
+
+        memberForm.setPassword(passwordEncoder.encode(memberForm.getPassword()));
+        memberService.save(memberForm.toEntity());
         return "redirect:/";
     }
 
