@@ -1,6 +1,7 @@
 package js.daangnclone.domain.member;
 
 import js.daangnclone.domain.TimeEntity;
+import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;
 import lombok.*;
 
@@ -30,6 +31,9 @@ public class Member extends TimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Board> boardList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Attention> attentionList = new ArrayList<>();
 
     @Builder
     public Member(String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)

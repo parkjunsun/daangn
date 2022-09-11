@@ -20,17 +20,49 @@
                 <p class="card-text" th:utext="${board.content}"></p>
                 <br><br>
                 <small th:class="text-muted" >채팅 1</small> ·
-                <small th:class="text-muted" >관심 2</small> ·
+                <small th:class="text-muted" th:text="|관심 ${cntAttention}|"></small> ·
                 <small th:class="text-muted" th:text="|조회 ${board.view}|"></small>
             </div>
             <div class="card-footer bg-transparent">
-                <a href="#" class="card-link" style="margin-right: 5px;"><img src="https://img.icons8.com/ios/50/000000/hearts--v1.png"/></a>
+                <button id="attentionBtn" class="card-link" style="margin-right: 5px; border:0; outline: 0; background-color: transparent;">
+                    <img th:if="${attentionInpYn eq 'N'}" id="heart-white" src="https://img.icons8.com/ios/50/000000/novel--v1.png"/>
+                    <img th:if="${attentionInpYn eq 'Y'}"id="heart-red" src="https://img.icons8.com/color/50/000000/novel--v1.png"/>
+                </button>
                 <span class="card-text" th:text="|${#numbers.formatInteger(board.price, 0, 'COMMA')}￦|"></span>
                 <a href="#" class="btn btn-primary" style="float:right; background-color: orange; border-color: orange">채팅하기</a>
             </div>
         </div>
     </div>
 </div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    let boardId = /*[[${board.id}]]*/;
+
+    $("#attentionBtn").on('click', function () {
+        $.ajax({
+            url: "/board/" + boardId + "/attention/process.do",
+            type: "post",
+            // data: {"boardId" : boardId},
+            sync: false,
+            success: function (attentionInpYn) {
+                if (attentionInpYn === "Y") {
+                    let imgObj = $("<img id=\"heart-white\" src=\"https://img.icons8.com/ios/50/000000/novel--v1.png\" alt='heart-white'>");
+                    $("#attentionBtn").empty();
+                    $("#attentionBtn").append(imgObj);
+                } else {
+                    let imgObj = $("<img id=\"heart-red\" src=\"https://img.icons8.com/color/50/000000/novel--v1.png\" alt='heart-red'>");
+                    $("#attentionBtn").empty();
+                    $("#attentionBtn").append(imgObj);
+                }
+            }
+        })
+    });
+
+    /*]]>*/
+</script>
+
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
 </html>

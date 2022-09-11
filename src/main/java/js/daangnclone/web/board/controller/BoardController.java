@@ -7,6 +7,7 @@ import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.category.CategoryRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
+import js.daangnclone.service.attention.AttentionService;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
@@ -29,6 +30,7 @@ public class BoardController {
     private final MemberService memberService;
     private final CategoryRepository categoryRepository;
     private final BoardService boardService;
+    private final AttentionService attentionService;
 
     @GetMapping("/")
     public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
@@ -51,24 +53,26 @@ public class BoardController {
     public String createBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute BoardForm boardForm, RedirectAttributes redirectAttributes) {
 
         Member member = memberService.findMember(principalUserDetails.getMember().getId());
-        Board board = new Board();
-        board.setTitle(boardForm.getTitle());
-        board.setCategory(boardForm.getCategory());
-        board.setContent(boardForm.getContent().replace("\r\n", "<br>"));
-        board.setDetail(boardForm.getDetail());
-        board.setPrice(boardForm.getPrice());
-        board.setMember(member);
-
-        boardService.registerItem(board);
+        boardService.registerItem(boardForm, member);
         redirectAttributes.addFlashAttribute("successMsg", "상품 등록 성공!!");
         return "redirect:/";
     }
 
     @GetMapping("/board/{id}")
-    public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long id, Model model) {
-        boardService.updateView(id);
-        BoardResponse boardResponse = boardService.inquireBoard(id);
+    public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long boardId, Model model) {
+        boardService.updateView(boardId);
+        BoardResponse boardResponse = boardService.inquireBoard(boardId);
+
+        Long memberId = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(memberId);
+        Board findBoard = boardService.findBoard(boardId);
+
+        String attentionInpYn = attentionService.InpAttentionYn(findMember, findBoard);
+        long cnt = attentionService.countAttentionInBoard(findBoard);
+
         model.addAttribute("board", boardResponse);
+        model.addAttribute("attentionInpYn", attentionInpYn);
+        model.addAttribute("cntAttention", cnt);
         return "board/InquireBoard";
     }
 

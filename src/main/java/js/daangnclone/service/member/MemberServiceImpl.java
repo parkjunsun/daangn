@@ -3,7 +3,10 @@ package js.daangnclone.service.member;
 import js.daangnclone.Exception.CustomException;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
+import js.daangnclone.domain.member.MemberRole;
+import js.daangnclone.web.member.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +20,23 @@ import static js.daangnclone.Exception.ErrorCode.*;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
-    public Member save(Member member) {
+    public Member save(MemberForm memberForm) {
+        Member member = Member.builder()
+                .username(memberForm.getUsername())
+                .nickname(memberForm.getNickname())
+                .password(passwordEncoder.encode(memberForm.getPassword()))
+                .email(memberForm.getEmail())
+                .state(memberForm.getState())
+                .city(memberForm.getCity())
+                .memberRole(MemberRole.ROLE_ADMIN)
+                .certifyYn("N")
+                .build();
         return memberRepository.save(member);
+
     }
 
     @Override

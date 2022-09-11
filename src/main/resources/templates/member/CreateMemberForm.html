@@ -38,12 +38,12 @@
                     </div>
 
                     <div class="mb-5">
-                        <label th:for="state">시/도</label>
 
                         <div th:if="${#fields.hasGlobalErrors()}">
                             <p style="color:#bd2130;" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
                         </div>
 
+                        <label th:for="state">시/도</label>
                         <select class="form-select" th:field="*{state}">
                             <option value=""> --시도-- </option>
                             <option th:each="pprArea : ${pprAreaList}" th:value="${pprArea.areaCd}" th:text="${pprArea.areaName}"></option>

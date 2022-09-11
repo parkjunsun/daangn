@@ -7,6 +7,8 @@ import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.category.CategoryRepository;
+import js.daangnclone.domain.member.Member;
+import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -26,7 +28,17 @@ public class BoardServiceImpl implements BoardService{
     private final CategoryRepository categoryRepository;
 
     @Override
-    public Board registerItem(Board board) {
+    public Board registerItem(BoardForm boardForm, Member member) {
+
+        Board board = Board.builder()
+                .title(boardForm.getTitle())
+                .category(boardForm.getCategory())
+                .content(boardForm.getContent().replace("\r\n", "<br>"))
+                .detail(boardForm.getDetail())
+                .price(boardForm.getPrice())
+                .member(member)
+                .build();
+
         return boardRepository.save(board);
     }
 
@@ -76,5 +88,10 @@ public class BoardServiceImpl implements BoardService{
     public void updateView(Long id) {
         Board findBoard = boardRepository.findById(id).orElse(null);
         findBoard.addView();
+    }
+
+    @Override
+    public Board findBoard(Long id) {
+        return boardRepository.findById(id).orElse(null);
     }
 }

@@ -1,11 +1,14 @@
 package js.daangnclone.domain.board;
 
 import js.daangnclone.domain.TimeEntity;
+import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -33,6 +36,9 @@ public class Board extends TimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Attention> attentionList = new ArrayList<>();
+
     public void setMember(Member member) {
         this.member = member;
         member.getBoardList().add(this);
@@ -40,5 +46,17 @@ public class Board extends TimeEntity {
 
     public void addView() {
         this.view += 1;
+    }
+
+    @Builder
+    public Board (String title, Long category, int price, String image, String content, String detail, int view, Member member) {
+        this.title = title;
+        this.category = category;
+        this.price = price;
+        this.image = image;
+        this.content = content;
+        this.detail = detail;
+        this.view = view;
+        this.member = member;
     }
 }

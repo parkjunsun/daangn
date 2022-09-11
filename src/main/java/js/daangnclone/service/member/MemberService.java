@@ -1,10 +1,11 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.domain.member.Member;
+import js.daangnclone.web.member.dto.MemberForm;
 
 public interface MemberService {
 
-    Member save(Member member);
+    Member save(MemberForm memberForm);
     Member findMember(Long id);
     void updateMemberCertifyYn(Long id);
     void validateCertifyLocation(Long id);
