@@ -8,4 +8,6 @@ public interface MemberService {
     Member findMember(Long id);
     void updateMemberCertifyYn(Long id);
     void validateCertifyLocation(Long id);
+    String validateDuplicateUsername(String username);
+    String validateDuplicateNickname(String nickname);
 }

@@ -9,35 +9,51 @@
             <div class="input-form mx-auto">
                 <h4 class="mb-3">회원가입</h4>
                 <form class="validation-form" novalidate th:action="@{/signup}" th:method="post" th:object="${memberForm}">
+
                     <div class="mb-5">
                         <label th:for="username">아이디</label><br>
                         <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'form-control fieldError' : 'form-control'" placeholder="" value="" required />
-                        <button style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
+                        <button id="validateUsernameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
+                        <p id="validateUsernameMsg" style="display: none;"></p>
                         <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:#bd2130;">Incorrect Data</p>
                     </div>
+
                     <div class="mb-5">
-                        <label th:for="nickname">별명</label>
-                        <input type="text" class="form-control" th:field="*{nickname}" placeholder="" value="" required>
+                        <label th:for="nickname">별명</label><br>
+                        <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'" placeholder="" value="" required />
+                        <button id="validateNicknameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
+                        <p id="validateNicknameMsg" style="display: none;"></p>
+                        <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" style="color:#bd2130;">Incorrect Data</p>
                     </div>
+
                     <div class="mb-5">
                         <label th:for="password">비밀번호</label>
-                        <input type="password" class="form-control" th:field="*{password}" placeholder="" required>
+                        <input type="password" class="form-control" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'form-control fieldError' : 'form-control'" placeholder="" required>
+                        <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:#bd2130;">Incorrect Data</p>
                     </div>
+
                     <div class="mb-5">
                         <label th:for="email">이메일</label>
                         <input type="email" class="form-control" th:field="*{email}" placeholder="you@example.com" required>
                     </div>
+
                     <div class="mb-5">
                         <label th:for="state">시/도</label>
+
+                        <div th:if="${#fields.hasGlobalErrors()}">
+                            <p style="color:#bd2130;" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                        </div>
+
                         <select class="form-select" th:field="*{state}">
                             <option value=""> --시도-- </option>
                             <option th:each="pprArea : ${pprAreaList}" th:value="${pprArea.areaCd}" th:text="${pprArea.areaName}"></option>
-                        </select>
-                        <br>
+                        </select><br>
+
                         <label th:for="city">시/군/구</label>
                         <select class="form-select" th:field="*{city}">
-                            <option value="--시군구--"> --시군구-- </option>
+                            <option value=""> --시군구-- </option>
                         </select>
+
                     </div>
                     <hr class="mb-4">
                     <div class="custom-control custom-checkbox">
@@ -45,22 +61,32 @@
                         <label class="custom-control-label" for="aggrement">개인정보 수집 및 이용에 동의합니다.</label>
                     </div>
                     <div class="mb-4"></div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
+                    <button id="submitBtn" class="btn btn-primary btn-lg btn-block" type="submit">가입 완료</button>
                 </form>
             </div>
         </div>
     </div>
 <script async th:inline="javascript">
     /*<![CDATA[*/
+
+    $(function () {
+        // 시/도 , 시/군/구는 한 세트 이기 때문에 한 곳만 값을 저장되는 것을 방지
+        $("#state").val("");
+        $("#city").val("");
+    })
+
+    let validateUsernameInpYn = "N";
+    let validateNicknameInpYn = "N";
+
     $("#state").on('change', function () {
         $.ajax({
-             url: "/signup/getPsAreaCd.do"
-            ,type: "post"
-            ,data: {"pprAreaCd" : $(this).val()}
-            ,sync: false
-            ,success: function (areaList) {
+             url: "/signup/getPsAreaCd.do",
+            type: "post",
+            data: {"pprAreaCd" : $(this).val()},
+            sync: false,
+            success: function (areaList) {
                 $("#city").empty();
-                $("#city").append("<option value=\"--시군구--\"> --시군구-- </option>");
+                $("#city").append("<option value=\"\"> --시군구-- </option>");
                 $.each(areaList, function (idx, area) {
                     $("#city").append($("<option>", {
                          value: area.areaCd
@@ -69,7 +95,89 @@
                 })
             }
         })
-    })
+    });
+
+    $("#validateUsernameBtn").on('click', function () {
+
+        if ($("#username").val() === null || $("#username").val() === "") {
+            alert("아이디를 입력해주세요.");
+            $("#validateUsernameMsg").css("display", "none");
+            return false;
+        }
+
+        $.ajax({
+           url: "/signup/validate-username.do",
+           type: "post",
+           data: {"username" : $("#username").val()},
+           sync: false,
+           success: function (canUseYn) {
+                if (canUseYn === "N") {
+                    $("#validateUsernameMsg").css("display", "block");
+                    $("#validateUsernameMsg").css("color", "#bd2130");
+                    $("#validateUsernameMsg").text("이미 존재하는 아이디 입니다.");
+
+                    validateUsernameInpYn = "N";
+
+                } else {
+                    $("#validateUsernameMsg").css("display", "block");
+                    $("#validateUsernameMsg").css("color", "#00bfff");
+                    $("#validateUsernameMsg").text("사용 가능한 아이디 입니다.");
+
+                    validateUsernameInpYn = "Y";
+                }
+           }
+       })
+    });
+
+
+    $("#validateNicknameBtn").on('click', function () {
+
+        if ($("#nickname").val() === null || $("#nickname").val() === "") {
+            alert("아이디를 입력해주세요.");
+            $("#validateNicknameMsg").css("display", "none");
+            return false;
+        }
+
+        $.ajax({
+            url: "/signup/validate-nickname.do",
+            type: "post",
+            data: {"nickname" : $("#nickname").val()},
+            sync: false,
+            success: function (canUseYn) {
+                if (canUseYn === "N") {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#bd2130");
+                    $("#validateNicknameMsg").text("이미 존재하는 별명 입니다.");
+
+                    validateNicknameInpYn = "N";
+
+                } else {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#00bfff");
+                    $("#validateNicknameMsg").text("사용 가능한 별명 입니다.");
+
+                    validateNicknameInpYn = "Y";
+                }
+            }
+        })
+    });
+
+
+    $("#submitBtn").on('click', function () {
+        if (validateUsernameInpYn === "N") {
+            $("#validateUsernameMsg").css("display", "block");
+            $("#validateUsernameMsg").css("color", "#bd2130");
+            $("#validateUsernameMsg").text("아이디 중복 확인이 완료되지 않았습니다.");
+            return false;
+        }
+
+        if (validateNicknameInpYn === "N") {
+            $("#validateNicknameMsg").css("display", "block");
+            $("#validateNicknameMsg").css("color", "#bd2130");
+            $("#validateNicknameMsg").text("별명 중복 확인이 완료되지 않았습니다.");
+            return false;
+        }
+    });
     /*]]>*/
 </script>
 

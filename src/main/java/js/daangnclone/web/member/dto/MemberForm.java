@@ -17,9 +17,7 @@ public class MemberForm {
     @NotBlank(message = "비밀번호는 필수 입니다.")
     private String password;
     private String email;
-    @NotNull(message = "시/도 입력은 필수 입니다.")
     private Long state;
-    @NotNull(message = "시/군/구 입력은 필수 입니다.")
     private Long city;
 
     public Member toEntity() {

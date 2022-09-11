@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static js.daangnclone.Exception.ErrorCode.*;
 
 @Service
@@ -41,6 +43,28 @@ public class MemberServiceImpl implements MemberService{
 
         if (certifyYn.equals("N")) {
             throw new CustomException(NOT_CERTIFIED_LOCATION);
+        }
+    }
+
+    @Override
+    public String validateDuplicateUsername(String username) {
+        Optional<Member> findMember = memberRepository.findByUsername(username);
+
+        if (findMember.isPresent()) {
+            return "N";
+        } else {
+            return "Y";
+        }
+    }
+
+    @Override
+    public String validateDuplicateNickname(String nickname) {
+        Optional<Member> findMember = memberRepository.findByNickname(nickname);
+
+        if (findMember.isPresent()) {
+            return "N";
+        } else {
+            return "Y";
         }
     }
 }

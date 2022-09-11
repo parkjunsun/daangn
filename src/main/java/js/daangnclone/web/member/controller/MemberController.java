@@ -46,9 +46,15 @@ public class MemberController {
     }
 
     @PostMapping("/signup")
-    public String createMember(@Valid @ModelAttribute("memberForm") MemberForm memberForm, BindingResult result) {
+    public String createMember(@Valid @ModelAttribute("memberForm") MemberForm memberForm, BindingResult result, Model model) {
+
+        if (memberForm.getState() == null || memberForm.getCity() == null) {
+            result.reject("address", null, null);
+        }
 
         if (result.hasErrors()) {
+            List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
+            model.addAttribute("pprAreaList", pprAreaList);
             return "member/CreateMemberForm";
         }
 
@@ -63,6 +69,22 @@ public class MemberController {
     public List<Area> getPsAreaList(@RequestParam Long pprAreaCd) {
         List<Area> areaList = areaRepository.findAreaByPprAreaCd(pprAreaCd);
         return areaList;
+    }
+
+    //ajax 데이터
+    @PostMapping("/signup/validate-username.do")
+    @ResponseBody
+    public String validateUsernameYn(@RequestParam String username) {
+        String canUseYn = memberService.validateDuplicateUsername(username);
+        return canUseYn;
+    }
+
+    //ajax 데이터
+    @PostMapping("/signup/validate-nickname.do")
+    @ResponseBody
+    public String validateNicknameYn(@RequestParam String nickname) {
+        String canUseYn = memberService.validateDuplicateNickname(nickname);
+        return canUseYn;
     }
 
     @GetMapping("/certify")
