@@ -12,6 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AttentionServiceImpl implements AttentionService{
 
     private final AttentionRepository attentionRepository;

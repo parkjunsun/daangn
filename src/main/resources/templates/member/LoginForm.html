@@ -10,15 +10,15 @@
                 <form action="/login_proc" method="POST">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                        <button type="button" class="btn btn-primary btn-floating mx-1 btn-social" data-social="facebook">
                             <img src="https://img.icons8.com/material-outlined/24/000000/facebook-circled--v1.png"/>
                         </button>
 
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                        <button type="button" class="btn btn-primary btn-floating mx-1 btn-social" data-social="google">
                             <img src="https://img.icons8.com/material-rounded/24/000000/google-logo.png"/>
                         </button>
 
-                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                        <button type="button" class="btn btn-primary btn-floating mx-1 btn-social" data-social="kakao">
                             <img src="https://img.icons8.com/external-tal-revivo-color-tal-revivo/24/000000/external-free-instant-messaging-app-for-cross-platform-devices-logo-color-tal-revivo.png"/>
                         </button>
                     </div>
@@ -58,6 +58,15 @@
             </div>
         </div>
     </div>
+    <script th:inline="javascript">
+        let socials = document.getElementsByClassName("btn-social");
+        for (let social of socials) {
+            social.addEventListener('click', function () {
+               let socialType = this.getAttribute('data-social') ;
+               location.href="/oauth2/authorization/" + socialType;
+            });
+        }
+    </script>
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
 </html>

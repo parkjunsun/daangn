@@ -18,6 +18,7 @@ public class Member extends TimeEntity {
     @Column(name = "member_id")
     private Long id;
 
+    private String provider;
     private String username;
     private String nickname;
     private String password;
@@ -36,8 +37,9 @@ public class Member extends TimeEntity {
     private List<Attention> attentionList = new ArrayList<>();
 
     @Builder
-    public Member(String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)
+    public Member(String provider, String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)
     {
+        this.provider = provider;
         this.username = username;
         this.password = password;
         this.nickname = nickname;

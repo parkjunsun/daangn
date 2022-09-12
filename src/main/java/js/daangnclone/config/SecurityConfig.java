@@ -2,6 +2,7 @@ package js.daangnclone.config;
 
 import js.daangnclone.handler.CustomAuthenticationFailureHandler;
 import js.daangnclone.handler.CustomAuthenticationSuccessHandler;
+import js.daangnclone.security.PrincipalOauth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -23,17 +24,14 @@ import org.springframework.security.web.authentication.LoginUrlAuthenticationEnt
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
+    private final PrincipalOauth2UserService principalOauth2UserService;
     private final CustomAuthenticationSuccessHandler successHandler;
     private final CustomAuthenticationFailureHandler failureHandler;
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();   // 평문인 비밀번호 암호화
-    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsService);
     }
 
     @Override
@@ -70,12 +68,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/")
                 .successHandler(successHandler)
                 .failureHandler(failureHandler)
-                .permitAll();
-//        .and()
-//                .oauth2Login() //구글 로그인이 완료된 뒤의 후처리가 필요 1.코드받기(인증됬다는것) 2.엑세스토큰(권한) 3.사용자프로필 정보를 가져옴 4-1.그 정보를 토대로 회원가입 자동진행 4-2. 집주소, vip(일반)등급같은 추가할 정보가 있을 경우 또 입력이 가능해야함
-//                //중요! 구글 로그인이 완료가 되면 엑세스 토큰 + 사용자프로필 정보를 받음
-//                .loginPage("/login")
-//                .userInfoEndpoint()
-//                .userService(principalOauth2UserService);
+                .permitAll()
+        .and()
+                .oauth2Login() //구글 로그인이 완료된 뒤의 후처리가 필요 1.코드받기(인증됬다는것) 2.엑세스토큰(권한) 3.사용자프로필 정보를 가져옴 4-1.그 정보를 토대로 회원가입 자동진행 4-2. 집주소, vip(일반)등급같은 추가할 정보가 있을 경우 또 입력이 가능해야함
+                //중요! 구글 로그인이 완료가 되면 엑세스 토큰 + 사용자프로필 정보를 받음
+                .loginPage("/login")
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
     }
 }

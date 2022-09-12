@@ -23,10 +23,13 @@
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/board/new'|">내 물건 팔기</button>
-                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                <li th:with="auth=${#authentication.getPrincipal().getMember()}" sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="https://img.icons8.com/fluency/32/000000/person-at-home.png"/>
-                        [[${#authentication.name}]]
+                        <img th:if="${auth.getProvider() eq 'daanngn'}" src="https://img.icons8.com/color/30/000000/carrot.png"/>
+                        <img th:if="${auth.getProvider() eq 'facebook'}" src="/images/facebook.PNG"/>
+                        <img th:if="${auth.getProvider() eq 'google'}" src="/images/google.PNG"/>
+                        <img th:if="${auth.getProvider() eq 'kakao'}" src="/images/kakao.PNG" style="width: 30px; height: 30px">
+                        <span th:text="${auth.getNickname()}"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">나의 당근</a></li>

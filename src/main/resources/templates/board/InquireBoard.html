@@ -19,9 +19,9 @@
                 <br><br>
                 <p class="card-text" th:utext="${board.content}"></p>
                 <br><br>
-                <small th:class="text-muted" >채팅 1</small> ·
-                <small th:class="text-muted" th:text="|관심 ${cntAttention}|"></small> ·
-                <small th:class="text-muted" th:text="|조회 ${board.view}|"></small>
+                <small th:class="text-muted">채팅 </small><small id="chatCnt" th:class="text-muted">1</small> ·
+                <small th:class="text-muted">관심 </small><small id="attentionCnt" th:class="text-muted" th:text="${attentionCnt}"></small> ·
+                <small th:class="text-muted">조회 </small><small id="boardView" th:class="text-muted" th:text="${board.view}"></small>
             </div>
             <div class="card-footer bg-transparent">
                 <button id="attentionBtn" class="card-link" style="margin-right: 5px; border:0; outline: 0; background-color: transparent;">
@@ -47,14 +47,17 @@
             // data: {"boardId" : boardId},
             sync: false,
             success: function (attentionInpYn) {
-                if (attentionInpYn === "Y") {
+                let curAttentionCnt = parseInt($("#attentionCnt").text());
+                if (attentionInpYn === "N") {
                     let imgObj = $("<img id=\"heart-white\" src=\"https://img.icons8.com/ios/50/000000/novel--v1.png\" alt='heart-white'>");
                     $("#attentionBtn").empty();
                     $("#attentionBtn").append(imgObj);
+                    $("#attentionCnt").text(curAttentionCnt - 1);
                 } else {
                     let imgObj = $("<img id=\"heart-red\" src=\"https://img.icons8.com/color/50/000000/novel--v1.png\" alt='heart-red'>");
                     $("#attentionBtn").empty();
                     $("#attentionBtn").append(imgObj);
+                    $("#attentionCnt").text(curAttentionCnt + 1);
                 }
             }
         })

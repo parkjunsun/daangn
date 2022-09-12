@@ -7,18 +7,25 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 @Getter @Setter
-public class PrincipalUserDetails implements UserDetails {
+public class PrincipalUserDetails implements UserDetails, OAuth2User {
 
     private Member member;
+    private Map<String, Object> attributes;
 
-    @Autowired
     public PrincipalUserDetails(Member member) {
         this.member = member;
+    }
+
+    public PrincipalUserDetails(Member member, Map<String, Object> attributes) {
+        this.member = member;
+        this.attributes = attributes;
     }
 
     @Override
@@ -56,5 +63,16 @@ public class PrincipalUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+
+    @Override
+    public Map<String, Object> getAttribute(String name) {
+        return attributes;
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 }

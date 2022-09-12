@@ -1,6 +1,7 @@
 package js.daangnclone.web.board.controller;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.category.Category;
@@ -12,6 +13,7 @@ import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardResponse;
+import js.daangnclone.web.member.dto.MemberAddressForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,6 +24,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
+
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -31,9 +35,24 @@ public class BoardController {
     private final CategoryRepository categoryRepository;
     private final BoardService boardService;
     private final AttentionService attentionService;
+    private final AreaRepository areaRepository;
 
     @GetMapping("/")
     public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+
+            if (findMember.getState() == null || findMember.getCity() == null) {
+                List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
+
+                model.addAttribute("memberAddressForm", new MemberAddressForm());
+                model.addAttribute("pprAreaList", pprAreaList);
+                return "member/AddAddressMemberForm";
+            }
+        }
+
         List<BoardResponse> boardResponsesList = boardService.inquireAllBoardList();
         model.addAttribute("boardList", boardResponsesList);
         return "board/InquireBoardList";
@@ -70,9 +89,12 @@ public class BoardController {
         String attentionInpYn = attentionService.InpAttentionYn(findMember, findBoard);
         long cnt = attentionService.countAttentionInBoard(findBoard);
 
+        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        log.info("cnt={}", cnt);
+
         model.addAttribute("board", boardResponse);
         model.addAttribute("attentionInpYn", attentionInpYn);
-        model.addAttribute("cntAttention", cnt);
+        model.addAttribute("attentionCnt", cnt);
         return "board/InquireBoard";
     }
 

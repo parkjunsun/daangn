@@ -5,6 +5,7 @@ import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
+import js.daangnclone.web.member.dto.MemberAddressForm;
 import js.daangnclone.web.member.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -60,6 +61,26 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @PostMapping("/signup/address")
+    public String addAddress(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                             @ModelAttribute("memberAddressForm")MemberAddressForm addressForm, BindingResult result, Model model) {
+
+        if (addressForm.getState() == null || addressForm.getCity() == null) {
+            result.reject("address", null, null);
+        }
+
+        if (result.hasErrors()) {
+            List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
+            model.addAttribute("pprAreaList", pprAreaList);
+            return "member/AddAddressMemberForm";
+        }
+
+        Long memberId = principalUserDetails.getMember().getId();
+        memberService.addAddress(memberId, addressForm);
+
+        return "redirect:/";
+    }
+
     //ajax 데이터
     @PostMapping("/signup/getPsAreaCd.do")
     @ResponseBody
@@ -97,7 +118,11 @@ public class MemberController {
     @PostMapping("/certify")
     public String setCertifyMember(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, RedirectAttributes redirectAttributes) {
         memberService.updateMemberCertifyYn(principalUserDetails.getMember().getId());
-        Area findArea = areaRepository.findByAreaCd(principalUserDetails.getMember().getCity()).orElse(null);
+
+        Long memberId = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(memberId);
+
+        Area findArea = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
         redirectAttributes.addFlashAttribute("successMsg", findArea.getAreaName() + " 동네 인증 성공!!");
         return "redirect:/";
     }
