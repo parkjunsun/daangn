@@ -3,9 +3,9 @@ package js.daangnclone.security;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
-import js.daangnclone.security.provider.FacebookUserInfo;
 import js.daangnclone.security.provider.GoogleUserInfo;
 import js.daangnclone.security.provider.KakaoUserInfo;
+import js.daangnclone.security.provider.NaverUserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,11 +31,13 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(userRequest);
 
+        log.info("oAuth2User = {}", oAuth2User);
+
         Oauth2UserInfo oauth2UserInfo = null;
-        if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
-            oauth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
+        if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
+            oauth2UserInfo = new NaverUserInfo((Map) oAuth2User.getAttributes().get("response"));
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("google")) {
-            oauth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
+            oauth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("kakao")) {
             oauth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
         }
