@@ -19,7 +19,7 @@ public enum ErrorCode {
 
     //401 UNAUTHORIZED : 인증되지 않은 사용자
     NOT_CERTIFIED_EMAIL(HttpStatus.UNAUTHORIZED, "E201","이메일 인증이 되지 않았습니다. 이메일 활성화 후 다시 로그인해주세요."),
-    NOT_CERTIFIED_LOCATION(HttpStatus.UNAUTHORIZED, "E202","동네 인증이 되지 않았습니다. 이 기능을 사용하려면 동네인증이 필요해요."),
+    NOT_CERTIFIED_LOCATION(HttpStatus.UNAUTHORIZED, "E202","동네 인증이 되지 않았습니다.<br>이 기능을 사용하려면 동네인증이 필요해요."),
 
     //404 NOT_FOUND : Resource 를 찾을 수 없음
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "E3O1","해당 유저 정보를 찾을 수 없습니다."),

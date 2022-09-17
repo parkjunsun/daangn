@@ -8,7 +8,15 @@
     <div class="input-form-background row">
         <div class="input-form mx-auto">
             <h4 class="mb-3">주소 정보 추가</h4>
-            <form class="validation-form" novalidate th:action="@{/signup/address}" th:method="post" th:object="${memberAddressForm}">
+            <form class="validation-form" novalidate th:action="@{/signup/details}" th:method="post" th:object="${memberDetailsForm}">
+
+                <div class="mb-5">
+                    <label th:for="nickname">별명</label><br>
+                    <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'" placeholder="" value="" required />
+                    <button id="validateNicknameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
+                    <p id="validateNicknameMsg" style="display: none;"></p>
+                    <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" style="color:#bd2130;">Incorrect Data</p>
+                </div>
 
                 <div class="mb-5">
 
@@ -42,6 +50,8 @@
 <script async th:inline="javascript">
     /*<![CDATA[*/
 
+    let validateNicknameInpYn = "N";
+
     $(function () {
         // 시/도 , 시/군/구는 한 세트 이기 때문에 한 곳만 값을 저장되는 것을 방지
         $("#state").val("");
@@ -67,6 +77,56 @@
             }
         })
     });
+
+
+    $("#validateNicknameBtn").on('click', function () {
+
+        if ($("#nickname").val() === null || $("#nickname").val() === "") {
+            alert("별명을 입력해주세요.");
+            $("#validateNicknameMsg").css("display", "none");
+            return false;
+        }
+
+        $.ajax({
+            url: "/signup/validate-nickname.do",
+            type: "post",
+            data: {"nickname" : $("#nickname").val()},
+            sync: false,
+            success: function (canUseYn) {
+                if (canUseYn === "N") {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#bd2130");
+                    $("#validateNicknameMsg").text("이미 존재하는 별명 입니다.");
+
+                    validateNicknameInpYn = "N";
+
+                } else {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#00bfff");
+                    $("#validateNicknameMsg").text("사용 가능한 별명 입니다.");
+
+                    validateNicknameInpYn = "Y";
+                }
+            }
+        })
+    });
+
+
+    $("#submitBtn").on('click', function () {
+
+        if (validateNicknameInpYn === "N") {
+            $("#validateNicknameMsg").css("display", "block");
+            $("#validateNicknameMsg").css("color", "#bd2130");
+            $("#validateNicknameMsg").text("별명 중복 확인이 완료되지 않았습니다.");
+            return false;
+        }
+
+        if ($("#aggrement").is(':checked') === false) {
+            alert("개인정보 수집 및 이용에 대한 안내에 동의해 주세요");
+            return false;
+        }
+    });
+
     /*]]>*/
 </script>
 

@@ -11,12 +11,19 @@
     /* ]]> */
 
     if (errorMessage != null) {
-        //swal("Error", errorMessage, "error");
-        Swal.fire("Error", errorMessage, "error");
+        Swal.fire({
+           title: 'Error',
+           html: errorMessage,
+           icon: "error"
+        });
     } else if (successMessage != null) {
-        //swal("Success", successMessage, "success");
-        Swal.fire("Success", successMessage, "success");
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
     }
+
 </script>
 
 <div class="container">

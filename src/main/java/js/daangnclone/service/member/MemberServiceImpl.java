@@ -4,7 +4,7 @@ import js.daangnclone.Exception.CustomException;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
-import js.daangnclone.web.member.dto.MemberAddressForm;
+import js.daangnclone.web.member.dto.MemberDetailsForm;
 import js.daangnclone.web.member.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -87,9 +87,11 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     @Transactional
-    public void addAddress(Long id, MemberAddressForm addressForm) {
+    public void addDetails(Long id, MemberDetailsForm detailsForm) {
         Member findMember = memberRepository.findById(id).orElse(null);
-        findMember.setState(addressForm.getState());
-        findMember.setCity(addressForm.getCity());
+
+        findMember.setNickname(detailsForm.getNickname());
+        findMember.setState(detailsForm.getState());
+        findMember.setCity(detailsForm.getCity());
     }
 }

@@ -5,7 +5,7 @@ import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
-import js.daangnclone.web.member.dto.MemberAddressForm;
+import js.daangnclone.web.member.dto.MemberDetailsForm;
 import js.daangnclone.web.member.dto.MemberForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -61,11 +61,11 @@ public class MemberController {
         return "redirect:/";
     }
 
-    @PostMapping("/signup/address")
+    @PostMapping("/signup/details")
     public String addAddress(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
-                             @ModelAttribute("memberAddressForm")MemberAddressForm addressForm, BindingResult result, Model model) {
+                             @ModelAttribute("memberDetailsForm") MemberDetailsForm detailsForm, BindingResult result, Model model) {
 
-        if (addressForm.getState() == null || addressForm.getCity() == null) {
+        if (detailsForm.getState() == null || detailsForm.getCity() == null) {
             result.reject("address", null, null);
         }
 
@@ -76,7 +76,7 @@ public class MemberController {
         }
 
         Long memberId = principalUserDetails.getMember().getId();
-        memberService.addAddress(memberId, addressForm);
+        memberService.addDetails(memberId, detailsForm);
 
         return "redirect:/";
     }
@@ -112,6 +112,8 @@ public class MemberController {
 
         Area area = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
         model.addAttribute("city", area.getAreaName());
+        model.addAttribute("provider", findMember.getProvider());
+        model.addAttribute("nickname", findMember.getNickname());
         return "member/CertifyMemberAddress";
     }
 

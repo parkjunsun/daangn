@@ -133,7 +133,7 @@
     $("#validateNicknameBtn").on('click', function () {
 
         if ($("#nickname").val() === null || $("#nickname").val() === "") {
-            alert("아이디를 입력해주세요.");
+            alert("별명을 입력해주세요.");
             $("#validateNicknameMsg").css("display", "none");
             return false;
         }
@@ -164,6 +164,7 @@
 
 
     $("#submitBtn").on('click', function () {
+
         if (validateUsernameInpYn === "N") {
             $("#validateUsernameMsg").css("display", "block");
             $("#validateUsernameMsg").css("color", "#bd2130");
@@ -175,6 +176,11 @@
             $("#validateNicknameMsg").css("display", "block");
             $("#validateNicknameMsg").css("color", "#bd2130");
             $("#validateNicknameMsg").text("별명 중복 확인이 완료되지 않았습니다.");
+            return false;
+        }
+
+        if ($("#aggrement").is(':checked') === false) {
+            alert("개인정보 수집 및 이용에 대한 안내에 동의해 주세요");
             return false;
         }
     });

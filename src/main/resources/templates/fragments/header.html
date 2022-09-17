@@ -23,13 +23,13 @@
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
                 <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/board/new'|">내 물건 팔기</button>
-                <li th:with="auth=${#authentication.getPrincipal().getMember()}" sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:if="${auth.getProvider() eq 'daanngn'}" src="https://img.icons8.com/color/35/000000/carrot.png"/>
-                        <img th:if="${auth.getProvider() eq 'naver'}" src="/images/naver.PNG" style="width: 35px; height: 35px"/>
-                        <img th:if="${auth.getProvider() eq 'google'}" src="/images/google.PNG" style="width: 35px; height: 35px"/>
-                        <img th:if="${auth.getProvider() eq 'kakao'}" src="/images/kakao.PNG" style="width: 35px; height: 35px"/>
-                        <span th:text="${auth.getNickname()}"></span>
+                        <img th:if="${provider eq 'daanngn'}" src="https://img.icons8.com/color/35/000000/carrot.png" alt="daanngn">
+                        <img th:if="${provider eq 'naver'}" src="/images/naver.PNG" style="width: 35px; height: 35px" alt="naver"/>
+                        <img th:if="${provider eq 'google'}" src="/images/google.PNG" style="width: 35px; height: 35px" alt="google"/>
+                        <img th:if="${provider eq 'kakao'}" src="/images/kakao.png" style="width: 35px; height: 35px" alt="kakao"/>
+                        <span th:text="${nickname}"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="#">나의 당근</a></li>

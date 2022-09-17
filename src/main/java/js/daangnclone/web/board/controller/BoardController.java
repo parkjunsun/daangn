@@ -13,7 +13,7 @@ import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardResponse;
-import js.daangnclone.web.member.dto.MemberAddressForm;
+import js.daangnclone.web.member.dto.MemberDetailsForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -47,10 +47,13 @@ public class BoardController {
             if (findMember.getState() == null || findMember.getCity() == null) {
                 List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
 
-                model.addAttribute("memberAddressForm", new MemberAddressForm());
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
                 model.addAttribute("pprAreaList", pprAreaList);
-                return "member/AddAddressMemberForm";
+                return "member/AddDetailsMemberForm";
             }
+
+            model.addAttribute("provider", findMember.getProvider());
+            model.addAttribute("nickname", findMember.getNickname());
         }
 
         List<BoardResponse> boardResponsesList = boardService.inquireAllBoardList();
@@ -60,11 +63,15 @@ public class BoardController {
 
     @GetMapping("/board/new")
     public String createBoardForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-        memberService.validateCertifyLocation(principalUserDetails.getMember().getId());
+        Long memberId = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(memberId);
+        memberService.validateCertifyLocation(memberId);
 
         List<Category> categoryList = categoryRepository.findAll();
         model.addAttribute("boardForm", new BoardForm());
         model.addAttribute("categoryList", categoryList);
+        model.addAttribute("provider", findMember.getProvider());
+        model.addAttribute("nickname", findMember.getNickname());
         return "board/BoardForm";
     }
 
@@ -89,12 +96,11 @@ public class BoardController {
         String attentionInpYn = attentionService.InpAttentionYn(findMember, findBoard);
         long cnt = attentionService.countAttentionInBoard(findBoard);
 
-        log.info("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        log.info("cnt={}", cnt);
-
         model.addAttribute("board", boardResponse);
         model.addAttribute("attentionInpYn", attentionInpYn);
         model.addAttribute("attentionCnt", cnt);
+        model.addAttribute("provider", findMember.getProvider());
+        model.addAttribute("nickname", findMember.getNickname());
         return "board/InquireBoard";
     }
 
