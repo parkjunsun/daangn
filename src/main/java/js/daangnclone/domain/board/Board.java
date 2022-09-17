@@ -2,6 +2,7 @@ package js.daangnclone.domain.board;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
+import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.Type;
@@ -38,6 +39,9 @@ public class Board extends TimeEntity {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Attention> attentionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 
     public void setMember(Member member) {
         this.member = member;

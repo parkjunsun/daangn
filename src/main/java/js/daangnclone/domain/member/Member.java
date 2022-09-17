@@ -3,6 +3,7 @@ package js.daangnclone.domain.member;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.comment.Comment;
 import lombok.*;
 
 import javax.persistence.*;
@@ -35,6 +36,9 @@ public class Member extends TimeEntity {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Attention> attentionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Comment> commentList = new ArrayList<>();
 
     @Builder
     public Member(String provider, String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)
