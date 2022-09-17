@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Getter @Setter
 public class Attention extends TimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attention_id")
     private Long id;
 

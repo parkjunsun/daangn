@@ -4,4 +4,6 @@ import lombok.Data;
 
 @Data
 public class CommentForm {
+
+    String content;
 }

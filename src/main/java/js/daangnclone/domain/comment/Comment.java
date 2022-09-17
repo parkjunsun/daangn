@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Comment extends TimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comment_id")
     private Long id;
 
@@ -29,12 +29,12 @@ public class Comment extends TimeEntity {
     @JoinColumn(name = "board_id")
     private Board board;
 
-    void setMember(Member member) {
+    public void setMember(Member member) {
         this.member = member;
         member.getCommentList().add(this);
     }
 
-    void setBoard(Board board) {
+    public void setBoard(Board board) {
         this.board = board;
         board.getCommentList().add(this);
     }

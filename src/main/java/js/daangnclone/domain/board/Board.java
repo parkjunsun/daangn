@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Board extends TimeEntity {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "board_id")
     private Long id;
 

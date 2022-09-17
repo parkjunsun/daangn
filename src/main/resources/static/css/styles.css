@@ -39,3 +39,16 @@ body {
 .fieldError {
     border-color: #bd2130 !important;
 }
+
+.myList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.myListContent {
+    padding: 5px 0 5px 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px solid #efefef;
+    font-size: 12px;
+}
