@@ -1,7 +1,9 @@
 package js.daangnclone.web.comment.controller;
 
+import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
@@ -35,16 +37,20 @@ public class CommentController {
 
         Board findBoard = boardService.findBoard(boardId);
         Member findMember = memberService.findMember(principalUserDetails.getMember().getId());
-        commentService.writeComment(commentForm, findBoard, findMember);
+        Comment comment = commentService.writeComment(commentForm, findBoard, findMember);
 
-        return createCommentWriteInfo(principalUserDetails, findMember);
+        return createCommentWriteInfo(findMember, comment);
     }
 
-    private CommentWriteInfo createCommentWriteInfo(PrincipalUserDetails principalUserDetails, Member findMember) {
+    private CommentWriteInfo createCommentWriteInfo(Member findMember, Comment comment) {
         CommentWriteInfo commentWriteInfo = new CommentWriteInfo();
-        commentWriteInfo.setMemberId(principalUserDetails.getMember().getId());
+        commentWriteInfo.setCommentId(comment.getId());
+        commentWriteInfo.setMemberId(findMember.getId());
         commentWriteInfo.setNickname(findMember.getNickname());
-        commentWriteInfo.setCity(areaRepository.findByAreaCd(findMember.getCity()).get().getAreaName());
+        commentWriteInfo.setCity(findMember.getArea().getAreaName());
+        commentWriteInfo.setProvider(findMember.getProvider());
+        commentWriteInfo.setDiffCreatedAt(DateUtil.diffDate(comment.getCreatedAt()));
+        commentWriteInfo.setContent(comment.getContent());
 
         return commentWriteInfo;
     }

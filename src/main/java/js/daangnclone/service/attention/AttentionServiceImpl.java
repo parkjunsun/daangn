@@ -42,7 +42,7 @@ public class AttentionServiceImpl implements AttentionService{
     }
 
     @Override
-    public String InpAttentionYn(Member member, Board board) {
+    public String getInpAttentionYn(Member member, Board board) {
         Optional<Attention> findAttention = attentionRepository.findByMemberAndBoard(member, board);
         String attentionInpYn = null;
 

@@ -2,12 +2,14 @@ package js.daangnclone.domain.board;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
+import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +24,6 @@ public class Board extends TimeEntity {
     private Long id;
 
     private String title;
-    private Long category;
     private int price;
     private String image;
     @Lob
@@ -32,6 +33,10 @@ public class Board extends TimeEntity {
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id")
@@ -53,7 +58,7 @@ public class Board extends TimeEntity {
     }
 
     @Builder
-    public Board (String title, Long category, int price, String image, String content, String detail, int view, Member member) {
+    public Board (String title, Category category, int price, String image, String content, String detail, int view, Member member) {
         this.title = title;
         this.category = category;
         this.price = price;

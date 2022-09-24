@@ -6,7 +6,6 @@ import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
-import js.daangnclone.web.board.dto.BoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,6 +31,6 @@ public class AttentionController {
 
         attentionService.processAttention(findMember, findBoard);
 
-        return attentionService.InpAttentionYn(findMember, findBoard);
+        return attentionService.getInpAttentionYn(findMember, findBoard);
     }
 }

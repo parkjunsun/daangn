@@ -110,8 +110,7 @@ public class MemberController {
         Long id = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(id);
 
-        Area area = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
-        model.addAttribute("city", area.getAreaName());
+        model.addAttribute("city", findMember.getArea().getAreaName());
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
         return "member/CertifyMemberAddress";
@@ -124,8 +123,8 @@ public class MemberController {
         Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
 
-        Area findArea = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
-        redirectAttributes.addFlashAttribute("successMsg", findArea.getAreaName() + " 동네 인증 성공!!");
+//        Area findArea = areaRepository.findByAreaCd(findMember.getCity()).orElse(null);
+        redirectAttributes.addFlashAttribute("successMsg", findMember.getArea().getAreaName() + " 동네 인증 성공!!");
         return "redirect:/";
     }
 

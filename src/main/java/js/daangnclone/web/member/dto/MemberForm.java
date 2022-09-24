@@ -20,17 +20,4 @@ public class MemberForm {
     private Long state;
     private Long city;
 
-    public Member toEntity() {
-        return Member.builder()
-                .username(username)
-                .password(password)
-                .nickname(nickname)
-                .email(email)
-                .state(state)
-                .city(city)
-                .memberRole(MemberRole.ROLE_ADMIN)
-                .certifyYn("N")
-                .build();
-    }
-
 }

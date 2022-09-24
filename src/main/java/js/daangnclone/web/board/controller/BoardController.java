@@ -12,7 +12,9 @@ import js.daangnclone.service.attention.AttentionService;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
-import js.daangnclone.web.board.dto.BoardResponse;
+import js.daangnclone.web.board.dto.BoardMultiResponse;
+import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.comment.dto.CommentResponse;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,7 +46,7 @@ public class BoardController {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
 
-            if (findMember.getState() == null || findMember.getCity() == null) {
+            if (findMember.getArea() == null) {
                 List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
 
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
@@ -56,7 +58,7 @@ public class BoardController {
             model.addAttribute("nickname", findMember.getNickname());
         }
 
-        List<BoardResponse> boardResponsesList = boardService.inquireAllBoardList();
+        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
         model.addAttribute("boardList", boardResponsesList);
         return "board/InquireBoardList";
     }
@@ -87,13 +89,13 @@ public class BoardController {
     @GetMapping("/board/{id}")
     public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long boardId, Model model) {
         boardService.updateView(boardId);
-        BoardResponse boardResponse = boardService.inquireBoard(boardId);
+        BoardSingleResponse boardResponse = boardService.inquireBoard(boardId);
 
         Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
         Board findBoard = boardService.findBoard(boardId);
 
-        String attentionInpYn = attentionService.InpAttentionYn(findMember, findBoard);
+        String attentionInpYn = attentionService.getInpAttentionYn(findMember, findBoard);
         long cnt = attentionService.countAttentionInBoard(findBoard);
 
         model.addAttribute("board", boardResponse);

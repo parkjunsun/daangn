@@ -7,7 +7,7 @@ import js.daangnclone.domain.member.Member;
 public interface AttentionService {
 
     void processAttention(Member member, Board board);
-    String InpAttentionYn(Member member, Board board);
+    String getInpAttentionYn(Member member, Board board);
     long countAttentionInBoard(Board board);
 
 }

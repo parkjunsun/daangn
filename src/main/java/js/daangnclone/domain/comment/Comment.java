@@ -2,13 +2,15 @@ package js.daangnclone.domain.comment;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.like.Likes;
 import js.daangnclone.domain.member.Member;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter @Setter
@@ -28,6 +30,9 @@ public class Comment extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    private List<Likes> likeList = new ArrayList<>();
 
     public void setMember(Member member) {
         this.member = member;

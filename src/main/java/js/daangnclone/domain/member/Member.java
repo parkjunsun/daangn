@@ -1,9 +1,11 @@
 package js.daangnclone.domain.member;
 
 import js.daangnclone.domain.TimeEntity;
+import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.comment.Comment;
+import js.daangnclone.domain.like.Likes;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,12 +26,14 @@ public class Member extends TimeEntity {
     private String nickname;
     private String password;
     private String email;
-    private Long state;
-    private Long city;
     private String certifyYn;
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="area_id")
+    private Area area;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Board> boardList = new ArrayList<>();
@@ -40,16 +44,18 @@ public class Member extends TimeEntity {
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
+    private List<Likes> likeList = new ArrayList<>();
+
     @Builder
-    public Member(String provider, String username, String password, String nickname, String email, Long state, Long city, MemberRole memberRole, String certifyYn)
+    public Member(String provider, String username, String password, String nickname, String email, Area area, MemberRole memberRole, String certifyYn)
     {
         this.provider = provider;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.email = email;
-        this.state = state;
-        this.city = city;
+        this.area = area;
         this.memberRole = memberRole;
         this.certifyYn = certifyYn;
     }

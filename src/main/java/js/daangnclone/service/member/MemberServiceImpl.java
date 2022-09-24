@@ -1,6 +1,7 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
@@ -21,6 +22,7 @@ import static js.daangnclone.Exception.ErrorCode.*;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final AreaRepository areaRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -32,8 +34,7 @@ public class MemberServiceImpl implements MemberService{
                 .nickname(memberForm.getNickname())
                 .password(passwordEncoder.encode(memberForm.getPassword()))
                 .email(memberForm.getEmail())
-                .state(memberForm.getState())
-                .city(memberForm.getCity())
+                .area(areaRepository.findById(memberForm.getCity()).get())
                 .memberRole(MemberRole.ROLE_USER)
                 .certifyYn("N")
                 .build();
@@ -91,7 +92,6 @@ public class MemberServiceImpl implements MemberService{
         Member findMember = memberRepository.findById(id).orElse(null);
 
         findMember.setNickname(detailsForm.getNickname());
-        findMember.setState(detailsForm.getState());
-        findMember.setCity(detailsForm.getCity());
+        findMember.setArea(areaRepository.findById(detailsForm.getCity()).get());
     }
 }

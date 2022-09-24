@@ -9,8 +9,10 @@ import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.category.CategoryRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
-import js.daangnclone.web.board.dto.BoardResponse;
+import js.daangnclone.web.board.dto.BoardMultiResponse;
+import js.daangnclone.web.board.dto.BoardSingleResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
@@ -33,7 +36,7 @@ public class BoardServiceImpl implements BoardService{
 
         Board board = Board.builder()
                 .title(boardForm.getTitle())
-                .category(boardForm.getCategory())
+                .category(categoryRepository.findById(boardForm.getCategory()).get())
                 .content(boardForm.getContent().replace("\r\n", "<br>"))
                 .detail(boardForm.getDetail())
                 .price(boardForm.getPrice())
@@ -44,43 +47,42 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public List<BoardResponse> inquireAllBoardList() {
+    public List<BoardMultiResponse> inquireAllBoardList() {
         List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
 
         return findBoardList.stream()
-                .map(board -> BoardResponse.builder()
+                .map(board -> BoardMultiResponse.builder()
                         .id(board.getId())
                         .title(board.getTitle())
                         .image(board.getImage())
                         .price(board.getPrice())
                         .content(board.getContent())
                         .detail(board.getDetail())
-                        .category(categoryRepository.findById(board.getCategory()).get().getCategoryName())
+                        .category(board.getCategory().getCategoryName())
                         .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
                         .nickname(board.getMember().getNickname())
-                        .city(areaRepository.findByAreaCd(board.getMember().getCity()).get().getAreaName())
+                        .city(board.getMember().getArea().getAreaName())
                         .build())
                 .collect(Collectors.toList());
     }
 
     @Override
-    public BoardResponse inquireBoard(Long id) {
-        Board findBoard = boardRepository.findById(id).orElse(null);
-        Category category = categoryRepository.findById(findBoard.getCategory()).orElse(null);
-        Area city = areaRepository.findByAreaCd(findBoard.getMember().getCity()).orElse(null);
+    public BoardSingleResponse inquireBoard(Long id) {
+        Board findBoard = boardRepository.findBoard(id).orElse(null);
 
-        return BoardResponse.builder()
+        return BoardSingleResponse.builder()
                 .id(findBoard.getId())
                 .title(findBoard.getTitle())
                 .image(findBoard.getImage())
                 .price(findBoard.getPrice())
                 .content(findBoard.getContent())
                 .detail(findBoard.getDetail())
-                .category(category.getCategoryName())
+                .category(findBoard.getCategory().getCategoryName())
                 .diffCreatedAt(DateUtil.diffDate(findBoard.getCreatedAt()))
                 .nickname(findBoard.getMember().getNickname())
-                .city(city.getAreaName())
+                .city(findBoard.getMember().getArea().getAreaName())
                 .view(findBoard.getView())
+                .commentList(findBoard.getCommentList())
                 .build();
     }
 
