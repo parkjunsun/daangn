@@ -1,7 +1,11 @@
 package js.daangnclone.web.comment.dto;
 
+import js.daangnclone.domain.like.Likes;
+import js.daangnclone.web.like.dto.LikesResponse;
 import lombok.Builder;
 import lombok.Data;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class CommentResponse {
@@ -12,14 +16,16 @@ public class CommentResponse {
     private String nickname;
     private String city;
     private String provider;
+    private String likeInpYn;
 
     @Builder
-    public CommentResponse (Long id, String content, String diffCreatedAt, String nickname, String city, String provider) {
+    public CommentResponse (Long id, String content, String diffCreatedAt, String nickname, String city, String provider, String likeInpYn) {
         this.id = id;
         this.content = content;
         this.diffCreatedAt = diffCreatedAt;
         this.nickname = nickname;
         this.city = city;
         this.provider = provider;
+        this.likeInpYn = likeInpYn;
     }
 }

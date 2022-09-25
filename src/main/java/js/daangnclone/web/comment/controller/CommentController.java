@@ -28,7 +28,6 @@ public class CommentController {
     private final CommentService commentService;
     private final BoardService boardService;
     private final MemberService memberService;
-    private final AreaRepository areaRepository;
 
     @PostMapping("/board/{boardId}/comment/new.do")
     @ResponseBody
@@ -45,7 +44,7 @@ public class CommentController {
     private CommentWriteInfo createCommentWriteInfo(Member findMember, Comment comment) {
         CommentWriteInfo commentWriteInfo = new CommentWriteInfo();
         commentWriteInfo.setCommentId(comment.getId());
-        commentWriteInfo.setMemberId(findMember.getId());
+        commentWriteInfo.setMemberId(comment.getMember().getId());
         commentWriteInfo.setNickname(findMember.getNickname());
         commentWriteInfo.setCity(findMember.getArea().getAreaName());
         commentWriteInfo.setProvider(findMember.getProvider());

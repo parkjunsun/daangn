@@ -38,7 +38,7 @@
         </div>
         <div style="margin-top: 70px;">
             <ul class="myList" id="commentUl">
-                <li th:id="|li-${comment.id}|" class="myListContent" th:each="comment : ${board.commentList}">
+                <li th:id="|li-${comment.id}|" class="myListContent" th:each="comment : ${commentList}">
                     <br>
                     <div style="margin-bottom: 70px;">
                         <div style="float: left; display: inline-block">
@@ -55,8 +55,8 @@
                         </div>
                         <div style="float:right; display: inline-block;">
                             <button class="likeBtn" style="margin-right: 5px; border:0; outline: 0; background-color: transparent;" th:value="${comment.id}">
-                                <img src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png"/>
-                                <img src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png"/>
+                                <img th:if="${comment.likeInpYn eq 'N'}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png"/>
+                                <img th:if="${comment.likeInpYn eq 'Y'}" src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png"/>
                             </button>
                             <span style="font-size: 20px;">31</span>
                         </div>
@@ -76,6 +76,7 @@
 
 
     let boardId = /*[[${board.id}]]*/;
+    let loginMemberId = /*[[${memberId}]]*/;
 
     $("#attentionBtn").on('click', function () {
         $.ajax({
@@ -102,12 +103,22 @@
 
     $(".likeBtn").on('click', function () {
         let commentId = $(this).val();
+        let btnObj = $(this);
         $.ajax({
             url: "/comment/" + commentId + "/like/process.do",
             type: "post",
             sync: false,
             success: function (likeInpYn) {
-                alert(likeInpYn);
+                if (likeInpYn === "N") {
+                    let imgObj = $("<img src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png\"/>")
+                    btnObj.empty();
+                    btnObj.append(imgObj);
+                } else {
+                    let imgObj = $("<img src=\"https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png\"/>")
+                    btnObj.empty();
+                    btnObj.append(imgObj);
+
+                }
             }
         });
     });
@@ -123,24 +134,25 @@
             sync: false,
             success: function (writeInfo) {
 
-                let imgTag;
+                let imgProvider;
 
                 if (writeInfo.provider === "daanngn") {
-                    imgTag = "<img src=\"https://img.icons8.com/color/35/000000/carrot.png\" alt=\"daanngn\">";
+                    imgProvider = "<img src=\"https://img.icons8.com/color/35/000000/carrot.png\" alt=\"daanngn\">";
                 } else if (writeInfo.provider === "naver") {
-                    imgTag = "<img src=\"/images/naver.PNG\" style=\"width: 35px; height: 35px\" alt=\"naver\"/>";
+                    imgProvider = "<img src=\"/images/naver.PNG\" style=\"width: 35px; height: 35px\" alt=\"naver\"/>";
                 } else if (writeInfo.provider === "google") {
-                    imgTag = "<img src=\"/images/google.PNG\" style=\"width: 35px; height: 35px\" alt=\"google\"/>";
+                    imgProvider = "<img src=\"/images/google.PNG\" style=\"width: 35px; height: 35px\" alt=\"google\"/>";
                 } else if (writeInfo.provider === "kakao") {
-                    imgTag = "<img src=\"/images/kakao.png\" style=\"width: 35px; height: 35px\" alt=\"kakao\"/>";
+                    imgProvider = "<img src=\"/images/kakao.png\" style=\"width: 35px; height: 35px\" alt=\"kakao\"/>";
                 }
+
 
                 $("#commentUl").append(
                     "<li id=\"" + writeInfo.commentId + "\" class=\"myListContent\">" +
                         "<div style=\"margin-bottom: 70px;\">" +
                             "<div style=\"float: left; display: inline-block\">" +
                                 "<div style=\"float: left; margin-right: 10px;\">" +
-                                    imgTag +
+                                    imgProvider +
                                 "</div>" +
                                 "<div style=\"float: right;\">" +
                                     "<h5 style=\"font-weight: bold;\">" + writeInfo.nickname + "</h5>" +
@@ -148,8 +160,10 @@
                                 "</div>" +
                             "</div>" +
                             "<div style=\"float: right; display: inline-block;\">" +
-                                "<span>좋아요</span><br>" +
-                                "<span class=\"text-muted\">31</span>" +
+                                "<button class=\"likeBtn\" style=\"margin-right: 5px; border:0; outline: 0; background-color: transparent;\" value=\"" + writeInfo.commentId + "\">" +
+                                    "<img src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png\"/>" +
+                                "</button>" +
+                                "<span style=\"font-size: 20px;\">31</span>" +
                             "</div>" +
                         "</div>" +
                         "<div>" +

@@ -10,6 +10,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
 import js.daangnclone.service.board.BoardService;
+import js.daangnclone.service.comment.CommentService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
@@ -38,6 +39,7 @@ public class BoardController {
     private final BoardService boardService;
     private final AttentionService attentionService;
     private final AreaRepository areaRepository;
+    private final CommentService commentService;
 
     @GetMapping("/")
     public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
@@ -88,10 +90,12 @@ public class BoardController {
 
     @GetMapping("/board/{id}")
     public String inquireBoard(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable("id") Long boardId, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+
         boardService.updateView(boardId);
         BoardSingleResponse boardResponse = boardService.inquireBoard(boardId);
+        List<CommentResponse> commentResponseList = commentService.inquireCommentList(boardId, memberId);
 
-        Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
         Board findBoard = boardService.findBoard(boardId);
 
@@ -99,10 +103,12 @@ public class BoardController {
         long cnt = attentionService.countAttentionInBoard(findBoard);
 
         model.addAttribute("board", boardResponse);
+        model.addAttribute("commentList", commentResponseList);
         model.addAttribute("attentionInpYn", attentionInpYn);
         model.addAttribute("attentionCnt", cnt);
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("memberId", findMember.getId());
         return "board/InquireBoard";
     }
 

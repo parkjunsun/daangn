@@ -25,12 +25,12 @@ public class BoardSingleResponse {
     private String nickname;
     private String city;
 
-    private List<CommentResponse> commentList;
+//    private List<CommentResponse> commentList;
 
 
 
     @Builder
-    private BoardSingleResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view, List<Comment> commentList) {
+    private BoardSingleResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -42,16 +42,17 @@ public class BoardSingleResponse {
         this.city = city;
         this.diffCreatedAt = diffCreatedAt;
         this.view = view;
-        this.commentList = commentList.stream()
-                .map(comment -> CommentResponse.builder()
-                        .id(comment.getId())
-                        .content(comment.getContent())
-                        .diffCreatedAt(DateUtil.diffDate(comment.getCreatedAt()))
-                        .nickname(comment.getMember().getNickname())
-                        .city(comment.getMember().getArea().getAreaName())
-                        .provider(comment.getMember().getProvider())
-                        .build())
-                .collect(Collectors.toList());
+//        this.commentList = commentList.stream()
+//                .map(comment -> CommentResponse.builder()
+//                        .id(comment.getId())
+//                        .content(comment.getContent())
+//                        .diffCreatedAt(DateUtil.diffDate(comment.getCreatedAt()))
+//                        .nickname(comment.getMember().getNickname())
+//                        .city(comment.getMember().getArea().getAreaName())
+//                        .provider(comment.getMember().getProvider())
+//                        .likesList(comment.getLikeList())
+//                        .build())
+//                .collect(Collectors.toList());
     }
 
 }

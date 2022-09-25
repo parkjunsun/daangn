@@ -82,7 +82,6 @@ public class BoardServiceImpl implements BoardService{
                 .nickname(findBoard.getMember().getNickname())
                 .city(findBoard.getMember().getArea().getAreaName())
                 .view(findBoard.getView())
-                .commentList(findBoard.getCommentList())
                 .build();
     }
 
