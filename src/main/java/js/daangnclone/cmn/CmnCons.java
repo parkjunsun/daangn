@@ -6,8 +6,6 @@ public class CmnCons {
      * 지역코드
      */
 
-    public static final Long KOREA_CODE = 100000L;
-
     public static final Long SEOUL_CODE = 101000L;
     public static final Long GANGNAM_CODE = 101010L;
 

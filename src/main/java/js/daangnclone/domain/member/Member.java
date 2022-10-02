@@ -1,7 +1,7 @@
 package js.daangnclone.domain.member;
 
+import js.daangnclone.cmn.Area;
 import js.daangnclone.domain.TimeEntity;
-import js.daangnclone.domain.area.Area;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.comment.Comment;
@@ -29,11 +29,11 @@ public class Member extends TimeEntity {
     private String certifyYn;
 
     @Enumerated(EnumType.STRING)
+    private Area area;
+
+    @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="area_id")
-    private Area area;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
     private List<Board> boardList = new ArrayList<>();

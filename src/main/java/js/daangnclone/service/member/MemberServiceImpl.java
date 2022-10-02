@@ -1,7 +1,7 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.domain.area.AreaRepository;
+import js.daangnclone.cmn.Area;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
@@ -22,7 +22,6 @@ import static js.daangnclone.Exception.ErrorCode.*;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
-    private final AreaRepository areaRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -34,7 +33,8 @@ public class MemberServiceImpl implements MemberService{
                 .nickname(memberForm.getNickname())
                 .password(passwordEncoder.encode(memberForm.getPassword()))
                 .email(memberForm.getEmail())
-                .area(areaRepository.findById(memberForm.getCity()).get())
+//                .area(areaRepository.findById(memberForm.getCity()).get())
+                .area(Area.of(memberForm.getCity()))
                 .memberRole(MemberRole.ROLE_USER)
                 .certifyYn("N")
                 .build();
@@ -92,6 +92,7 @@ public class MemberServiceImpl implements MemberService{
         Member findMember = memberRepository.findById(id).orElse(null);
 
         findMember.setNickname(detailsForm.getNickname());
-        findMember.setArea(areaRepository.findById(detailsForm.getCity()).get());
+//        findMember.setArea(areaRepository.findById(detailsForm.getCity()).get());
+        findMember.setArea(Area.of(detailsForm.getCity()));
     }
 }

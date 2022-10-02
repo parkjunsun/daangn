@@ -1,7 +1,7 @@
 package js.daangnclone.web.member.controller;
 
-import js.daangnclone.domain.area.Area;
-import js.daangnclone.domain.area.AreaRepository;
+import js.daangnclone.cmn.Area;
+import js.daangnclone.cmn.AreaDto;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
@@ -22,8 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
-
-import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,16 +30,11 @@ import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
 public class MemberController {
 
     private final MemberService memberService;
-    private final AreaRepository areaRepository;
 
     @GetMapping("/signup")
     public String ShowMemberForm(Model model) {
 
-        List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
-
         model.addAttribute("memberForm", new MemberForm());
-        model.addAttribute("pprAreaList", pprAreaList);
-
         return "member/CreateMemberForm";
     }
 
@@ -52,8 +46,6 @@ public class MemberController {
         }
 
         if (result.hasErrors()) {
-            List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
-            model.addAttribute("pprAreaList", pprAreaList);
             return "member/CreateMemberForm";
         }
 
@@ -70,8 +62,6 @@ public class MemberController {
         }
 
         if (result.hasErrors()) {
-            List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
-            model.addAttribute("pprAreaList", pprAreaList);
             return "member/AddAddressMemberForm";
         }
 
@@ -84,9 +74,15 @@ public class MemberController {
     //ajax 데이터
     @PostMapping("/signup/getPsAreaCd.do")
     @ResponseBody
-    public List<Area> getPsAreaList(@RequestParam Long pprAreaCd) {
-        List<Area> areaList = areaRepository.findAreaByPprAreaCd(pprAreaCd);
-        return areaList;
+    public List<AreaDto> getPsAreaList(@RequestParam String pprAreaCd) {
+        List<Area> areaList = Area.of(Long.parseLong(pprAreaCd)).children();
+        return areaList.stream()
+                .map(area -> AreaDto.builder()
+                        .areaCd(area.getAreaCd())
+                        .areaName(area.getAreaName())
+                        .build())
+                .collect(Collectors.toList());
+
     }
 
     //ajax 데이터

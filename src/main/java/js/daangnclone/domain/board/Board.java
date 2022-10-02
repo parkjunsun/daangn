@@ -1,15 +1,14 @@
 package js.daangnclone.domain.board;
 
+import js.daangnclone.cmn.Category;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
-import js.daangnclone.domain.category.Category;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
-import javax.print.attribute.standard.MediaSize;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,8 +33,7 @@ public class Board extends TimeEntity {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category_id")
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)

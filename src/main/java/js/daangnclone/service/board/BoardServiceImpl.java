@@ -1,12 +1,9 @@
 package js.daangnclone.service.board;
 
+import js.daangnclone.cmn.Category;
 import js.daangnclone.cmn.DateUtil;
-import js.daangnclone.domain.area.Area;
-import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
-import js.daangnclone.domain.category.Category;
-import js.daangnclone.domain.category.CategoryRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
@@ -27,8 +24,6 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
-    private final AreaRepository areaRepository;
-    private final CategoryRepository categoryRepository;
 
     @Override
     @Transactional
@@ -36,7 +31,7 @@ public class BoardServiceImpl implements BoardService{
 
         Board board = Board.builder()
                 .title(boardForm.getTitle())
-                .category(categoryRepository.findById(boardForm.getCategory()).get())
+                .category(Category.of(boardForm.getCategory()))
                 .content(boardForm.getContent().replace("\r\n", "<br>"))
                 .detail(boardForm.getDetail())
                 .price(boardForm.getPrice())

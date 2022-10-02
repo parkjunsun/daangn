@@ -46,7 +46,9 @@
                         <label th:for="state">시/도</label>
                         <select class="form-select" th:field="*{state}">
                             <option value=""> --시도-- </option>
-                            <option th:each="pprArea : ${pprAreaList}" th:value="${pprArea.areaCd}" th:text="${pprArea.areaName}"></option>
+<!--                            <option th:each="pprArea : ${pprAreaList}" th:value="${pprArea.areaCd}" th:text="${pprArea.areaName}"></option>-->
+                            <option value="101000">서울시</option>
+                            <option value="102000">경기도</option>
                         </select><br>
 
                         <label th:for="city">시/군/구</label>

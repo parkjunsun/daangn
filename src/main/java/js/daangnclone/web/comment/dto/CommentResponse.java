@@ -17,9 +17,10 @@ public class CommentResponse {
     private String city;
     private String provider;
     private String likeInpYn;
+    private Long likeCnt;
 
     @Builder
-    public CommentResponse (Long id, String content, String diffCreatedAt, String nickname, String city, String provider, String likeInpYn) {
+    public CommentResponse (Long id, String content, String diffCreatedAt, String nickname, String city, String provider, String likeInpYn, Long likeCnt) {
         this.id = id;
         this.content = content;
         this.diffCreatedAt = diffCreatedAt;
@@ -27,5 +28,6 @@ public class CommentResponse {
         this.city = city;
         this.provider = provider;
         this.likeInpYn = likeInpYn;
+        this.likeCnt = likeCnt;
     }
 }

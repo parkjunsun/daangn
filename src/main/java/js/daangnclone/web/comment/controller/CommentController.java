@@ -1,7 +1,6 @@
 package js.daangnclone.web.comment.controller;
 
 import js.daangnclone.cmn.DateUtil;
-import js.daangnclone.domain.area.AreaRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;

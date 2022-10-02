@@ -64,4 +64,9 @@ public class LikesServiceImpl implements LikesService {
 
         return likeInpYn;
     }
+
+    @Override
+    public long countLikesInComment(Comment comment) {
+        return likeRepository.countByComment(comment);
+    }
 }

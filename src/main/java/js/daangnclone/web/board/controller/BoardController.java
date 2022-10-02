@@ -1,11 +1,9 @@
 package js.daangnclone.web.board.controller;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.domain.area.Area;
-import js.daangnclone.domain.area.AreaRepository;
+import js.daangnclone.cmn.Category;
+import js.daangnclone.cmn.CategoryDto;
 import js.daangnclone.domain.board.Board;
-import js.daangnclone.domain.category.Category;
-import js.daangnclone.domain.category.CategoryRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
@@ -25,9 +23,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Arrays;
 import java.util.List;
-
-import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,10 +33,8 @@ import static js.daangnclone.cmn.CmnCons.KOREA_CODE;
 public class BoardController {
 
     private final MemberService memberService;
-    private final CategoryRepository categoryRepository;
     private final BoardService boardService;
     private final AttentionService attentionService;
-    private final AreaRepository areaRepository;
     private final CommentService commentService;
 
     @GetMapping("/")
@@ -49,10 +45,7 @@ public class BoardController {
             Member findMember = memberService.findMember(memberId);
 
             if (findMember.getArea() == null) {
-                List<Area> pprAreaList = areaRepository.findAreaByPprAreaCd(KOREA_CODE);
-
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
-                model.addAttribute("pprAreaList", pprAreaList);
                 return "member/AddDetailsMemberForm";
             }
 
@@ -71,7 +64,14 @@ public class BoardController {
         Member findMember = memberService.findMember(memberId);
         memberService.validateCertifyLocation(memberId);
 
-        List<Category> categoryList = categoryRepository.findAll();
+//        List<Category> categoryList = categoryRepository.findAll();
+        List<CategoryDto> categoryList = Arrays.stream(Category.values())
+                .map(category -> CategoryDto.builder()
+                        .categoryCd(category.getCategoryCd())
+                        .categoryName(category.getCategoryName())
+                        .build())
+                .collect(Collectors.toList());
+
         model.addAttribute("boardForm", new BoardForm());
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("provider", findMember.getProvider());

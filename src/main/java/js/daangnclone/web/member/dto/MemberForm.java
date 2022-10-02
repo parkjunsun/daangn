@@ -1,11 +1,9 @@
 package js.daangnclone.web.member.dto;
-
-import js.daangnclone.domain.member.Member;
-import js.daangnclone.domain.member.MemberRole;
+import js.daangnclone.cmn.Area;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+
 
 @Data
 public class MemberForm {
@@ -19,5 +17,6 @@ public class MemberForm {
     private String email;
     private Long state;
     private Long city;
+//    private Area area;
 
 }

@@ -55,10 +55,10 @@
                         </div>
                         <div style="float:right; display: inline-block;">
                             <button class="likeBtn" style="margin-right: 5px; border:0; outline: 0; background-color: transparent;" th:value="${comment.id}">
-                                <img th:if="${comment.likeInpYn eq 'N'}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png"/>
-                                <img th:if="${comment.likeInpYn eq 'Y'}" src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png"/>
+                                <img th:if="${comment.likeInpYn eq 'N'}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png" alt="good"/>
+                                <img th:if="${comment.likeInpYn eq 'Y'}" src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png" alt="bad"/>
                             </button>
-                            <span style="font-size: 20px;">31</span>
+                            <span style="font-size: 20px;" th:text="${comment.likeCnt}"></span>
                         </div>
                     </div>
                     <div>
@@ -101,9 +101,11 @@
         })
     });
 
-    $(".likeBtn").on('click', function () {
+    $(document).on('click', '.likeBtn', function () {
         let commentId = $(this).val();
         let btnObj = $(this);
+        let likeCntObj = $(this).next();
+        let curLikeCnt = parseInt($(this).next().text());
         $.ajax({
             url: "/comment/" + commentId + "/like/process.do",
             type: "post",
@@ -113,11 +115,12 @@
                     let imgObj = $("<img src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png\"/>")
                     btnObj.empty();
                     btnObj.append(imgObj);
+                    likeCntObj.text(curLikeCnt - 1);
                 } else {
                     let imgObj = $("<img src=\"https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-like-support-anggara-filled-outline-anggara-putra-2.png\"/>")
                     btnObj.empty();
                     btnObj.append(imgObj);
-
+                    likeCntObj.text(curLikeCnt + 1);
                 }
             }
         });
@@ -148,7 +151,8 @@
 
 
                 $("#commentUl").append(
-                    "<li id=\"" + writeInfo.commentId + "\" class=\"myListContent\">" +
+                    "<li id=\"li-" + writeInfo.commentId + "\" class=\"myListContent\">" +
+                        "<br>" +
                         "<div style=\"margin-bottom: 70px;\">" +
                             "<div style=\"float: left; display: inline-block\">" +
                                 "<div style=\"float: left; margin-right: 10px;\">" +
@@ -163,12 +167,13 @@
                                 "<button class=\"likeBtn\" style=\"margin-right: 5px; border:0; outline: 0; background-color: transparent;\" value=\"" + writeInfo.commentId + "\">" +
                                     "<img src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-like-support-anggara-outline-color-anggara-putra-2.png\"/>" +
                                 "</button>" +
-                                "<span style=\"font-size: 20px;\">31</span>" +
+                                "<span style=\"font-size: 20px;\">0</span>" +
                             "</div>" +
                         "</div>" +
                         "<div>" +
                             "<h5>" + writeInfo.content + "</h5>" +
                         "</div>" +
+                        "<br>" +
                     "</li>"
                 )
             }
