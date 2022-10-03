@@ -6,7 +6,8 @@
 <body>
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center h-100" style="text-align: center">
-            <div id="map" style="height:350px;"></div>
+            <div id="map" style="height:350px; margin-bottom: 30px;"></div>
+            <h2 id="crtInfo"></h2>
             <p id="crtText"></p><br><br><br><br><br><br><br>
             <form action="/certify" method="post">
                 <button id="crtBtn" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">동네 인증 완료하기</button>
@@ -52,10 +53,12 @@
                     var dong = loSplit[3];
 
                     if (city === Mycity) {
+                        $("#crtInfo").text(" 인증이 가능해요!!!").css("color", "blue");
                         $("#crtText").text("현재 위치가 내 동네로 설정한 '" + city + "'에 있습니다.").css("color","blue");
                         $("#certifyYn").val("Y");
                         $("#crtBtn").attr("disabled", false);
                     } else {
+                        $("#crtInfo").text(" 잠깐만요!!!").css("color", "red");
                         $("#crtText").text("현재 내 동네로 설정되어 있는 '" + Mycity + "'에서만 동네인증을 할 수 있어요. 현재 위치는 '" + city + "' 입니다.").css("color","red");
                         $("#certifyYn").val("N");
                         $("#crtBtn").attr("disabled", true);

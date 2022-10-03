@@ -19,24 +19,37 @@
                 </form>
             </div>
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
                 <button sec:authorize="isAnonymous()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/login'|">로그인</button>
-                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>
-                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/board/new'|">내 물건 팔기</button>
+                <button sec:authorize="isAnonymous()" type="button" class="btn btn-primary btn-space" th:onclick="|location.href='/signup'|">회원가입</button>
+<!--                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>-->
                 <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        <img th:if="${provider eq 'daanngn'}" src="https://img.icons8.com/color/35/000000/carrot.png" alt="daanngn">
-                        <img th:if="${provider eq 'naver'}" src="/images/naver.PNG" style="width: 35px; height: 35px" alt="naver"/>
-                        <img th:if="${provider eq 'google'}" src="/images/google.PNG" style="width: 35px; height: 35px" alt="google"/>
-                        <img th:if="${provider eq 'kakao'}" src="/images/kakao.png" style="width: 35px; height: 35px" alt="kakao"/>
-                        <span th:text="${nickname}"></span>
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                        <img src="https://img.icons8.com/puffy/32/000000/experimental-user-puffy.png" alt="account"/>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">나의 당근</a></li>
-                        <li><a class="dropdown-item" href="/logout">로그아웃</a></li>
+                        <li><a class="dropdown-item" href="/profile"><img src="https://img.icons8.com/material-outlined/24/000000/user--v1.png" alt="profile"/> 나의 프로필</a></li>
+                        <li><a class="dropdown-item" href="/activity"><img src="https://img.icons8.com/ios-glyphs/24/000000/activity-history.png" alt="activity"/> 나의 활동</a></li>
+                        <li><a class="dropdown-item" href="/address"><img src="https://img.icons8.com/fluency-systems-regular/24/000000/user-location.png" alt="setting"/> 동네 설정</a></li>
+                        <li><a class="dropdown-item" href="/certify"><img src="https://img.icons8.com/ios-glyphs/24/000000/center-direction.png" alt="certify"/> 동네 인증</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <li><a class="dropdown-item" href="/logout"><img src="https://img.icons8.com/fluency-systems-regular/20/000000/exit.png" alt="logout"/> 로그아웃</a></li>
                     </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                        <img src="https://img.icons8.com/material-outlined/32/000000/carrot.png" alt="daanngn"/>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/board/new"><img src="https://img.icons8.com/ios/24/000000/add-to-collection--v2.png" alt="new"/> 물건 등록</a></li>
+                        <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/ios/24/000000/land-sales.png" alt="sale"/> 판매 내역</a></li>
+                        <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="buy"/> 구매 내역</a></li>
+                        <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/ios/24/000000/novel--v1.png" alt="attention"/> 관심목록</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="nav-link" href="#" role="button">
+                        <img src="https://img.icons8.com/material-outlined/32/000000/filled-appointment-reminders.png" alt="alarm"/>
+                    </a>
                 </li>
             </ul>
         </div>

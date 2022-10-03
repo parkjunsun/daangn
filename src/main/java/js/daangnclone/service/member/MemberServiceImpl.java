@@ -1,12 +1,15 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.Area;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
+import js.daangnclone.web.member.dto.AddressForm;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import js.daangnclone.web.member.dto.MemberForm;
+import js.daangnclone.web.member.dto.ProfileForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -89,10 +92,29 @@ public class MemberServiceImpl implements MemberService{
     @Override
     @Transactional
     public void addDetails(Long id, MemberDetailsForm detailsForm) {
-        Member findMember = memberRepository.findById(id).orElse(null);
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
         findMember.setNickname(detailsForm.getNickname());
 //        findMember.setArea(areaRepository.findById(detailsForm.getCity()).get());
         findMember.setArea(Area.of(detailsForm.getCity()));
+    }
+
+    @Override
+    @Transactional
+    public void updateMemberProfile(Long id, ProfileForm profileForm) {
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        findMember.setNickname(profileForm.getNickname());
+        findMember.setEmail(profileForm.getEmail());
+        findMember.setPassword(passwordEncoder.encode(profileForm.getPassword()));
+    }
+
+    @Override
+    @Transactional
+    public void updateMemberAddress(Long id, AddressForm addressForm) {
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+
+        findMember.setCertifyYn("N");
+        findMember.setArea(Area.of(addressForm.getCity()));
     }
 }

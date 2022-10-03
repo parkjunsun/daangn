@@ -1,5 +1,7 @@
 package js.daangnclone.security;
 
+import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
@@ -52,7 +54,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
         Optional<Member> findOauthMember = memberRepository.findByUsername(username);
         if (findOauthMember.isPresent()) {
-            Member member = findOauthMember.orElse(null);
+            Member member = findOauthMember.orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND));
             return new PrincipalUserDetails(member, oAuth2User.getAttributes());
         } else {
             Member m = Member.builder()

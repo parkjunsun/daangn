@@ -1,5 +1,7 @@
 package js.daangnclone.service.board;
 
+import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.Category;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.board.Board;
@@ -16,6 +18,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static js.daangnclone.Exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -63,7 +67,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public BoardSingleResponse inquireBoard(Long id) {
-        Board findBoard = boardRepository.findBoard(id).orElse(null);
+        Board findBoard = boardRepository.findBoard(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
         return BoardSingleResponse.builder()
                 .id(findBoard.getId())
@@ -83,12 +87,12 @@ public class BoardServiceImpl implements BoardService{
     @Override
     @Transactional
     public void updateView(Long id) {
-        Board findBoard = boardRepository.findById(id).orElse(null);
+        Board findBoard = boardRepository.findById(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
         findBoard.addView();
     }
 
     @Override
     public Board findBoard(Long id) {
-        return boardRepository.findById(id).orElse(null);
+        return boardRepository.findById(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
     }
 }

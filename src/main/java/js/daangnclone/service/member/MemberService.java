@@ -1,8 +1,10 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.domain.member.Member;
+import js.daangnclone.web.member.dto.AddressForm;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import js.daangnclone.web.member.dto.MemberForm;
+import js.daangnclone.web.member.dto.ProfileForm;
 
 public interface MemberService {
 
@@ -13,4 +15,6 @@ public interface MemberService {
     String validateDuplicateUsername(String username);
     String validateDuplicateNickname(String nickname);
     void addDetails(Long id, MemberDetailsForm addressForm);
+    void updateMemberProfile(Long id, ProfileForm profileForm);
+    void updateMemberAddress(Long id, AddressForm addressForm);
 }

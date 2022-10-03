@@ -12,7 +12,7 @@
 
                     <div class="mb-5">
                         <label th:for="username">아이디</label><br>
-                        <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'form-control fieldError' : 'form-control'" placeholder="" value="" required />
+                        <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{username}" th:class="${#fields.hasErrors('username')} ? 'form-control fieldError' : 'form-control'" placeholder="아이디를 입력해주세요." required />
                         <button id="validateUsernameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
                         <p id="validateUsernameMsg" style="display: none;"></p>
                         <p th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color:#bd2130;">Incorrect Data</p>
@@ -20,7 +20,7 @@
 
                     <div class="mb-5">
                         <label th:for="nickname">별명</label><br>
-                        <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'" placeholder="" value="" required />
+                        <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'" placeholder="별명을 입력해주세요." required />
                         <button id="validateNicknameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
                         <p id="validateNicknameMsg" style="display: none;"></p>
                         <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" style="color:#bd2130;">Incorrect Data</p>
@@ -28,13 +28,13 @@
 
                     <div class="mb-5">
                         <label th:for="password">비밀번호</label>
-                        <input type="password" class="form-control" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'form-control fieldError' : 'form-control'" placeholder="" required>
+                        <input type="password" class="form-control" th:field="*{password}" th:class="${#fields.hasErrors('password')} ? 'form-control fieldError' : 'form-control'" placeholder="비밀번호를 입력해주세요." required>
                         <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color:#bd2130;">Incorrect Data</p>
                     </div>
 
                     <div class="mb-5">
                         <label th:for="email">이메일</label>
-                        <input type="email" class="form-control" th:field="*{email}" placeholder="you@example.com" required>
+                        <input type="email" class="form-control" th:field="*{email}" placeholder="이메일을 입력해주세요." required>
                     </div>
 
                     <div class="mb-5">

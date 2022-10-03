@@ -1,5 +1,7 @@
 package js.daangnclone.security;
 
+import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -7,6 +9,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import static js.daangnclone.Exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -17,7 +21,7 @@ public class PrincipalUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Member member = memberRepository.findByUsername(username).orElse(null);
+        Member member = memberRepository.findByUsername(username).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         if (member == null) {
             throw new UsernameNotFoundException("UsernameFoundException");
         }

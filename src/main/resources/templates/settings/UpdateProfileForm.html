@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head">
+    <title>프로필 변경</title>
+</head>
+
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3">회원정보 변경</h4>
+            <form class="validation-form" novalidate th:action="@{/profile}" th:method="post" th:object="${profileForm}">
+
+                <div class="mb-5">
+                    <label th:for="nickname">별명</label><br>
+                    <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{nickname}" th:class="${#fields.hasErrors('nickname')} ? 'form-control fieldError' : 'form-control'"  required />
+                    <button id="validateNicknameBtn" style="display: inline-block; width:130px; margin-left: 20px;" class="btn btn-primary btn-lg" type="button">중복 확인</button>
+                    <p id="validateNicknameMsg" style="display: none;"></p>
+                    <p th:if="${#fields.hasErrors('nickname')}" th:errors="*{nickname}" style="color:#bd2130;">Incorrect Data</p>
+                </div>
+
+                <div class="mb-5">
+                    <label th:for="email">이메일</label><br>
+                    <input type="email" style="width:581px; display: inline-block" class="form-control" th:field="*{email}" >
+                </div>
+
+                <th:block th:if="${provider eq 'daanngn'}">
+                <div class="mb-5">
+                    <label th:for="password">비밀번호</label><br>
+                    <input type="password" style="width:581px; display: inline-block" class="form-control" th:field="*{password}" >
+                </div>
+                </th:block>
+
+                <hr class="mb-4">
+                <div class="mb-4"></div>
+                <button id="submitBtn" class="btn btn-primary btn-lg btn-block" type="submit">저장</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    let validateNicknameInpYn = "N";
+
+    $("#validateNicknameBtn").on('click', function () {
+
+        if ($("#nickname").val() === null || $("#nickname").val() === "") {
+            alert("별명을 입력해주세요.");
+            $("#validateNicknameMsg").css("display", "none");
+            return false;
+        }
+
+        $.ajax({
+            url: "/signup/validate-nickname.do",
+            type: "post",
+            data: {"nickname" : $("#nickname").val()},
+            sync: false,
+            success: function (canUseYn) {
+                if (canUseYn === "N") {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#bd2130");
+                    $("#validateNicknameMsg").text("이미 존재하는 별명 입니다.");
+
+                    validateNicknameInpYn = "N";
+
+                } else {
+                    $("#validateNicknameMsg").css("display", "block");
+                    $("#validateNicknameMsg").css("color", "#00bfff");
+                    $("#validateNicknameMsg").text("사용 가능한 별명 입니다.");
+
+                    validateNicknameInpYn = "Y";
+                }
+            }
+        })
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+
+</html>

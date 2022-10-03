@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3">주소 정보</h4>
+            <form class="validation-form" novalidate th:action="@{/address}" th:method="post" th:object="${addressForm}">
+
+                <span class="text-muted" th:if="*{certifyYn eq 'Y'}"><img src="https://img.icons8.com/fluency/32/000000/guarantee.png" alt="auth"/> 현재 내 동네가 인증된 상태입니다. 동네 변경시 동네 인증이 필요합니다!</span>
+                <br><br><br><br>
+
+                <div class="mb-5">
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <p style="color:#bd2130;" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
+                    </div>
+
+                    <label th:for="state">시/도</label>
+                    <select class="form-select" th:field="*{state}">
+                        <option value=""> --시도-- </option>
+                        <option value="101000" th:selected="*{state eq '101000'}">서울시</option>
+                        <option value="102000" th:selected="*{state eq '102000'}">경기도</option>
+                    </select><br>
+
+                    <label th:for="city">시/군/구</label>
+                    <select class="form-select" th:field="*{city}">
+                        <option value=""> --시군구-- </option>
+                    </select>
+
+                </div>
+                <hr class="mb-4">
+                <div class="mb-4"></div>
+                <button id="submitBtn" class="btn btn-danger btn-lg btn-block" type="submit">저장</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    let validateNicknameInpYn = "N";
+    let addressForm = [[${addressForm}]];
+    let state = addressForm.state;
+    let city = addressForm.city;
+
+    // $(function () {
+    //     // 시/도 , 시/군/구는 한 세트 이기 때문에 한 곳만 값을 저장되는 것을 방지
+    //     $("#state").val("");
+    //     $("#city").val("");
+    // })
+
+    $(function () {
+        if (state === 101000) {
+            $.ajax({
+                url: "/signup/getPsAreaCd.do",
+                type: "post",
+                data: {"pprAreaCd" : $("#state").val()},
+                sync: false,
+                success: function (areaList) {
+                    $("#city").empty().append("<option value=\"\"> --시군구-- </option>");
+                    $.each(areaList, function (idx, area) {
+                        $("#city").append($("<option>", {
+                            value: area.areaCd,
+                            text: area.areaName
+                        }));
+                    });
+                    $("#city").val(city);
+                }
+            })
+        }
+        else if (state === 102000) {
+            $.ajax({
+                url: "/signup/getPsAreaCd.do",
+                type: "post",
+                data: {"pprAreaCd" : $("#state").val()},
+                sync: false,
+                success: function (areaList) {
+                    $("#city").empty().append("<option value=\"\"> --시군구-- </option>");
+                    $.each(areaList, function (idx, area) {
+                        $("#city").append($("<option>", {
+                            value: area.areaCd,
+                            text: area.areaName
+                        }));
+                    });
+                    $("#city").val(city);
+                }
+            })
+        }
+    })
+
+    $("#state").on('change', function () {
+        $.ajax({
+            url: "/signup/getPsAreaCd.do",
+            type: "post",
+            data: {"pprAreaCd" : $(this).val()},
+            sync: false,
+            success: function (areaList) {
+                $("#city").empty().append("<option value=\"\"> --시군구-- </option>");
+                $.each(areaList, function (idx, area) {
+                    $("#city").append($("<option>", {
+                        value: area.areaCd,
+                        text: area.areaName
+                    }));
+                });
+            }
+        })
+    });
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+
+</html>

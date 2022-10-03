@@ -1,6 +1,8 @@
 package js.daangnclone.service.like;
 
 
+import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.comment.CommentRepository;
 import js.daangnclone.domain.like.Likes;
@@ -12,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+
+import static js.daangnclone.Exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +39,8 @@ public class LikesServiceImpl implements LikesService {
 
 
     private void createLike(Long memberId, Long commentId) {
-        Member findMember = memberRepository.findById(memberId).orElse(null);
-        Comment findComment = commentRepository.findById(commentId).orElse(null);
+        Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Comment findComment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(COMMENT_NOT_FOUND));
 
         Likes like = new Likes();
         like.setMember(findMember);

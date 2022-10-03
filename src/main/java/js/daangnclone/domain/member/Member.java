@@ -1,6 +1,7 @@
 package js.daangnclone.domain.member;
 
 import js.daangnclone.cmn.Area;
+import js.daangnclone.cmn.Category;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;
@@ -33,6 +34,7 @@ public class Member extends TimeEntity {
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
+
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
