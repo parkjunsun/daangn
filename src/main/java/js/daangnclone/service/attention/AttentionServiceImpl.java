@@ -1,10 +1,12 @@
 package js.daangnclone.service.attention;
 
 import js.daangnclone.domain.attention.Attention;
+import js.daangnclone.domain.attention.event.AttentionCreatedEvent;
 import js.daangnclone.domain.attention.AttentionRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,6 +18,7 @@ import java.util.Optional;
 public class AttentionServiceImpl implements AttentionService{
 
     private final AttentionRepository attentionRepository;
+    private final ApplicationEventPublisher eventPublisher;  //이벤트를 발생시키기 위한 bean 주입 *EventPublisher를 사용함으로써 결합도가 낮아진다
 
     @Override
     @Transactional
@@ -34,6 +37,10 @@ public class AttentionServiceImpl implements AttentionService{
         Attention attention = new Attention();
         attention.setMember(member);
         attention.setBoard(board);
+        eventPublisher.publishEvent(new AttentionCreatedEvent(attention));
+        //관심이 만들어지는 시점에 이벤트를 발생시킨다.
+        //비동기처리(다른 스레드에서 처리)를 하지 않으면 여기서 RuntimeException이 발생했을 경우
+        // @Transactional의 영향을 받게 되어 rollback이 발생하므로 주의해야한다.
         attentionRepository.save(attention);
     }
 

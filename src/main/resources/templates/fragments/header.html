@@ -46,7 +46,7 @@
                         <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/ios/24/000000/novel--v1.png" alt="attention"/> 관심목록</a></li>
                     </ul>
                 </li>
-                <li>
+                <li sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="#" role="button">
                         <img src="https://img.icons8.com/material-outlined/32/000000/filled-appointment-reminders.png" alt="alarm"/>
                     </a>
