@@ -32,7 +32,7 @@
             <th:block th:each="i : ${#numbers.sequence(0, boardList.size() - 1)}">
                 <div th:if="${i % 4 eq 0}" class="row">
                     <th:block th:each="j : ${#numbers.sequence(i, i+3)}">
-                        <div th:if="${j le boardList.size() - 1}" class="card border-info mb-3" style="width: 14rem; cursor: pointer; padding-top: 12px;" th:onclick="|location.href='/board/${boardList[j].id}'|">
+                        <div th:if="${j le boardList.size() - 1}" class="card border-info mb-3" style="width: 14rem; cursor: pointer; padding-top: 12px; margin-left: 40px;" th:onclick="|location.href='/board/${boardList[j].id}'|">
                                 <img class="card-img-top" th:src="${boardList[j].image}" alt="Card image cap" style="width: 200px; height: 150px;">
                                 <div class="card-body">
                                     <h6 class="card-title" style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold" th:text="${boardList[j].title}">Card title</h6>
