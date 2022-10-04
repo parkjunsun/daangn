@@ -4,6 +4,7 @@ import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.comment.CommentRepository;
+import js.daangnclone.domain.comment.event.CommentCreatedEvent;
 import js.daangnclone.domain.like.Likes;
 import js.daangnclone.domain.like.LikesRepository;
 import js.daangnclone.domain.member.Member;
@@ -11,8 +12,10 @@ import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.web.comment.dto.CommentForm;
 import js.daangnclone.web.comment.dto.CommentResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.yaml.snakeyaml.events.CommentEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +29,7 @@ public class CommentServiceImpl implements CommentService{
 
     private final CommentRepository commentRepository;
     private final LikesRepository likesRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -34,6 +38,8 @@ public class CommentServiceImpl implements CommentService{
         comment.setContent(commentForm.getContent());
         comment.setBoard(board);
         comment.setMember(member);
+
+        eventPublisher.publishEvent(new CommentCreatedEvent(comment));
 
         return commentRepository.save(comment);
     }

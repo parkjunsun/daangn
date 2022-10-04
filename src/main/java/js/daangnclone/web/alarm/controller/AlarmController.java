@@ -62,10 +62,19 @@ public class AlarmController {
     private void putCategorizeAlarmList(Model model, List<AlarmResponse> alarmList, long numberOfChecked, long numberOfNotChecked) {
 
         ArrayList<AlarmResponse> newAttentionAlarmList = new ArrayList<>();
+        ArrayList<AlarmResponse> newCommentAlarmList = new ArrayList<>();
+        ArrayList<AlarmResponse> newLikesAlarmList = new ArrayList<>();
         for (AlarmResponse alarm : alarmList) {
             switch (alarm.getAlarmType()) {
                 case ATTENTION_CREATED:
                     newAttentionAlarmList.add(alarm);
+                    break;
+                case COMMENT_CREATED:
+                    newCommentAlarmList.add(alarm);
+                    break;
+                case LIKES_CREATED:
+                    newLikesAlarmList.add(alarm);
+                    break;
             }
         }
 
@@ -73,5 +82,7 @@ public class AlarmController {
         model.addAttribute("numberOfChecked", numberOfChecked);
         model.addAttribute("alarmList", alarmList);
         model.addAttribute("newAttentionAlarmList", newAttentionAlarmList);
+        model.addAttribute("newCommentAlarmList", newCommentAlarmList);
+        model.addAttribute("newLikesAlarmList", newLikesAlarmList);
     }
 }

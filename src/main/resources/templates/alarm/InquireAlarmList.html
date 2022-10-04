@@ -24,16 +24,16 @@
                     새 관심 알림
                     <span th:text="${newAttentionAlarmList.size()}">3</span>
                 </a>
-<!--                <a href="#" th:if="${eventEnrollmentNotifications.size() > 0}"-->
-<!--                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">-->
-<!--                    모임 참가 신청 알림-->
-<!--                    <span th:text="${eventEnrollmentNotifications.size()}">0</span>-->
-<!--                </a>-->
-<!--                <a href="#" th:if="${watchingStudyNotifications.size() > 0}"-->
-<!--                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">-->
-<!--                    관심있는 스터디 알림-->
-<!--                    <span th:text="${watchingStudyNotifications.size()}">0</span>-->
-<!--                </a>-->
+                <a href="#" th:if="${newCommentAlarmList.size() > 0}"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    새 댓글 알림
+                    <span th:text="${newCommentAlarmList.size()}">0</span>
+                </a>
+                <a href="#" th:if="${newLikesAlarmList.size() > 0}"
+                   class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    새 좋아요 알림
+                    <span th:text="${newLikesAlarmList.size()}">0</span>
+                </a>
             </ul>
 
             <ul class="list-group mt-4" th:if="${numberOfChecked > 0}">
@@ -41,7 +41,7 @@
                     <button type="submit" class="btn btn-outline-warning" aria-describedby="deleteHelp">
                         읽은 알림 삭제
                     </button>
-                    <small id="deleteHelp">삭제하지 않아도 한달이 지난 알림은 사라집니다.</small>
+                    <small id="deleteHelp">삭제하지 않아도 한달 지난 알림은 사라집니다.</small>
                 </form>
             </ul>
         </div>
@@ -54,33 +54,48 @@
 
             <div class="card" th:if="${newAttentionAlarmList.size() > 0}">
                 <div class="card-header">
-                    나의 활동에 관심이 있는 사람들이 생겼습니다.
+                    나의 판매상품에 관심이 추가 됐습니다.
                 </div>
-<!--                <div th:replace="fragments.html::notification-list (notifications=${newAttentionAlarmList})"></div>-->
                 <ul class="list-group list-group-flush">
-                    <a th:href="@{${alarm.link}}" th:each="alarm : ${alarmList}" class="list-group-item list-group-item-action">
+                    <a th:href="@{${attentionAlarm.link}}" th:each="attentionAlarm : ${newAttentionAlarmList}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted" th:text="|${alarm.sender}님이 ${alarm.message}|"></small>
-                            <small class="fromNow text-muted" th:text="${alarm.diffCreatedAt}"></small>
+                            <small class="text-muted" th:text="|${attentionAlarm.sender}님이 ${attentionAlarm.message}|"></small>
+                            <small class="fromNow text-muted" th:text="${attentionAlarm.diffCreatedAt}"></small>
                         </div>
-                        <p th:text="${alarm.title}" class="text-left mb-0 mt-1"></p>
+                        <p th:text="${attentionAlarm.title}" class="text-left mb-0 mt-1"></p>
                     </a>
                 </ul>
             </div>
 
-<!--            <div class="card mt-4" th:if="${eventEnrollmentNotifications.size() > 0}">-->
-<!--                <div class="card-header">-->
-<!--                    모임 참가 신청 관련 소식이 있습니다.-->
-<!--                </div>-->
-<!--                <div th:replace="fragments.html::notification-list (notifications=${eventEnrollmentNotifications})"></div>-->
-<!--            </div>-->
+            <div class="card mt-4" th:if="${newCommentAlarmList.size() > 0}">
+                <div class="card-header">
+                    나의 판매상품에 댓글이 달렸습니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a th:href="@{${commentAlarm.link}}" th:each="commentAlarm : ${newCommentAlarmList}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted" th:text="|${commentAlarm.sender}님이 ${commentAlarm.message}|"></small>
+                            <small class="fromNow text-muted" th:text="${commentAlarm.diffCreatedAt}"></small>
+                        </div>
+                        <p th:text="${commentAlarm.title}" class="text-left mb-0 mt-1"></p>
+                    </a>
+                </ul>
+            </div>
 
-<!--            <div class="card mt-4" th:if="${watchingStudyNotifications.size() > 0}">-->
-<!--                <div class="card-header">-->
-<!--                    참여중인 스터디 관련 소식이 있습니다.-->
-<!--                </div>-->
-<!--                <div th:replace="fragments.html::notification-list (notifications=${watchingStudyNotifications})"></div>-->
-<!--            </div>-->
+            <div class="card mt-4" th:if="${newLikesAlarmList.size() > 0}">
+                <div class="card-header">
+                    나의 댓글에 좋아요가 눌렸습니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a th:href="@{${likesAlarm.link}}" th:each="likesAlarm : ${newLikesAlarmList}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted" th:text="|${likesAlarm.sender}님이 ${likesAlarm.message}|"></small>
+                            <small class="fromNow text-muted" th:text="${likesAlarm.diffCreatedAt}"></small>
+                        </div>
+                        <p th:text="${likesAlarm.title}" class="text-left mb-0 mt-1"></p>
+                    </a>
+                </ul>
+            </div>
         </div>
     </div>
 </div>

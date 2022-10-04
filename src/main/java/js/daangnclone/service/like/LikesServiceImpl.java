@@ -7,9 +7,11 @@ import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.comment.CommentRepository;
 import js.daangnclone.domain.like.Likes;
 import js.daangnclone.domain.like.LikesRepository;
+import js.daangnclone.domain.like.event.LikesCreatedEvent;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +27,7 @@ public class LikesServiceImpl implements LikesService {
     private final MemberRepository memberRepository;
     private final CommentRepository commentRepository;
     private final LikesRepository likeRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -46,6 +49,7 @@ public class LikesServiceImpl implements LikesService {
         like.setMember(findMember);
         like.setComment(findComment);
 
+        eventPublisher.publishEvent(new LikesCreatedEvent(like));
         likeRepository.save(like);
     }
 
