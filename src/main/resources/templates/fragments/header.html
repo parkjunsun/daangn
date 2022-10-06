@@ -24,7 +24,8 @@
 <!--                <button sec:authorize="isAuthenticated()" type="button" class="btn btn-outline-secondary btn-space" th:onclick="|location.href='/certify'|">동네인증</button>-->
                 <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
                     <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
-                        <img src="https://img.icons8.com/puffy/32/000000/experimental-user-puffy.png" alt="account"/>
+                        <img th:if="${certifyYn eq 'Y'}" src="https://img.icons8.com/windows/32/000000/check-male.png" alt="account"/>
+                        <img th:if="${certifyYn eq 'N'}" src="https://img.icons8.com/windows/32/000000/contacts.png" alt="account"/>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/profile"><img src="https://img.icons8.com/material-outlined/24/000000/user--v1.png" alt="profile"/> 나의 프로필</a></li>
@@ -48,8 +49,8 @@
                 </li>
                 <li sec:authorize="isAuthenticated()">
                     <a class="nav-link" href="/alarmList" role="button">
-                        <img th:if="${!hasAlarm}" src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-notification-multimedia-anggara-filled-outline-anggara-putra-3.png" alt="alarm"/>
-                        <img th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/000000/external-notification-multimedia-anggara-filled-outline-anggara-putra-2.png" alt="newAlarm"/>
+                        <img th:if="${!hasAlarm}" src="../images/alarm.png" alt="alarm"/>
+                        <img th:if="${hasAlarm}" src="../images/add-alarm.png" alt="newAlarm"/>
                     </a>
                 </li>
             </ul>

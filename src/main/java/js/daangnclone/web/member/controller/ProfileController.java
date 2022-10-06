@@ -31,6 +31,7 @@ public class ProfileController {
         model.addAttribute("profileForm", profileForm);
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "settings/UpdateProfileForm";
     }
 

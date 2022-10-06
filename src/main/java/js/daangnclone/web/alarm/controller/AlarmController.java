@@ -35,6 +35,7 @@ public class AlarmController {
         List<AlarmResponse> alarmList = alarmService.inquireAlarmList(receiver, "N");
         putCategorizeAlarmList(model, alarmList, numberOfChecked, alarmList.size());
         model.addAttribute("isNew", true);
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
         return "alarm/InquireAlarmList";
 
     }
@@ -48,6 +49,7 @@ public class AlarmController {
         long numberOfNotChecked = alarmRepository.countByReceiverAndCheckedYn(receiver, "N");
         putCategorizeAlarmList(model, alarmList, alarmList.size(), numberOfNotChecked);
         model.addAttribute("isNew", false);
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
         return "alarm/InquireAlarmList";
     }
 

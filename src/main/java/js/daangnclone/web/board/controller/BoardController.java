@@ -51,6 +51,7 @@ public class BoardController {
 
             model.addAttribute("provider", findMember.getProvider());
             model.addAttribute("nickname", findMember.getNickname());
+            model.addAttribute("certifyYn", findMember.getCertifyYn());
         }
 
         List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
@@ -76,6 +77,7 @@ public class BoardController {
         model.addAttribute("categoryList", categoryList);
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "board/BoardForm";
     }
 
@@ -108,6 +110,7 @@ public class BoardController {
         model.addAttribute("attentionCnt", cnt);
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("memberId", findMember.getId());
         return "board/InquireBoard";
     }

@@ -109,6 +109,7 @@ public class MemberController {
         model.addAttribute("city", findMember.getArea().getAreaName());
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "member/CertifyMemberAddress";
     }
 
