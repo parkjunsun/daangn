@@ -23,12 +23,12 @@ public class CommentEventListener {
         Comment comment = event.getComment();
 
         Alarm newAlarm = Alarm.builder()
-                .title(comment.getBoard().getTitle())
-                .message("등록한 상품에 댓글을 달았습니다.")
+                .message("회원님이 등록한 " + "\"" + comment.getBoard().getTitle() + "\"" + " 상품에 댓글을 달았습니다.")
                 .link("/board/" + comment.getBoard().getId())
                 .sender(comment.getMember())
                 .receiver(comment.getBoard().getMember())
                 .checkedYn("N")
+                .clickYn("N")
                 .alarmType(AlarmType.COMMENT_CREATED)
                 .createdAt(LocalDateTime.now())
                 .build();

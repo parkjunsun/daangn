@@ -34,6 +34,9 @@ public class Board extends TimeEntity {
     private int view;
 
     @Enumerated(EnumType.STRING)
+    private BoardStatus boardStatus;
+
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,7 +59,7 @@ public class Board extends TimeEntity {
     }
 
     @Builder
-    public Board (String title, Category category, int price, String image, String content, String detail, int view, Member member) {
+    public Board (String title, Category category, int price, String image, String content, String detail, int view, BoardStatus boardStatus, Member member) {
         this.title = title;
         this.category = category;
         this.price = price;
@@ -64,6 +67,7 @@ public class Board extends TimeEntity {
         this.content = content;
         this.detail = detail;
         this.view = view;
+        this.boardStatus = boardStatus;
         this.member = member;
     }
 }

@@ -25,12 +25,12 @@ public class LikesEventListener {
         Likes likes = event.getLikes();
 
         Alarm newAlarm = Alarm.builder()
-                .title(likes.getComment().getContent())
-                .message("등록한 댓글에 좋아요가 눌렸습니다.")
+                .message("회원님이 등록한 " + "\"" + likes.getComment().getContent() + "\"" + " 댓글에 좋아요가 눌렸습니다.")
                 .link("/board/" + likes.getComment().getBoard().getId())
                 .sender(likes.getMember())
                 .receiver(likes.getComment().getMember())
                 .checkedYn("N")
+                .clickYn("N")
                 .alarmType(AlarmType.LIKES_CREATED)
                 .createdAt(LocalDateTime.now())
                 .build();

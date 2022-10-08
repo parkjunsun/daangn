@@ -1,6 +1,7 @@
 package js.daangnclone.service.board;
 
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
@@ -14,6 +15,6 @@ public interface BoardService {
     List<BoardMultiResponse> inquireAllBoardList();
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);
-
+    Board updateBoardStatus(Long id, BoardStatus boardStatus);
     Board findBoard(Long id);
 }

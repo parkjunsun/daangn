@@ -27,12 +27,12 @@ public class AttentionEventListener {
         Attention attention = event.getAttention();
 
         Alarm newAlarm = Alarm.builder()
-                .title(attention.getBoard().getTitle())
-                .message("등록한 상품에 관심을 가졌습니다.")
+                .message("회원님이 등록한 " + "\"" + attention.getBoard().getTitle() + "\"" + " 상품에 관심을 가졌습니다.")
                 .link("/board/" + attention.getBoard().getId())
                 .sender(attention.getMember())
                 .receiver(attention.getBoard().getMember())
                 .checkedYn("N")
+                .clickYn("N")
                 .alarmType(AlarmType.ATTENTION_CREATED)
                 .createdAt(LocalDateTime.now())
                 .build();

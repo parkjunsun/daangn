@@ -59,10 +59,9 @@
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${attentionAlarm.link}}" th:each="attentionAlarm : ${newAttentionAlarmList}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted" th:text="|${attentionAlarm.sender}님이 ${attentionAlarm.message}|"></small>
+                            <small class="text-muted"><span th:text="${attentionAlarm.sender}" style="color: #0090F9"></span>님이 [[${attentionAlarm.message}]]</small>
                             <small class="fromNow text-muted" th:text="${attentionAlarm.diffCreatedAt}"></small>
                         </div>
-                        <p th:text="${attentionAlarm.title}" class="text-left mb-0 mt-1"></p>
                     </a>
                 </ul>
             </div>
@@ -74,10 +73,9 @@
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${commentAlarm.link}}" th:each="commentAlarm : ${newCommentAlarmList}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted" th:text="|${commentAlarm.sender}님이 ${commentAlarm.message}|"></small>
+                            <small class="text-muted"><span th:text="${commentAlarm.sender}" style="color: #0090F9"></span>님이 [[${commentAlarm.message}]]</small>
                             <small class="fromNow text-muted" th:text="${commentAlarm.diffCreatedAt}"></small>
                         </div>
-                        <p th:text="${commentAlarm.title}" class="text-left mb-0 mt-1"></p>
                     </a>
                 </ul>
             </div>
@@ -89,10 +87,9 @@
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${likesAlarm.link}}" th:each="likesAlarm : ${newLikesAlarmList}" class="list-group-item list-group-item-action">
                         <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted" th:text="|${likesAlarm.sender}님이 ${likesAlarm.message}|"></small>
+                            <small class="text-muted"><span th:text="${likesAlarm.sender}" style="color: #0090F9"></span>님이 [[${likesAlarm.message}]]</small>
                             <small class="fromNow text-muted" th:text="${likesAlarm.diffCreatedAt}"></small>
                         </div>
-                        <p th:text="${likesAlarm.title}" class="text-left mb-0 mt-1"></p>
                     </a>
                 </ul>
             </div>

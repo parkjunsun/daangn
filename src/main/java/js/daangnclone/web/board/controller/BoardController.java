@@ -4,6 +4,7 @@ import js.daangnclone.Exception.CustomException;
 import js.daangnclone.cmn.Category;
 import js.daangnclone.cmn.CategoryDto;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
@@ -43,6 +44,7 @@ public class BoardController {
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
+            model.addAttribute("certifyYn", findMember.getCertifyYn());
 
             if (findMember.getArea() == null) {
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
@@ -51,7 +53,6 @@ public class BoardController {
 
             model.addAttribute("provider", findMember.getProvider());
             model.addAttribute("nickname", findMember.getNickname());
-            model.addAttribute("certifyYn", findMember.getCertifyYn());
         }
 
         List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
@@ -115,6 +116,27 @@ public class BoardController {
         return "board/InquireBoard";
     }
 
+    @PostMapping("/board/{id}/change.do")
+    @ResponseBody
+    public Message changeBoardStatus(@PathVariable("id") Long boardId, @RequestParam String boardStatusCd) {
+        Board findBoard = boardService.updateBoardStatus(boardId, BoardStatus.of(boardStatusCd));
+        Message message = new Message();
+        message.setTitle("Success");
+        message.setMsg("상품의 상태가 \"" + findBoard.getBoardStatus().getValue() + "\"" + "로 바뀌었습니다.");
+
+        return message;
+    }
+
+    static class Message {
+        private String title;
+        private String msg;
+
+        public String getTitle() {return title;}
+        public String getMsg() { return msg; }
+        public void setTitle(String title) {this.title = title;}
+        public void setMsg(String msg) {this.msg = msg;}
+
+    }
 
     @ExceptionHandler
     public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {

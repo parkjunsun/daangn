@@ -52,3 +52,27 @@ body {
     border-bottom: 1px solid #efefef;
     font-size: 12px;
 }
+
+#circle1 {
+    background-color:#86efef;
+    width:10px;
+    height:10px;
+    border-radius:75px;
+    text-align:center;
+    margin:0 auto;
+    font-size:12px;
+    vertical-align:middle;
+    line-height:150px;
+}
+
+#circle2 {
+    background-color:white;
+    width:10px;
+    height:10px;
+    border-radius:75px;
+    text-align:center;
+    margin:0 auto;
+    font-size:12px;
+    vertical-align:middle;
+    line-height:150px;
+}

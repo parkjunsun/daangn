@@ -6,6 +6,7 @@ import js.daangnclone.cmn.Category;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
@@ -39,6 +40,7 @@ public class BoardServiceImpl implements BoardService{
                 .content(boardForm.getContent().replace("\r\n", "<br>"))
                 .detail(boardForm.getDetail())
                 .price(boardForm.getPrice())
+                .boardStatus(BoardStatus.SALE_ON)
                 .member(member)
                 .build();
 
@@ -61,6 +63,7 @@ public class BoardServiceImpl implements BoardService{
                         .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
                         .nickname(board.getMember().getNickname())
                         .city(board.getMember().getArea().getAreaName())
+                        .boardStatus(board.getBoardStatus())
                         .build())
                 .collect(Collectors.toList());
     }
@@ -78,9 +81,11 @@ public class BoardServiceImpl implements BoardService{
                 .detail(findBoard.getDetail())
                 .category(findBoard.getCategory().getCategoryName())
                 .diffCreatedAt(DateUtil.diffDate(findBoard.getCreatedAt()))
+                .memberId(findBoard.getMember().getId())
                 .nickname(findBoard.getMember().getNickname())
                 .city(findBoard.getMember().getArea().getAreaName())
                 .view(findBoard.getView())
+                .boardStatus(findBoard.getBoardStatus())
                 .build();
     }
 
@@ -92,7 +97,18 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional
+    public Board updateBoardStatus(Long id, BoardStatus boardStatus) {
+        Board findBoard = boardRepository.findById(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
+        findBoard.setBoardStatus(boardStatus);
+
+        return findBoard;
+    }
+
+    @Override
     public Board findBoard(Long id) {
         return boardRepository.findById(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
     }
+
+
 }

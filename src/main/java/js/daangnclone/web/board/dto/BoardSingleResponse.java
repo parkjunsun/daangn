@@ -1,6 +1,7 @@
 package js.daangnclone.web.board.dto;
 
 import js.daangnclone.cmn.DateUtil;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.web.comment.dto.CommentResponse;
 import lombok.Builder;
@@ -21,7 +22,9 @@ public class BoardSingleResponse {
     private String category;
     private String diffCreatedAt;
     private int view;
+    private BoardStatus boardStatus;
 
+    private Long memberId;
     private String nickname;
     private String city;
 
@@ -30,18 +33,20 @@ public class BoardSingleResponse {
 
 
     @Builder
-    private BoardSingleResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view) {
+    private BoardSingleResponse(Long id, String title, String image, int price, String content, String detail, Long memberId, String nickname, String category, String city, String diffCreatedAt, int view, BoardStatus boardStatus) {
         this.id = id;
         this.title = title;
         this.image = image;
         this.price = price;
         this.content = content;
         this.detail = detail;
+        this.memberId = memberId;
         this.nickname = nickname;
         this.category = category;
         this.city = city;
         this.diffCreatedAt = diffCreatedAt;
         this.view = view;
+        this.boardStatus = boardStatus;
 //        this.commentList = commentList.stream()
 //                .map(comment -> CommentResponse.builder()
 //                        .id(comment.getId())

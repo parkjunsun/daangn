@@ -9,7 +9,15 @@
         <div class="card mb-3" style="width: 40rem; padding-top: 12px;">
             <img th:src="${board.image}" class="card-img-top" alt="...">
             <div class="card-header bg-transparent">
-                <p class="card-title" th:text="${board.nickname}" style="font-weight: bold"></p>
+                <span class="card-title" th:text="${board.nickname}" style="font-weight: bold"></span>
+                <th:block th:if="${board.memberId == memberId}">
+                    <select class="form-select" id="boardStatus" style="float: right; width: 120px;">
+                        <option th:each="status : ${T(js.daangnclone.domain.board.BoardStatus).values()}" th:value="${status.getKey()}" th:text="${status.getValue()}" th:selected="${board.boardStatus.getKey() eq status.getKey()}"></option>
+                    </select>
+                </th:block>
+                <th:block th:if="${board.memberId != memberId}">
+                    <span class="text-muted" th:text="${board.boardStatus.getValue()}" style="float: right"></span>
+                </th:block>
                 <p class="card-text" th:text="${board.city}"></p>
             </div>
             <div class="card-body">
@@ -73,7 +81,6 @@
 
 <script async th:inline="javascript">
     /*<![CDATA[*/
-
 
     let boardId = /*[[${board.id}]]*/;
     let loginMemberId = /*[[${memberId}]]*/;
@@ -178,6 +185,23 @@
                 )
             }
         });
+    });
+
+
+    $("#boardStatus").on('change', function () {
+        $.ajax({
+            url: "/board/" + boardId + "/change.do",
+            type: "post",
+            data: {"boardStatusCd" : $(this).val()},
+            sync: false,
+            success: function (message) {
+                Swal.fire({
+                    title: message.title,
+                    html: message.msg,
+                    icon: "success"
+                })
+            }
+        })
     });
 
     /*]]>*/

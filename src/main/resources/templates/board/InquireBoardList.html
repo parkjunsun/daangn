@@ -40,7 +40,8 @@
                                         <small class="text-muted" th:text="${boardList[j].city}"></small> ·
                                         <small class="text-muted" th:text="${boardList[j].diffCreatedAt}"></small>
                                     </p>
-                                    <p class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</p>
+                                    <span class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</span>
+                                    <small class="text-muted" style="margin-left: 30px;" th:text="${boardList[j].boardStatus.getValue()}"></small>
                                 </div>
                         </div>
                     </th:block>

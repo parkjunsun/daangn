@@ -1,6 +1,7 @@
 package js.daangnclone.web.board.dto;
 
 import js.daangnclone.cmn.DateUtil;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.web.comment.dto.CommentResponse;
 import lombok.Builder;
@@ -21,12 +22,13 @@ public class BoardMultiResponse {
     private String category;
     private String diffCreatedAt;
     private int view;
+    private BoardStatus boardStatus;
 
     private String nickname;
     private String city;
 
     @Builder
-    private BoardMultiResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view) {
+    private BoardMultiResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view, BoardStatus boardStatus) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -38,5 +40,6 @@ public class BoardMultiResponse {
         this.city = city;
         this.diffCreatedAt = diffCreatedAt;
         this.view = view;
+        this.boardStatus = boardStatus;
     }
 }
