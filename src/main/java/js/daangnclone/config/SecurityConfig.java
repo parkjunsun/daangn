@@ -43,12 +43,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+
 //        http
 //                .rememberMe()
-//                .key("rememberMe")
+//                .rememberMeParameter("remember")
+//                .tokenValiditySeconds(3600)
+//                .alwaysRemember(true)
 //                .userDetailsService(userDetailsService)
-//                .tokenRepository(persistentTokenRepository())
-//                .tokenValiditySeconds(60*60*24);
         http
                 .authorizeRequests()
                 .antMatchers("/").permitAll()

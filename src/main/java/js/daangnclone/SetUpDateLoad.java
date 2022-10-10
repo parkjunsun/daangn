@@ -53,6 +53,20 @@ public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent>
                     .build();
             memberRepository.save(member);
         }
+
+        if (memberRepository.findByUsername("naver-_IgsVw9FnC90aXXL9993KHqSgY73U2HTHX86XHMWzfU").isEmpty()) {
+            Member member = Member.builder()
+                    .username("naver-_IgsVw9FnC90aXXL9993KHqSgY73U2HTHX86XHMWzfU")
+                    .nickname("park95")
+                    .email("qkrwnstns52@naver.com")
+                    .password(passwordEncoder.encode("1234"))
+                    .provider("naver")
+                    .area(Area.ANYANG_DONGAN)
+                    .memberRole(MemberRole.ROLE_USER)
+                    .certifyYn("Y")
+                    .build();
+            memberRepository.save(member);
+        }
     }
 
     private void createBoard() {
