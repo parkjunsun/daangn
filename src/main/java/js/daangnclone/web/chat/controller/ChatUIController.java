@@ -8,13 +8,11 @@ import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.chat.dto.ChatResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -22,7 +20,6 @@ public class ChatUIController {
 
     private final MemberService memberService;
     private final BoardService boardService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/board/{boardId}/chat")
     public String showChat(@PathVariable Long boardId, Model model, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
@@ -37,12 +34,15 @@ public class ChatUIController {
                 .senderName(sender.getNickname())
                 .boardId(board.getId())
                 .boardTitle(board.getTitle())
+                .boardImage(board.getImage())
+                .boardPrice(board.getPrice())
                 .receiverId(board.getMember().getId())
                 .receiverName(board.getMember().getNickname())
                 .roomNum(board.getId().toString())
                 .build();
 
         model.addAttribute("chatInfo", chatInfo);
+        model.addAttribute("certifyYn", sender.getCertifyYn());
 
         return "chat/chat";
     }

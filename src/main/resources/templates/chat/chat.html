@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:replace="fragments/head::head"></head>
-
+<header th:replace="fragments/header::header"></header>
 <body>
-<div class="container-fluid">
-    <div class="row">
+<h4 class="mb-3" style="margin-left: 560px;">채팅하기</h4>><br><br>
+<div class="container" style="width: 800px;">
+    <div class="card row d-flex justify-content-center align-items-center h-100" style="padding: 30px 50px 50px 50px">
+        <div style="margin-bottom: 50px;">
+            <img th:src="${chatInfo.boardImage}" alt="boardImage" style="width: 50px; height: 50px"/>
+            <span class="card-title" th:text="${chatInfo.boardTitle}" style="font-size: 25px;"></span><br>
+            &nbsp;&nbsp;<span class="text-muted" th:text="|${#numbers.formatInteger(chatInfo.boardPrice, 0, 'COMMA')}￦|"></span>
+        </div>
         <div class="col-sm-12">
             <div id="user_chat_data" class="user_chat_data">
-                <div class="profile_name">
-                    &nbsp;&nbsp;&nbsp;&nbsp;<img src="/images/profile.png" class="mr-3 rounded-circle"> &nbsp;&nbsp;
-                    <span id="username" th:text="${chatInfo.senderName}"></span>
+                <div class="profile_name" style="text-align: center">
+                    <span id="username" th:text="${chatInfo.receiverName}" style="color: #FFA500; font-weight: bold"></span>님과의 대화입니다.<br>
+                    <small class="text-muted">보통 10분이내 응답</small>
                 </div>
                 <div class="container-fluid chat_section" id="chat-box">
 
@@ -66,7 +71,7 @@
     function getSendMsgBox(data) {
         let md = data.createdAt.substring(5, 10);
         let tm = data.createdAt.substring(11, 16);
-        convertTime = tm + "|" + md;
+        let convertTime = md + " " + tm;
 
         return `<div class="sent_msg">
             <p>${data.msg}</p>
@@ -78,7 +83,7 @@
     function getReceivedMsgBox(data) {
         let md = data.createdAt.substring(5, 10);
         let tm = data.createdAt.substring(11, 16);
-        convertTime = tm + "|" + md;
+        let convertTime = md + " " + tm;
 
         return `<div class="received_withd_msg">
             <p>${data.msg}</p>
@@ -121,7 +126,9 @@
         let chat = {
             roomNum: roomNum,
             senderId: senderId,
+            senderName: senderName,
             receiverId: receiverId,
+            receiverName: receiverName,
             msg: msgInput.value,
         };
 
@@ -153,9 +160,6 @@
 </script>
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>
-
+<footer th:replace="fragments/footer::footer"></footer>
 </html>

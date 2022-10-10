@@ -27,11 +27,6 @@ public class ChatController {
 
     private final ChatRepository chatRepository;
 
-//    @GetMapping(value = "/board/{boardId}/sender/{senderId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE) // MediaType.TEXT_EVENT_STREAM_VALUE -> SSE 프로토콜
-//    public Flux<Chat> getMsg(@PathVariable Long boardId, @PathVariable Long senderId) { //Flux -> 데이터를 지속적으로 끝없이 흘려보내고 있음(화면 보면 계속 로딩중인데, 채팅 받을 준비를 하고 있는 느낌임)
-//        return chatRepository.findByBoardIdAndSenderId(boardId, senderId)
-//                .subscribeOn(Schedulers.boundedElastic());
-//    }
 
     @GetMapping(value = "/board/{boardId}/chat/{roomNum}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public Flux<Chat> getMsg(@PathVariable Long boardId, @PathVariable String roomNum) {
