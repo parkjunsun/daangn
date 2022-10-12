@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 @Controller
@@ -22,7 +23,8 @@ public class ChatUIController {
     private final BoardService boardService;
 
     @GetMapping("/board/{boardId}/chat")
-    public String showChat(@PathVariable Long boardId, Model model, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
+    public String showChat(@PathVariable Long boardId, Model model, @RequestParam(value = "roomNum") String roomNum,
+                           @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
 
         Long senderId = principalUserDetails.getMember().getId();
 
@@ -38,7 +40,7 @@ public class ChatUIController {
                 .boardPrice(board.getPrice())
                 .receiverId(board.getMember().getId())
                 .receiverName(board.getMember().getNickname())
-                .roomNum(board.getId().toString())
+                .roomNum(roomNum)
                 .build();
 
         model.addAttribute("chatInfo", chatInfo);
