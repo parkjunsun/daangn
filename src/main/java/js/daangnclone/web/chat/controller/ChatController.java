@@ -1,37 +1,100 @@
 package js.daangnclone.web.chat.controller;
 
-
+import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.chat.Chat;
-import js.daangnclone.domain.chat.ChatRepository;
+import js.daangnclone.domain.member.Member;
+import js.daangnclone.security.PrincipalUserDetails;
+import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.chat.ChatService;
+import js.daangnclone.service.member.MemberService;
+import js.daangnclone.web.chat.dto.ChatResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
-import reactor.core.scheduler.Schedulers;
-import java.time.LocalDateTime;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
-@RestController
+import java.util.Optional;
+
+
+@Controller
 @RequiredArgsConstructor
-@Slf4j
 public class ChatController {
 
+    private final MemberService memberService;
+    private final BoardService boardService;
     private final ChatService chatService;
 
+    @GetMapping("/board/{boardId}/chat")
+    public String showChat(@PathVariable Long boardId, Model model, @RequestParam(value = "roomNum") String roomNum,
+                           @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
 
-    @GetMapping(value = "/board/{boardId}/chat/{roomNum}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flux<Chat> getMsg(@PathVariable Long boardId, @PathVariable String roomNum) {
-        return chatService.findChatRoom(roomNum)
-                .subscribeOn(Schedulers.boundedElastic());
+        Long memberId = principalUserDetails.getMember().getId();
+
+        Member findMember = memberService.findMember(memberId);
+        Board findBoard = boardService.findBoard(boardId);
+
+        Optional<Chat> findChatRoom = chatService.findChatRoom(roomNum);
+
+        Long senderId = null;
+        String senderName = null;
+        Long receiverId = null;
+        String receiverName = null;
+
+
+        //채팅하기로 채팅방이 생성되있지 않은 경우에는 채팅방을 만들고 메세지 sender를 채팅건 사람, 메세지 receiver를 상품 판매자로 간주한다.
+        if (findChatRoom.isEmpty()) {
+            Chat chat = Chat.builder()
+                    .roomNum(roomNum)
+                    .board(findBoard)
+                    .seller(findBoard.getMember())
+                    .buyer(findMember)
+                    .build();
+
+            Chat newChat = chatService.createChatRoom(chat);
+            senderId = newChat.getBuyer().getId();
+            senderName = newChat.getBuyer().getNickname();
+            receiverId = newChat.getSeller().getId();
+            receiverName = newChat.getSeller().getNickname();
+
+        }
+
+        // 이미 채팅방이 생성된 경우에는 두가지 경우로 분기한다.
+        // 1. 판매자가 채팅방에 들어온 경우 판매자가 메세지 sender, 구매자가 메세지 receiver가 된다.
+        // 2. 구매자가 채팅방에 들어온 경우 구매자가 메세지 sender, 판매자가 메세지 receiver가 된다.
+        else {
+            Chat chatRoom = findChatRoom.get();
+
+            if (findMember.equals(chatRoom.getBuyer())) {
+                senderId = chatRoom.getBuyer().getId();
+                senderName = chatRoom.getBuyer().getNickname();
+                receiverId = chatRoom.getSeller().getId();
+                receiverName = chatRoom.getSeller().getNickname();
+            } else {
+                senderId = chatRoom.getSeller().getId();
+                senderName = chatRoom.getSeller().getNickname();
+                receiverId = chatRoom.getBuyer().getId();
+                receiverName = chatRoom.getBuyer().getNickname();
+            }
+        }
+
+        ChatResponse chatInfo = ChatResponse.builder()
+                .senderId(senderId)
+                .senderName(senderName)
+                .boardId(findBoard.getId())
+                .boardTitle(findBoard.getTitle())
+                .boardImage(findBoard.getImage())
+                .boardPrice(findBoard.getPrice())
+                .receiverId(receiverId)
+                .receiverName(receiverName)
+                .roomNum(roomNum)
+                .build();
+
+        model.addAttribute("chatInfo", chatInfo);
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
+
+        return "chat/chat";
     }
-
-    @PostMapping("/chat")
-    public Mono<Chat> setMsg(@RequestBody Chat chat) { //save 한 데이터가 잘 저장됬나 보고 싶어서 Mono 타입으로 return한것
-
-        chat.setCreatedAt(LocalDateTime.now());
-        return chatService.createChatRoom(chat);
-    }
-
 }

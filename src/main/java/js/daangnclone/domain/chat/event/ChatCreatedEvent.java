@@ -1,7 +1,7 @@
 package js.daangnclone.domain.chat.event;
 
 
-import js.daangnclone.domain.chat.Chat;
+import js.daangnclone.domain.chat.Message;
 import lombok.Getter;
 
 /**
@@ -11,9 +11,9 @@ import lombok.Getter;
 @Getter
 public class ChatCreatedEvent {
 
-    private final Chat chat;
+    private final Message chat;
 
-    public ChatCreatedEvent(Chat chat) {
+    public ChatCreatedEvent(Message chat) {
         this.chat = chat;
     }
 }
