@@ -49,6 +49,7 @@ public class Board extends TimeEntity {
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Comment> commentList = new ArrayList<>();
 
+
     public void setMember(Member member) {
         this.member = member;
         member.getBoardList().add(this);

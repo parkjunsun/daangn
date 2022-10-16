@@ -16,7 +16,6 @@ import reactor.core.publisher.Mono;
 public class MessageServiceImpl implements MessageService {
 
     private final MessageRepository messageRepository;
-    private final ApplicationEventPublisher eventPublisher;  //이벤트를 발생시키기 위한 bean 주입 *EventPublisher를 사용함으로써 결합도가 낮아진다
 
     @Override
     public Flux<Message> findChatRoom(String roomNum) {
@@ -26,7 +25,6 @@ public class MessageServiceImpl implements MessageService {
     @Override
     @Transactional
     public Mono<Message> createChatRoom(Message chat) {
-        eventPublisher.publishEvent(new ChatCreatedEvent(chat));
         return messageRepository.save(chat);
     }
 }

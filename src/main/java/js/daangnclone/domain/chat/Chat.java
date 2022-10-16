@@ -3,14 +3,13 @@ package js.daangnclone.domain.chat;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter @Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Chat extends TimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

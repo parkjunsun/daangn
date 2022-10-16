@@ -9,6 +9,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
 import js.daangnclone.service.board.BoardService;
+import js.daangnclone.service.chat.ChatService;
 import js.daangnclone.service.comment.CommentService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
@@ -37,6 +38,7 @@ public class BoardController {
     private final BoardService boardService;
     private final AttentionService attentionService;
     private final CommentService commentService;
+    private final ChatService chatService;
 
     @GetMapping("/")
     public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
@@ -103,16 +105,19 @@ public class BoardController {
         Board findBoard = boardService.findBoard(boardId);
 
         String attentionInpYn = attentionService.getInpAttentionYn(findMember, findBoard);
-        long cnt = attentionService.countAttentionInBoard(findBoard);
+        long attentionCnt = attentionService.countAttentionInBoard(findBoard);
+        long chatRoomCnt = chatService.getCountChatRoom(findBoard);
 
         model.addAttribute("board", boardResponse);
         model.addAttribute("commentList", commentResponseList);
         model.addAttribute("attentionInpYn", attentionInpYn);
-        model.addAttribute("attentionCnt", cnt);
+        model.addAttribute("attentionCnt", attentionCnt);
         model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("memberId", findMember.getId());
+        model.addAttribute("chatRoomCnt", chatRoomCnt);
+
         return "board/InquireBoard";
     }
 

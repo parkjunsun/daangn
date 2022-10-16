@@ -27,7 +27,7 @@
                 <br><br>
                 <p class="card-text" th:utext="${board.content}"></p>
                 <br><br>
-                <small th:class="text-muted">채팅 </small><small id="chatCnt" th:class="text-muted">1</small> ·
+                <small th:class="text-muted">채팅 </small><small id="chatCnt" th:class="text-muted" th:text="${chatRoomCnt}"></small> ·
                 <small th:class="text-muted">관심 </small><small id="attentionCnt" th:class="text-muted" th:text="${attentionCnt}"></small> ·
                 <small th:class="text-muted">조회 </small><small id="boardView" th:class="text-muted" th:text="${board.view}"></small>
             </div>
@@ -91,7 +91,7 @@
             $("#chatBtn").hide();
         }
 
-        let encryptBoardId = btoa(boardId);
+        let encryptBoardId = btoa(boardId.toString() + loginMemberId.toString() + boardMemberId.toString());
         $("#chatBtn").attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
     });
 
