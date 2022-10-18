@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="row py-5 text-center">
+        <div class="col-9">
+            <div class="card" th:if="${chatList.size() > 0}">
+                <div class="card-header">
+                    나의 판매상품에 관심이 추가 됐습니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a th:href="@{${chat.link}}" th:each="chat : ${chatList}" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <small class="text-muted" th:text="${chat.opponentName}"></small>
+                            <small class="text-muted"><span th:text="${chat.opponentAddress}" style="color: #0090F9"></span>님이 [[${chat.boardImage}]]</small>
+<!--                            <small class="fromNow text-muted" th:text="${attentionAlarm.diffCreatedAt}"></small>-->
+                        </div>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

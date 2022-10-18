@@ -3,6 +3,7 @@ package js.daangnclone.domain.chat.event;
 import js.daangnclone.domain.chat.Message;
 import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.service.board.BoardService;
+import js.daangnclone.service.chat.ChatService;
 import js.daangnclone.service.chatNotification.ChatNotificationService;
 import js.daangnclone.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class MessageEventListener {
     private final ChatNotificationService chatNotificationService;
     private final MemberService memberService;
     private final BoardService boardService;
+    private final ChatService chatService;
 
     @EventListener
     public void handleMessageCreatedEvent(MessageCreatedEvent event) {
