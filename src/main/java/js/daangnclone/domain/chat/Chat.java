@@ -2,10 +2,13 @@ package js.daangnclone.domain.chat;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @Setter
 @Entity
@@ -30,11 +33,14 @@ public class Chat extends TimeEntity {
     @JoinColumn(name = "buyerId")
     private Member buyer;
 
+    private String lastComment;
+
     @Builder
-    public Chat(String roomNum, Board board, Member seller, Member buyer) {
+    public Chat(String roomNum, Board board, Member seller, Member buyer, String lastComment) {
         this.roomNum = roomNum;
         this.board = board;
         this.seller = seller;
-        this. buyer = buyer;
+        this.buyer = buyer;
+        this.lastComment = lastComment;
     }
 }

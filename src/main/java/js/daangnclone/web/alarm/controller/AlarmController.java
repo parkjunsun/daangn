@@ -79,7 +79,6 @@ public class AlarmController {
         ArrayList<AlarmResponse> newAttentionAlarmList = new ArrayList<>();
         ArrayList<AlarmResponse> newCommentAlarmList = new ArrayList<>();
         ArrayList<AlarmResponse> newLikesAlarmList = new ArrayList<>();
-        ArrayList<AlarmResponse> newChatAlarmList = new ArrayList<>();
         for (AlarmResponse alarm : alarmList) {
             switch (alarm.getAlarmType()) {
                 case ATTENTION_CREATED:
@@ -91,9 +90,6 @@ public class AlarmController {
                 case LIKES_CREATED:
                     newLikesAlarmList.add(alarm);
                     break;
-                case CHAT_CREATED:
-                    newChatAlarmList.add(alarm);
-                    break;
             }
         }
 
@@ -103,6 +99,5 @@ public class AlarmController {
         model.addAttribute("newAttentionAlarmList", newAttentionAlarmList);
         model.addAttribute("newCommentAlarmList", newCommentAlarmList);
         model.addAttribute("newLikesAlarmList", newLikesAlarmList);
-        model.addAttribute("newChatAlarmList", newChatAlarmList);
     }
 }

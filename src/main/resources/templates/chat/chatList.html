@@ -4,21 +4,35 @@
 <header th:replace="fragments/header::header"></header>
 <body>
 <div class="container">
-    <div class="row py-5 text-center">
+    <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="col-9">
             <div class="card" th:if="${chatList.size() > 0}">
                 <div class="card-header">
-                    나의 판매상품에 관심이 추가 됐습니다.
+                    채팅이 추가됬어요 대화를 나눠 보세요
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${chat.link}}" th:each="chat : ${chatList}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted" th:text="${chat.opponentName}"></small>
-                            <small class="text-muted"><span th:text="${chat.opponentAddress}" style="color: #0090F9"></span>님이 [[${chat.boardImage}]]</small>
-<!--                            <small class="fromNow text-muted" th:text="${attentionAlarm.diffCreatedAt}"></small>-->
+                        <div style="float:left; display: inline-block; margin-right: 5px; margin-top: 10px;">
+                            <div th:if="${chat.checkedYn eq 'N'}" id="circle1"></div>
+                            <div th:if="${chat.checkedYn eq 'Y'}" id="circle2"></div>
+                        </div>
+                        <div class="justify-content-between">
+                            <div style="float: left">
+                                <span th:text="${chat.opponentName}" style="color: #0090F9"></span> <small class="text-muted" th:text="${chat.opponentAddress}"></small> · <small class="fromNow text-muted" th:text="${chat.diffCreatedAt}"></small><br>
+                                <span th:text="${chat.lastComment}"></span>
+                            </div>
+                            <div style="float: right;">
+                                <small class="text-muted" th:text="${chat.boardTitle}"></small>
+                                <img th:src="${chat.boardImage}" style="width: 60px; height: 60px;">
+                            </div>
                         </div>
                     </a>
                 </ul>
+            </div>
+            <div class="card" th:if="${chatList.size() == 0}">
+                <div class="card-header">
+                    아직 채팅이 없어요. 사람들과 채팅을 주고 받아보세요
+                </div>
             </div>
         </div>
     </div>

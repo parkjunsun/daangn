@@ -30,15 +30,18 @@ public class ChatNotification {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    private String roomNum;
+
     private LocalDateTime createdAt;
 
     @Builder
-    public ChatNotification(String checkedYn, String clickYn, Member sender, Member receiver, Board board, LocalDateTime createdAt) {
+    public ChatNotification(String checkedYn, String clickYn, Member sender, Member receiver, Board board, String roomNum, LocalDateTime createdAt) {
         this.checkedYn = checkedYn;
         this.clickYn = clickYn;
         this.sender = sender;
         this.receiver = receiver;
         this.board = board;
+        this.roomNum = roomNum;
         this.createdAt = createdAt;
     }
 

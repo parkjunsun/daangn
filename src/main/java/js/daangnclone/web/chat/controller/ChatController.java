@@ -2,10 +2,12 @@ package js.daangnclone.web.chat.controller;
 
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.chat.Chat;
+import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.chat.ChatService;
+import js.daangnclone.service.chatNotification.ChatNotificationService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.chat.dto.ChatResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -26,6 +29,7 @@ public class ChatController {
     private final MemberService memberService;
     private final BoardService boardService;
     private final ChatService chatService;
+    private final ChatNotificationService chatNotificationService;
 
     @GetMapping("/board/{boardId}/chat")
     public String showChat(@PathVariable Long boardId, Model model, @RequestParam(value = "roomNum") String roomNum,
@@ -53,11 +57,11 @@ public class ChatController {
                     .buyer(findMember)
                     .build();
 
-            Chat newChat = chatService.createChatRoom(chat);
-            senderId = newChat.getBuyer().getId();
-            senderName = newChat.getBuyer().getNickname();
-            receiverId = newChat.getSeller().getId();
-            receiverName = newChat.getSeller().getNickname();
+//            Chat newChat = chatService.createChatRoom(chat);
+            senderId = chat.getBuyer().getId();
+            senderName = chat.getBuyer().getNickname();
+            receiverId = chat.getSeller().getId();
+            receiverName = chat.getSeller().getNickname();
 
         }
 
@@ -92,8 +96,12 @@ public class ChatController {
                 .roomNum(roomNum)
                 .build();
 
+        List<ChatNotification> chatNotificationList = chatNotificationService.findChatNotificationList(roomNum, findMember);
+        chatNotificationService.markAsRead(chatNotificationList);
+
         model.addAttribute("chatInfo", chatInfo);
         model.addAttribute("certifyYn", findMember.getCertifyYn());
+        model.addAttribute("nickname", findMember.getNickname());
 
         return "chat/chat";
     }

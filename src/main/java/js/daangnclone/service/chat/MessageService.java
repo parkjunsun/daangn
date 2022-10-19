@@ -7,6 +7,6 @@ import reactor.core.publisher.Mono;
 public interface MessageService {
 
     Flux<Message> findChatRoom(String roomNum);
-    Mono<Message> createChatRoom(Message chat);
+    Mono<Message> createMessage(Message message);
 
 }

@@ -1,6 +1,7 @@
 package js.daangnclone.config;
 
 import js.daangnclone.domain.alarm.interceptor.AlarmInterceptor;
+import js.daangnclone.domain.chatNotification.interceptor.ChatNotificationInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AlarmInterceptor alarmInterceptor;
+    private final ChatNotificationInterceptor chatNotificationInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -26,6 +28,8 @@ public class WebConfig implements WebMvcConfigurer {
         staticResourcePath.add("/resources/**");
         staticResourcePath.add("/error");
         registry.addInterceptor(alarmInterceptor)
+                .excludePathPatterns(staticResourcePath);
+        registry.addInterceptor(chatNotificationInterceptor)
                 .excludePathPatterns(staticResourcePath);
     }
 }

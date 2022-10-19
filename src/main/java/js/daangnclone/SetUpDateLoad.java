@@ -67,6 +67,20 @@ public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent>
                     .build();
             memberRepository.save(member);
         }
+
+        if (memberRepository.findByUsername("google-107231215495405360973").isEmpty()) {
+            Member member = Member.builder()
+                    .username("google-107231215495405360973")
+                    .nickname("호날두")
+                    .email("qkrwnstns52@gmail.com")
+                    .password(passwordEncoder.encode("1234"))
+                    .provider("google")
+                    .area(Area.ANYANG_DONGAN)
+                    .memberRole(MemberRole.ROLE_USER)
+                    .certifyYn("Y")
+                    .build();
+            memberRepository.save(member);
+        }
     }
 
     private void createBoard() {

@@ -50,13 +50,14 @@
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
                     <a class="nav-link" href="/chatList" role="button">
-                        <img src="https://img.icons8.com/windows/32/000000/messaging-.png"/>
+                        <img th:if="${!hasChatNotification}" src="https://img.icons8.com/external-anggara-detail-outline-anggara-putra/32/000000/external-chatting-support-anggara-detail-outline-anggara-putra-2.png"/>
+                        <img th:if="${hasChatNotification}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-chatting-support-anggara-blue-anggara-putra-2.png"/>
                     </a>
                 </li>
                 <li id="alarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
                     <a class="nav-link alarmClass" href="#" role="button" data-bs-toggle="dropdown">
-                        <img th:if="${!hasAlarm}" th:src="@{/images/alarm.png}" alt="alarm" class="alarmClass" style="width:32px; height: 32px"/>
-                        <img th:if="${hasAlarm}" th:src="@{/images/add-alarm.png}" alt="newAlarm" class="alarmClass" style="width:32px; height: 32px"/>
+                        <img th:if="${!hasAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" class="alarmClass"/>
+                        <img th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" class="alarmClass"/>
                     </a>
                     <ul id="alarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
 

@@ -1,11 +1,9 @@
 package js.daangnclone.service.chatNotification;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.chatNotification.ChatNotificationRepository;
 import js.daangnclone.domain.member.Member;
-import js.daangnclone.web.chatNotification.dto.ChatNotificationResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,9 +25,10 @@ public class ChatNotificationServiceImpl implements ChatNotificationService{
         chatNotificationRepository.save(chatNotification);
     }
 
+
     @Override
-    public ChatNotification findChatNotification(Long chatNotificationId) {
-        return chatNotificationRepository.findById(chatNotificationId).orElseThrow(() -> new CustomException(CHAT_NOTIFICATION_NOT_FOUND));
+    public List<ChatNotification> findChatNotificationList(String roomNum, Member receiver) {
+        return chatNotificationRepository.findByRoomNumAndReceiver(roomNum, receiver);
     }
 
     @Override
@@ -44,8 +43,4 @@ public class ChatNotificationServiceImpl implements ChatNotificationService{
         chatNotification.click();
     }
 
-    @Override
-    public List<ChatNotificationResponse> inquireChatNotificationList(Member receiver, String checkedYn) {
-        return null;
-    }
 }

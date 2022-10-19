@@ -31,6 +31,7 @@ public class MessageEventListener {
                 .sender(memberService.findMember(message.getSenderId()))
                 .receiver(memberService.findMember(message.getReceiverId()))
                 .board(boardService.findBoard(message.getBoardId()))
+                .roomNum(message.getRoomNum())
                 .checkedYn("N")
                 .clickYn("N")
                 .createdAt(LocalDateTime.now())

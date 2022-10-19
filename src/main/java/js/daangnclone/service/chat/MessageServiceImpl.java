@@ -2,7 +2,6 @@ package js.daangnclone.service.chat;
 
 import js.daangnclone.domain.chat.Message;
 import js.daangnclone.domain.chat.MessageRepository;
-import js.daangnclone.domain.chat.event.ChatCreatedEvent;
 import js.daangnclone.domain.chat.event.MessageCreatedEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,7 +25,7 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     @Transactional
-    public Mono<Message> createChatRoom(Message message) {
+    public Mono<Message> createMessage(Message message) {
         eventPublisher.publishEvent(new MessageCreatedEvent(message));
         return messageRepository.save(message);
     }
