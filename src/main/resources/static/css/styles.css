@@ -19,8 +19,8 @@
     border-radius: .25em;
 }
 
-body {
-    min-height: 100vh;
+html, body {
+    height: 100%;
 }
 
 .input-form {
