@@ -39,7 +39,10 @@ public class CommentServiceImpl implements CommentService{
         comment.setBoard(board);
         comment.setMember(member);
 
-        eventPublisher.publishEvent(new CommentCreatedEvent(comment));
+        //로그인 사용자와 게시글 사용자가 다를 때만 댓글 알림 이벤트를 생성한다.
+        if (!member.equals(board.getMember())) {
+            eventPublisher.publishEvent(new CommentCreatedEvent(comment));
+        }
 
         return commentRepository.save(comment);
     }

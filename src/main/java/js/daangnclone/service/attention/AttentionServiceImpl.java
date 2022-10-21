@@ -37,7 +37,11 @@ public class AttentionServiceImpl implements AttentionService{
         Attention attention = new Attention();
         attention.setMember(member);
         attention.setBoard(board);
-        eventPublisher.publishEvent(new AttentionCreatedEvent(attention));
+
+        //로그인 사용자와 게시글 사용자가 다를 때만 관심 알림 이벤트를 생성한다.
+        if (!member.equals(board.getMember())) {
+            eventPublisher.publishEvent(new AttentionCreatedEvent(attention));
+        }
         //관심이 만들어지는 시점에 이벤트를 발생시킨다.
         //비동기처리(다른 스레드에서 처리)를 하지 않으면 여기서 RuntimeException이 발생했을 경우
         // @Transactional의 영향을 받게 되어 rollback이 발생하므로 주의해야한다.

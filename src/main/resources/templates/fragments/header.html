@@ -55,9 +55,9 @@
                     </a>
                 </li>
                 <li id="alarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
-                    <a class="nav-link alarmClass" href="#" role="button" data-bs-toggle="dropdown">
-                        <img th:if="${!hasAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" class="alarmClass"/>
-                        <img th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" class="alarmClass"/>
+                    <a id="alarmBtn" class="nav-link alarmClass" href="#" role="button" data-bs-toggle="dropdown">
+                        <img id="notHasAlarm" th:if="${!hasAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="alarm" class="alarmClass"/>
+                        <img id="hasAlarm" th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newAlarm" class="alarmClass"/>
                     </a>
                     <ul id="alarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
 
@@ -86,6 +86,13 @@
            if(!$(e.target).hasClass("alarmClass")) {
                $("#alarmList").css("display", "none");
            }
+        });
+
+        $("#hasAlarm").on('click', function () {
+            $("#hasAlarm").remove();
+            $("#alarmBtn").append(
+                "<img id=\"notHasAlarm\" src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png\" alt=\"alarm\" class=\"alarmClass\"/>"
+            );
         });
 
         $("#alarm").on('click', function () {
