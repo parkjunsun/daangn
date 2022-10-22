@@ -85,9 +85,10 @@ public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent>
 
     private void createBoard() {
 
-        Member member = memberRepository.findByUsername("kakao-1796091073").orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Member kakaoMember = memberRepository.findByUsername("kakao-1796091073").orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        Member naverMember = memberRepository.findByUsername("naver-_IgsVw9FnC90aXXL9993KHqSgY73U2HTHX86XHMWzfU").orElseThrow(() -> new CustomException(USER_NOT_FOUND));
 
-        Board board = Board.builder()
+        Board board1 = Board.builder()
                 .title("보테가 팝니다~")
                 .category(Category.of(106001L))
                 .content("저렴하게 팝니다.\n직거래 선호합니다\n연락주세요\n".replace("\r\n", "<br>"))
@@ -95,10 +96,23 @@ public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent>
                 .price(750000)
                 .boardStatus(BoardStatus.SALE_ON)
                 .image("https://contents.lotteon.com/itemimage/_v182940/LE/12/11/46/39/30/_1/26/48/67/05/9/LE1211463930_1264867059_1.jpg/dims/resizef/554X554")
-                .member(member)
+                .member(kakaoMember)
                 .build();
 
-        boardRepository.save(board);
+        Board board2 = Board.builder()
+                .title("JPA 책 팔아욤~")
+                .category(Category.of(108000L))
+                .content("2020년 구매.\r\n사용감X\r\n편한게 연락ㄱㄱ\r\n".replace("\r\n", "<br>"))
+                .detail("JPA")
+                .price(38000)
+                .boardStatus(BoardStatus.SALE_ON)
+                .image("https://shopping-phinf.pstatic.net/main_3243600/32436007738.20220527090954.jpg?type=w300")
+                .member(naverMember)
+                .build();
+
+
+        boardRepository.save(board1);
+        boardRepository.save(board2);
     }
 
 

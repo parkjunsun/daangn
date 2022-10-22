@@ -4,15 +4,19 @@ import js.daangnclone.Exception.CustomException;
 import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.Category;
 import js.daangnclone.cmn.DateUtil;
+import js.daangnclone.domain.attention.AttentionRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.board.event.BoardCreatedEvent;
+import js.daangnclone.domain.chat.ChatRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,6 +33,9 @@ import static js.daangnclone.Exception.ErrorCode.*;
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
+    private final AttentionRepository attentionRepository;
+    private final ChatRepository chatRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
@@ -44,6 +51,7 @@ public class BoardServiceImpl implements BoardService{
                 .member(member)
                 .build();
 
+        eventPublisher.publishEvent(new BoardCreatedEvent(board));
         return boardRepository.save(board);
     }
 
@@ -64,6 +72,8 @@ public class BoardServiceImpl implements BoardService{
                         .nickname(board.getMember().getNickname())
                         .city(board.getMember().getArea().getAreaName())
                         .boardStatus(board.getBoardStatus())
+                        .attentionCnt(attentionRepository.countByBoard(board))
+                        .chatRoomCnt(chatRepository.countByBoard(board))
                         .build())
                 .collect(Collectors.toList());
     }

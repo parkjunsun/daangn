@@ -23,7 +23,8 @@
                             </div>
                             <div style="float: right;">
                                 <small class="text-muted" th:text="${chat.boardTitle}"></small>
-                                <img th:src="${chat.boardImage}" style="width: 60px; height: 60px;">
+                                <img th:src="${chat.boardImage}" style="width: 60px; height: 60px;"><br>
+                                <small class="text-muted" style="float: right" th:text="${chat.boardStatus.getValue()}"></small>
                             </div>
                         </div>
                     </a>

@@ -1,5 +1,6 @@
 package js.daangnclone.web.chat.controller;
 
+import js.daangnclone.Exception.CustomException;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.chat.Chat;
 import js.daangnclone.domain.chatNotification.ChatNotification;
@@ -14,9 +15,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +39,7 @@ public class ChatController {
                            @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
 
         Long memberId = principalUserDetails.getMember().getId();
+        memberService.validateCertifyLocation(memberId);
 
         Member findMember = memberService.findMember(memberId);
         Board findBoard = boardService.findBoard(boardId);
@@ -91,6 +95,7 @@ public class ChatController {
                 .boardTitle(findBoard.getTitle())
                 .boardImage(findBoard.getImage())
                 .boardPrice(findBoard.getPrice())
+                .boardStatus(findBoard.getBoardStatus())
                 .receiverId(receiverId)
                 .receiverName(receiverName)
                 .roomNum(roomNum)
@@ -104,5 +109,11 @@ public class ChatController {
         model.addAttribute("nickname", findMember.getNickname());
 
         return "chat/chat";
+    }
+
+    @ExceptionHandler
+    public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
+        return "redirect:/";
     }
 }

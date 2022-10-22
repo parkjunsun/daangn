@@ -1,10 +1,13 @@
 package js.daangnclone.domain.like.event;
 
+import js.daangnclone.domain.activity.Activity;
+import js.daangnclone.domain.activity.ActivityType;
 import js.daangnclone.domain.alarm.Alarm;
 import js.daangnclone.domain.alarm.AlarmType;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.comment.event.CommentCreatedEvent;
 import js.daangnclone.domain.like.Likes;
+import js.daangnclone.service.activity.ActivityService;
 import js.daangnclone.service.alarm.AlarmService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -19,6 +22,7 @@ import java.time.LocalDateTime;
 public class LikesEventListener {
 
     private final AlarmService alarmService;
+    private final ActivityService activityService;
 
     @EventListener
     public void handleCommentCreatedEvent(LikesCreatedEvent event) {
@@ -36,6 +40,19 @@ public class LikesEventListener {
                 .build();
 
         alarmService.load(newAlarm);
+
+
+        Activity newActivity = Activity.builder()
+                .message("님이 등록한 상품에 달린 댓글에 좋아요를 눌렀습니다.")
+                .content(likes.getComment().getBoard().getTitle())
+                .link("/board/" + likes.getComment().getBoard().getId())
+                .activityType(ActivityType.LIKES_CREATE)
+                .sender(likes.getMember())
+                .receiver(likes.getComment().getBoard().getMember())
+                .createdAt(LocalDateTime.now())
+                .build();
+
+        activityService.load(newActivity);
 
     }
 }

@@ -4,13 +4,17 @@ import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.attention.event.AttentionCreatedEvent;
 import js.daangnclone.domain.attention.AttentionRepository;
 import js.daangnclone.domain.board.Board;
+import js.daangnclone.domain.chat.ChatRepository;
 import js.daangnclone.domain.member.Member;
+import js.daangnclone.web.attention.dto.AttentionResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +22,7 @@ import java.util.Optional;
 public class AttentionServiceImpl implements AttentionService{
 
     private final AttentionRepository attentionRepository;
+    private final ChatRepository chatRepository;
     private final ApplicationEventPublisher eventPublisher;  //이벤트를 발생시키기 위한 bean 주입 *EventPublisher를 사용함으로써 결합도가 낮아진다
 
     @Override
@@ -69,5 +74,23 @@ public class AttentionServiceImpl implements AttentionService{
     @Override
     public long countAttentionInBoard(Board board) {
         return attentionRepository.countByBoard(board);
+    }
+
+    @Override
+    public List<AttentionResponse> inquireAttentionList(Member member) {
+        List<Attention> attentionList = attentionRepository.findByMember(member);
+
+        return attentionList.stream()
+                .map(attention -> AttentionResponse.builder()
+                        .link("/board/" + attention.getBoard().getId())
+                        .boardTitle(attention.getBoard().getTitle())
+                        .boardImage(attention.getBoard().getImage())
+                        .boardPrice(attention.getBoard().getPrice())
+                        .boardStatus(attention.getBoard().getBoardStatus())
+                        .area(attention.getBoard().getMember().getArea())
+                        .attentionCnt(attentionRepository.countByBoard(attention.getBoard()))
+                        .chatRoomCnt(chatRepository.countByBoard(attention.getBoard()))
+                        .build())
+                .collect(Collectors.toList());
     }
 }

@@ -7,7 +7,7 @@
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="card mb-3" style="width: 40rem; padding-top: 12px;">
-            <img th:src="${board.image}" class="card-img-top" alt="...">
+            <img th:src="${board.image}" class="card-img-top" alt="..." style="width: 610px; height: 500px;">
             <div class="card-header bg-transparent">
                 <span class="card-title" th:text="${board.nickname}" style="font-weight: bold"></span>
                 <th:block th:if="${board.memberId == memberId}">
@@ -37,7 +37,7 @@
                     <img th:if="${attentionInpYn eq 'Y'}"id="heart-red" src="https://img.icons8.com/color/50/000000/novel--v1.png"/>
                 </button>
                 <span class="card-text" th:text="|${#numbers.formatInteger(board.price, 0, 'COMMA')}￦|"></span>
-                <a id="chatBtn" class="btn btn-primary" style="float:right; background-color: orange; border-color: orange; color: white">채팅하기</a>
+                <button id="chatBtn" class="btn btn-primary" style="float:right; background-color: orange; border-color: orange; color: white">채팅하기</button>
             </div>
         </div>
         <div style="padding:50px; border: 1px solid lightgray; border-radius: 20px; display: flex; justify-content: center; margin-top: 50px;">
@@ -85,14 +85,21 @@
     let boardId = /*[[${board.id}]]*/;
     let loginMemberId = /*[[${memberId}]]*/;
     let boardMemberId = /*[[${board.memberId}]]*/;
+    let boardStatus = /*[[${board.boardStatus}]]*/;
 
     $(function () {
         if (loginMemberId === boardMemberId) {
             $("#chatBtn").hide();
         }
 
+        if (boardStatus === "SALE_COMP" || boardStatus === "SALE_RSRVT"){
+            $("#chatBtn").attr("disabled", true);
+        }
+
         let encryptBoardId = btoa(boardId.toString() + loginMemberId.toString() + boardMemberId.toString());
-        $("#chatBtn").attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
+        $("#chatBtn").click(function () {
+            $(location).attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
+        })
     });
 
     $("#attentionBtn").on('click', function () {
@@ -153,6 +160,7 @@
             dataType : "json",
             sync: false,
             success: function (writeInfo) {
+                $("#content").val("");
 
                 let imgProvider;
 

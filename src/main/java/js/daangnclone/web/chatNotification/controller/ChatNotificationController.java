@@ -30,7 +30,7 @@ public class ChatNotificationController {
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("nickname", findMember.getNickname());
 
-        return "chat/chatList";
+        return "chat/InquireChatList";
     }
 
 }

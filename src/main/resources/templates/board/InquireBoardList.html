@@ -31,6 +31,7 @@
                 <div th:if="${i % 4 eq 0}" class="row">
                     <th:block th:each="j : ${#numbers.sequence(i, i+3)}">
                         <div th:if="${j le boardList.size() - 1}" class="card border-info mb-3" style="width: 14rem; cursor: pointer; padding-top: 12px; margin-left: 40px;" th:onclick="|location.href='/board/${boardList[j].id}'|">
+                                <small class="text-muted" style="margin-bottom: 10px;" th:text="${boardList[j].boardStatus.getValue()}"></small>
                                 <img class="card-img-top" th:src="${boardList[j].image}" alt="Card image cap" style="width: 200px; height: 150px;">
                                 <div class="card-body">
                                     <h6 class="card-title" style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold" th:text="${boardList[j].title}">Card title</h6>
@@ -39,7 +40,12 @@
                                         <small class="text-muted" th:text="${boardList[j].diffCreatedAt}"></small>
                                     </p>
                                     <span class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</span>
-                                    <small class="text-muted" style="margin-left: 30px;" th:text="${boardList[j].boardStatus.getValue()}"></small>
+                                    <div style="float: right;">
+                                        <img src="https://img.icons8.com/external-anggara-detail-outline-anggara-putra/20/000000/external-chatting-support-anggara-detail-outline-anggara-putra-2.png"/>
+                                        <small id="chatCnt" th:class="text-muted" th:text="${boardList[j].chatRoomCnt}"></small>&nbsp;
+                                        <img id="heart-white" src="https://img.icons8.com/ios/20/000000/novel--v1.png"/>
+                                        <small id="attentionCnt" th:class="text-muted" th:text="${boardList[j].attentionCnt}"></small>
+                                    </div>
                                 </div>
                         </div>
                     </th:block>

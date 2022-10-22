@@ -30,7 +30,7 @@
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/profile"><img src="https://img.icons8.com/material-outlined/24/000000/user--v1.png" alt="profile"/> 나의 프로필</a></li>
-                        <li><a class="dropdown-item" href="/activity"><img src="https://img.icons8.com/ios-glyphs/24/000000/activity-history.png" alt="activity"/> 나의 활동</a></li>
+                        <li><a class="dropdown-item" href="/activityList"><img src="https://img.icons8.com/ios-glyphs/24/000000/activity-history.png" alt="activity"/> 나의 활동</a></li>
                         <li><a class="dropdown-item" href="/address"><img src="https://img.icons8.com/fluency-systems-regular/24/000000/user-location.png" alt="setting"/> 동네 설정</a></li>
                         <li><a class="dropdown-item" href="/certify"><img src="https://img.icons8.com/ios-glyphs/24/000000/center-direction.png" alt="certify"/> 동네 인증</a></li>
                         <li><hr class="dropdown-divider"></li>
@@ -45,7 +45,7 @@
                         <li><a class="dropdown-item" href="/board/new"><img src="https://img.icons8.com/ios/24/000000/add-to-collection--v2.png" alt="new"/> 물건 등록</a></li>
                         <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/ios/24/000000/land-sales.png" alt="sale"/> 판매 내역</a></li>
                         <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="buy"/> 구매 내역</a></li>
-                        <li><a class="dropdown-item" href="#"><img src="https://img.icons8.com/ios/24/000000/novel--v1.png" alt="attention"/> 관심목록</a></li>
+                        <li><a class="dropdown-item" href="/attentionList"><img src="https://img.icons8.com/ios/24/000000/novel--v1.png" alt="attention"/> 관심목록</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
@@ -70,9 +70,11 @@
         <div class="container" style="margin-top: 30px;">
             <div style="float: left">
                 <p style="font-family: 'Jua', sans-serif; color :orange; font-size: 30px;">따듯한 거래를 시작해보세요~</p>
-                <small class="text-muted">지금 동네인증을 하고 안양시 동안구 근처 이웃 326,823명과 거래하세요.</small>
+                <small class="text-muted">지금 동네인증을 하고 안양시 동안구 근처 이웃 326,823명과 거래하세요.</small><br>
+                <small class="text-muted">동네 미인증시 서비스 이용이 제한될 수 있습니다.</small>
             </div>
             <div style="float: right">
+                <br>
                 <a href="/certify" class="btn btn-primary" style="float:right; background-color: orange; border-color: orange; color: white">동네인증하고 시작하기</a>
             </div>
         </div>

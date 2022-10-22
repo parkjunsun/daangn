@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9">
+            <div class="card" th:if="${attentionList.size() > 0}">
+                <div class="card-header">
+                    관심등록 상품입니다. 확인해 보세요.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a th:href="@{${attention.link}}" th:each="attention : ${attentionList}" class="list-group-item list-group-item-action">
+                        <div class="justify-content-between">
+                            <div style="float: left">
+                                <img th:src="${attention.boardImage}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                                <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="${attention.boardTitle}"></h4><br>
+                                    <small class="text-muted" th:text="${attention.area.getAreaName()}"></small><br>
+                                    <small style="font-weight: bold" th:text="|${#numbers.formatInteger(attention.boardPrice, 0, 'COMMA')}￦|"></small>
+                                </div>
+                            </div>
+                            <div style="float: right; margin-top: 35px;">
+                                <small style="font-weight: bold; font-size: 20px;" th:text="${attention.boardStatus.getValue()}"></small><br>
+                                <div style="margin-top: 8px;">
+                                    <img src="https://img.icons8.com/external-anggara-detail-outline-anggara-putra/20/000000/external-chatting-support-anggara-detail-outline-anggara-putra-2.png"/>
+                                    <small class="text-muted" style="" th:text="${attention.attentionCnt}"></small>&nbsp;
+                                    <img id="heart-white" src="https://img.icons8.com/ios/20/000000/novel--v1.png"/>
+                                    <small class="text-muted" style="" th:text="${attention.chatRoomCnt}"></small>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </ul>
+            </div>
+            <div class="card" th:if="${attentionList.size() == 0}">
+                <div class="card-header">
+                    아직 등록된 관심 상품이 없어요. 관심상품을 등록하고 확인해보세요.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

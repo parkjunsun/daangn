@@ -10,6 +10,7 @@
             <img th:src="${chatInfo.boardImage}" alt="boardImage" style="width: 50px; height: 50px"/>
             <span class="card-title" th:text="${chatInfo.boardTitle}" style="font-size: 25px;"></span><br>
             &nbsp;&nbsp;<span class="text-muted" th:text="|${#numbers.formatInteger(chatInfo.boardPrice, 0, 'COMMA')}￦|"></span>
+            &nbsp;&nbsp;<span class="text-muted" th:text="${chatInfo.boardStatus.getValue()}"></span>
         </div>
         <div class="col-sm-12">
             <div id="user_chat_data" class="user_chat_data">
@@ -17,12 +18,12 @@
                     <span id="username" th:text="${chatInfo.receiverName}" style="color: #FFA500; font-weight: bold"></span>님과의 대화입니다.<br>
                     <small class="text-muted">보통 10분이내 응답</small>
                 </div>
-                <div class="container-fluid chat_section" id="chat-box" style="overflow: auto; height: 800px;">
+                <div class="container-fluid chat_section" id="chat-box" style="overflow: auto; height: 600px;">
 
                 </div>
                 <div class="type_msg">
                     <div class="input_msg_write">
-                        <input id="chat-outgoing-msg" type="text" class="write_msg" placeholder="Type a message" />
+                        <input id="chat-outgoing-msg" type="text" class="write_msg" placeholder="메세지를 입력하세요" />
                         <button id="chat-outgoing-button" class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
                     </div>
                 </div>
@@ -42,12 +43,26 @@
     let senderName = chatInfo.senderName;
     let boardId = chatInfo.boardId;
     let boardTitle = chatInfo.boardTitle;
+    let boardStatus = chatInfo.boardStatus;
     let receiverId = chatInfo.receiverId;
     let receiverName = chatInfo.receiverName;
-
     let roomNum = chatInfo.roomNum;
 
-    //document.querySelector("#username").innerHTML = senderName;
+    let boardStatusValue;
+    if (boardStatus === "SALE_COMP") {
+        boardStatusValue = "판매완료";
+    } else if (boardStatus === "SALE_RSRVT") {
+        boardStatusValue = "예약완료"
+    } else {
+        boardStatusValue = "판매중";
+    }
+
+    $(function () {
+       if (boardStatus === "SALE_COMP" || boardStatus === "SALE_RSRVT") {
+           $("#chat-outgoing-msg").attr("disabled", true).attr("placeholder", `${boardStatusValue}된 상품으로 메세지를 보낼 수 없어요`);
+           $("#chat-outgoing-button").attr("disabled", true);
+       }
+    });
 
     // SSE 연결하기
     const eventSource = new EventSource(

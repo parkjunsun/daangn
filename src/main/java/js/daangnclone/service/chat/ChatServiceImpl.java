@@ -4,6 +4,7 @@ import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.chat.Chat;
 import js.daangnclone.domain.chat.ChatRepository;
+import js.daangnclone.domain.chat.event.ChatCreatedEvent;
 import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.chatNotification.ChatNotificationRepository;
 import js.daangnclone.domain.member.Member;
@@ -24,10 +25,12 @@ public class ChatServiceImpl implements ChatService{
 
     private final ChatRepository chatRepository;
     private final ChatNotificationRepository chatNotificationRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
     public Chat createChatRoom(Chat chat) {
+        eventPublisher.publishEvent(new ChatCreatedEvent(chat));
         return chatRepository.save(chat);
     }
 
@@ -67,6 +70,7 @@ public class ChatServiceImpl implements ChatService{
                                 .opponentAddress(chat.getBuyer().getArea().getAreaName())
                                 .boardTitle(chat.getBoard().getTitle())
                                 .boardImage(chat.getBoard().getImage())
+                                .boardStatus(chat.getBoard().getBoardStatus())
                                 .lastComment(chat.getLastComment())
                                 .checkedYn(checkedYn)
                                 .diffCreatedAt(DateUtil.diffDate(chat.getCreatedAt())).build());
@@ -88,6 +92,7 @@ public class ChatServiceImpl implements ChatService{
                                 .opponentAddress(chat.getSeller().getArea().getAreaName())
                                 .boardTitle(chat.getBoard().getTitle())
                                 .boardImage(chat.getBoard().getImage())
+                                .boardStatus(chat.getBoard().getBoardStatus())
                                 .lastComment(chat.getLastComment())
                                 .checkedYn(checkedYn)
                                 .diffCreatedAt(DateUtil.diffDate(chat.getCreatedAt())).build());

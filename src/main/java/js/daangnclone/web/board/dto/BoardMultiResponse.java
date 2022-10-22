@@ -27,8 +27,13 @@ public class BoardMultiResponse {
     private String nickname;
     private String city;
 
+    private long attentionCnt;
+    private long chatRoomCnt;
+
     @Builder
-    private BoardMultiResponse(Long id, String title, String image, int price, String content, String detail, String nickname, String category, String city, String diffCreatedAt, int view, BoardStatus boardStatus) {
+    private BoardMultiResponse(Long id, String title, String image, int price, String content, String detail, String nickname,
+                               String category, String city, String diffCreatedAt, int view, BoardStatus boardStatus,
+                               long attentionCnt, long chatRoomCnt) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -41,5 +46,7 @@ public class BoardMultiResponse {
         this.diffCreatedAt = diffCreatedAt;
         this.view = view;
         this.boardStatus = boardStatus;
+        this.attentionCnt = attentionCnt;
+        this.chatRoomCnt = chatRoomCnt;
     }
 }
