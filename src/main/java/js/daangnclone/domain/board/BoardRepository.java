@@ -1,5 +1,6 @@
 package js.daangnclone.domain.board;
 
+import js.daangnclone.domain.member.Member;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,10 +18,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = {"member"})
     List<Board> findAll(Sort sort);
 
-//    @EntityGraph(attributePaths = {"member"})
-//    Optional<Board> findBoard(Long id);
-
     @Query("select distinct b from Board b left join fetch b.commentList where b.id = :id")
     Optional<Board> findBoard(@Param("id") Long id);
+
+    List<Board> findByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
+
+    long countByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
 
 }

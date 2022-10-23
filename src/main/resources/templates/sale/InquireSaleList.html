@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row py-5">
+        <div class="col-3">
+            <ul class="list-group mt-4">
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    판매중
+                    <span th:text="${numberOfSaleOn}">3</span>
+                </a>
+                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    판매 완료
+                    <span th:text="${numberOfSaleComp}">0</span>
+                </a>
+            </ul>
+        </div>
+        <div class="col-9">
+            <div class="card" th:if="${saleOnList.size() == 0}">
+                <div class="card-header">
+                    판매 내역이 없습니다.
+                </div>
+            </div>
+            <div class="card" th:if="${saleOnList.size() > 0}">
+                <div class="card-header">
+                    판매중인 상품들 입니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="saleOn : ${saleOnList}">
+                        <a th:href="@{${saleOn.link}}" class="list-group-item list-group-item-action">
+                            <div style="float: left">
+                                <img th:src="${saleOn.boardImage}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                                <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="${saleOn.boardTitle}"></h4><br>
+                                    <small class="text-muted" th:text="${saleOn.area.getAreaName()}"></small> · <small class="text-muted" th:text="${saleOn.diffCreatedAt}"></small><br>
+                                    <small style="font-weight: bold" th:text="|${#numbers.formatInteger(saleOn.boardPrice, 0, 'COMMA')}￦|"></small>
+                                </div>
+                            </div>
+                        </a>
+                        <div style="border-bottom: 1px solid #d1d2d4;">
+                            <div style="float: left; border-right: 1px solid #d1d2d4; width: 50%">
+                                <button id="btn_saleRsrvt" class="btn btn-primary" value="03" style="background-color: white; border-color: white; color: orange; width: 100%">예약중</button>
+                            </div>
+                            <div style="float: right; width: 50%">
+                                <button id="btn-saleComp" class="btn btn-primary" value="02" style="background-color: white; border-color: white; color: orange; width: 100%" th:onclick="|location.href='@{/saleList/{boardId}/purchaser(boardId=${saleOn.boardId})}'|">판매완료</button>
+                            </div>
+                        </div>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

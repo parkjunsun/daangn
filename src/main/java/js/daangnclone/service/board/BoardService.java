@@ -6,6 +6,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.sale.dto.SaleResponse;
 
 import java.util.List;
 
@@ -17,4 +18,7 @@ public interface BoardService {
     void updateView(Long id);
     Board updateBoardStatus(Long id, BoardStatus boardStatus);
     Board findBoard(Long id);
+    List<SaleResponse> inquireSaleList(Member member, BoardStatus boardStatus);
+    long getCount(Member member, BoardStatus boardStatus);
+
 }

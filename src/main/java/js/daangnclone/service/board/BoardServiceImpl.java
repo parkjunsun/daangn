@@ -14,6 +14,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.sale.dto.SaleResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -121,4 +122,26 @@ public class BoardServiceImpl implements BoardService{
     }
 
 
+    @Override
+    public List<SaleResponse> inquireSaleList(Member member, BoardStatus boardStatus) {
+        List<Board> saleList = boardRepository.findByMemberAndBoardStatus(member, boardStatus);
+
+        return saleList.stream()
+                .map(board -> SaleResponse.builder()
+                        .boardId(board.getId())
+                        .boardTitle(board.getTitle())
+                        .boardImage(board.getImage())
+                        .boardPrice(board.getPrice())
+                        .boardStatus(board.getBoardStatus())
+                        .link("/board/" + board.getId())
+                        .area(board.getMember().getArea())
+                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public long getCount(Member member, BoardStatus boardStatus) {
+        return boardRepository.countByMemberAndBoardStatus(member, boardStatus);
+    }
 }
