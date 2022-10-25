@@ -19,6 +19,7 @@ public interface BoardService {
     Board updateBoardStatus(Long id, BoardStatus boardStatus);
     Board findBoard(Long id);
     List<SaleResponse> inquireSaleList(Member member, BoardStatus boardStatus);
+    SaleResponse inquireSale(Long boardId);
     long getCount(Member member, BoardStatus boardStatus);
 
 }

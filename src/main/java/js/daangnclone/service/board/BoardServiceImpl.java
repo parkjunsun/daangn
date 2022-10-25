@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static js.daangnclone.Exception.ErrorCode.*;
@@ -143,5 +144,20 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public long getCount(Member member, BoardStatus boardStatus) {
         return boardRepository.countByMemberAndBoardStatus(member, boardStatus);
+    }
+
+    @Override
+    public SaleResponse inquireSale(Long boardId) {
+        Board sale = boardRepository.findBoard(boardId).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
+
+        return SaleResponse.builder()
+                .boardId(sale.getId())
+                .boardTitle(sale.getTitle())
+                .boardImage(sale.getImage())
+                .boardPrice(sale.getPrice())
+                .boardStatus(sale.getBoardStatus())
+                .area(sale.getMember().getArea())
+                .diffCreatedAt(DateUtil.diffDate(sale.getCreatedAt()))
+                .build();
     }
 }

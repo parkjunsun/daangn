@@ -7,6 +7,7 @@ import js.daangnclone.domain.member.Member;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +35,15 @@ public class Chat extends TimeEntity {
     private Member buyer;
 
     private String lastComment;
+    private LocalDateTime lastCommentUpdatedAt;
 
     @Builder
-    public Chat(String roomNum, Board board, Member seller, Member buyer, String lastComment) {
+    public Chat(String roomNum, Board board, Member seller, Member buyer, String lastComment, LocalDateTime lastCommentUpdatedAt) {
         this.roomNum = roomNum;
         this.board = board;
         this.seller = seller;
         this.buyer = buyer;
         this.lastComment = lastComment;
+        this.lastCommentUpdatedAt = lastCommentUpdatedAt;
     }
 }

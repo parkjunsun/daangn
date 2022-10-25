@@ -18,7 +18,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @EntityGraph(attributePaths = {"member"})
     List<Board> findAll(Sort sort);
 
-    @Query("select distinct b from Board b left join fetch b.commentList where b.id = :id")
+    @Query("select b from Board b where b.id = :id")
     Optional<Board> findBoard(@Param("id") Long id);
 
     List<Board> findByMemberAndBoardStatus(Member member, BoardStatus boardStatus);

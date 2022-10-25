@@ -44,7 +44,10 @@
                                 <button id="btn_saleRsrvt" class="btn btn-primary" value="03" style="background-color: white; border-color: white; color: orange; width: 100%">예약중</button>
                             </div>
                             <div style="float: right; width: 50%">
-                                <button id="btn-saleComp" class="btn btn-primary" value="02" style="background-color: white; border-color: white; color: orange; width: 100%" th:onclick="|location.href='@{/saleList/{boardId}/purchaser(boardId=${saleOn.boardId})}'|">판매완료</button>
+                                <form th:action="@{/saleList/{boardId}(boardId=${saleOn.boardId})}" th:method="post">
+                                    <button id="btn-saleComp" name="saleComp" class="btn btn-primary" value="02" style="background-color: white; border-color: white; color: orange; width: 100%">판매완료</button>
+<!--                                    th:onclick="|location.href='@{/saleList/{boardId}/purchaser(boardId=${saleOn.boardId})}'|"-->
+                                </form>
                             </div>
                         </div>
                     </th:block>

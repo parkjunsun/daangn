@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9">
+            <div class="card">
+                <div class="list-group-item list-group-item-action">
+                    <div style="float: left">
+                        <img th:src="${sale.boardImage}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                        <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                            <h4 style="display: inline-block" th:text="${sale.boardTitle}"></h4><br>
+                            <small class="text-muted" th:text="${sale.area.getAreaName()}"></small> · <small class="text-muted" th:text="${sale.diffCreatedAt}"></small><br>
+                            <small style="font-weight: bold" th:text="|${#numbers.formatInteger(sale.boardPrice, 0, 'COMMA')}￦|"></small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    var errorMessage = /*[[${errorMsg}]]*/
+    var successMessage = /*[[${successMsg}]]*/
+
+    if (errorMessage != null) {
+        Swal.fire({
+            title: 'Error',
+            html: errorMessage,
+            icon: "error"
+        });
+    } else if (successMessage != null) {
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
+    }
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>
