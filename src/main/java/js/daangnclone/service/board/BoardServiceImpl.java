@@ -14,6 +14,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.purchase.dto.PurchaseResponse;
 import js.daangnclone.web.sale.dto.SaleResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -136,6 +137,7 @@ public class BoardServiceImpl implements BoardService{
                         .boardStatus(board.getBoardStatus())
                         .link("/board/" + board.getId())
                         .area(board.getMember().getArea())
+                        .purchaser(board.getPurchaser())
                         .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
                         .build())
                 .collect(Collectors.toList());
@@ -157,7 +159,25 @@ public class BoardServiceImpl implements BoardService{
                 .boardPrice(sale.getPrice())
                 .boardStatus(sale.getBoardStatus())
                 .area(sale.getMember().getArea())
+                .purchaser(sale.getPurchaser())
                 .diffCreatedAt(DateUtil.diffDate(sale.getCreatedAt()))
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void updatePurchaser(Long boardId, Member purchaser) {
+        Board findBoard = boardRepository.findById(boardId).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
+        findBoard.setPurchaser(purchaser);
+    }
+
+    @Override
+    public List<PurchaseResponse> inquirePurchaseList(Member seller) {
+        List<Board> purchaseList = boardRepository.findByPurchaser(seller);
+        return purchaseList.stream()
+                .map(board -> PurchaseResponse.builder()
+                        .board(board)
+                        .build())
+                .collect(Collectors.toList());
     }
 }

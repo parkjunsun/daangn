@@ -9,6 +9,7 @@ import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.chatNotification.ChatNotificationRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.chatNotification.dto.ChatListResponse;
+import js.daangnclone.web.sale.dto.PurchaserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -108,5 +110,19 @@ public class ChatServiceImpl implements ChatService{
     public void updateLastComment(Chat chat, String comment) {
         chat.setLastComment(comment);
         chat.setLastCommentUpdatedAt(LocalDateTime.now());
+    }
+
+    @Override
+    public List<PurchaserResponse> findChatList(Board board) {
+        List<Chat> chatList = chatRepository.findByBoard(board);
+
+        return chatList.stream()
+                .map(chat -> PurchaserResponse.builder()
+                        .sender(chat.getBuyer())
+                        .board(chat.getBoard())
+                        .roomNum(chat.getRoomNum())
+                        .diffLastCommentUpdatedAt(DateUtil.diffDate(chat.getLastCommentUpdatedAt()))
+                        .build())
+                .collect(Collectors.toList());
     }
 }

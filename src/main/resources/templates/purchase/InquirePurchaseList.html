@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9">
+            <div class="card" th:if="${purchaseList.size() > 0}">
+                <div class="card-header">
+                    구매목록 입니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="purchase : ${purchaseList}">
+                        <a th:href="|/board/${purchase.board.getId()}|" class="list-group-item list-group-item-action">
+                            <div style="float: left">
+                                <img th:src="${purchase.board.getImage()}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                                <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="${purchase.board.getTitle()}"></h4><br>
+                                    <small class="text-muted" th:text="|판매자: ${purchase.board.getMember().getNickname()}|"></small> · <small class="text-muted" th:text="${purchase.board.getMember().getArea().getAreaName()}"></small><br>
+                                    <small style="font-weight: bold" th:text="|${#numbers.formatInteger(purchase.board.getPrice(), 0, 'COMMA')}￦|"></small>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </ul>
+            </div>
+            <div class="card" th:if="${purchaseList.size() == 0}">
+                <div class="card-header">
+                    구매 내역이 없어요.<br>동네 이웃과 따뜻한 거래를 해보세요.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

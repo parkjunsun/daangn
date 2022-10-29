@@ -58,13 +58,14 @@ public class MessageController {
                     .seller(findBoard.getMember())
                     .buyer(findMember)
                     .lastComment(message.getMsg())
+                    .lastCommentUpdatedAt(LocalDateTime.now())
                     .build();
             chatService.createChatRoom(chatRoom);
         } else {
             Chat chatRoom = findChatRoom.get();
             chatService.updateLastComment(chatRoom, message.getMsg());
         }
-       message.setCreatedAt(LocalDateTime.now());
+        message.setCreatedAt(LocalDateTime.now());
         return messageService.createMessage(message);
     }
 

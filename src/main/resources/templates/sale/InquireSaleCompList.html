@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row py-5">
+        <div class="col-3">
+            <ul class="list-group mt-4">
+                <a href="/saleList/saleOn" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    판매중
+                    <span th:text="${numberOfSaleOn}">3</span>
+                </a>
+                <a href="/saleList/saleComp" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
+                    판매 완료
+                    <span th:text="${numberOfSaleComp}">0</span>
+                </a>
+            </ul>
+        </div>
+        <div class="col-9">
+            <div class="card" th:if="${saleCompList.size() == 0}">
+                <div class="card-header">
+                    판매완료 내역이 없습니다.
+                </div>
+            </div>
+            <div class="card" th:if="${saleCompList.size() > 0}">
+                <div class="card-header">
+                    판매완료된 상품들 입니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="saleComp : ${saleCompList}">
+                        <a th:href="@{${saleComp.link}}" class="list-group-item list-group-item-action">
+                            <div style="float: left">
+                                <img th:src="${saleComp.boardImage}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                                <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="${saleComp.boardTitle}"></h4><br>
+                                    <small class="text-muted" th:text="${saleComp.area.getAreaName()}"></small> · <small class="text-muted" th:text="${saleComp.diffCreatedAt}"></small><br>
+                                    <small style="font-weight: bold" th:text="|${#numbers.formatInteger(saleComp.boardPrice, 0, 'COMMA')}￦|"></small>
+                                </div>
+                            </div>
+                            <div style="float: right">
+                                <div style="margin-top: 50px; margin-left: 10px; display: inline-block">
+                                    <small class="text-muted" th:text="|구매자 : ${saleComp.purchaser.getNickname()}|"></small>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

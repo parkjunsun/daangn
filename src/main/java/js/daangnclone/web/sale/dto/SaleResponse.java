@@ -2,6 +2,7 @@ package js.daangnclone.web.sale.dto;
 
 import js.daangnclone.cmn.Area;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.member.Member;
 import lombok.Builder;
 import lombok.Data;
 
@@ -16,9 +17,10 @@ public class SaleResponse {
     private String link;
     private Area area;
     private String diffCreatedAt;
+    private Member purchaser;
 
     @Builder
-    public SaleResponse(Long boardId, String boardTitle, String boardImage, int boardPrice, BoardStatus boardStatus, String link, Area area, String diffCreatedAt) {
+    public SaleResponse(Long boardId, String boardTitle, String boardImage, int boardPrice, BoardStatus boardStatus, String link, Area area, String diffCreatedAt, Member purchaser) {
         this.boardId = boardId;
         this.boardTitle = boardTitle;
         this.boardImage = boardImage;
@@ -27,5 +29,6 @@ public class SaleResponse {
         this.link = link;
         this.area = area;
         this.diffCreatedAt = diffCreatedAt;
+        this.purchaser = purchaser;
     }
 }

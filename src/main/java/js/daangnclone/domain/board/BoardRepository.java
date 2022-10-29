@@ -25,4 +25,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     long countByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
 
+    List<Board> findByPurchaser(Member purchaser);
+
 }

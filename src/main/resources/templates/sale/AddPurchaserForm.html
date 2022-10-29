@@ -5,6 +5,7 @@
 <header th:replace="fragments/header::header"></header>
 <div class="container">
     <div class="row row d-flex justify-content-center align-items-center h-100">
+        <h4 class="mb-3">거래자 선택</h4>
         <div class="col-9">
             <div class="card">
                 <div class="list-group-item list-group-item-action">
@@ -17,7 +18,38 @@
                         </div>
                     </div>
                 </div>
+            </div><br><br><br>
+
+            <div class="card" th:if="${chatList.size() == 0}">
+                <div class="card-header">
+                    대화한 사용자가 없습니다.
+                </div>
             </div>
+            <div class="card" th:if="${chatList.size() > 0}">
+                <div class="card-header">
+                    채팅목록에서 거래자 찾기
+                </div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="chat : ${chatList}">
+                        <a th:href="|/board/${chat.board.getId()}/chat?roomNum=${chat.roomNum}|" class="list-group-item list-group-item-action">
+                            <div style="float: left">
+                                <div style="margin-top: 15px; margin-left: 10px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="${chat.sender.getNickname()}"></h4><br>
+                                    <small class="text-muted" th:text="${chat.sender.getArea().getAreaName()}"></small> · <small class="text-muted" th:text="|마지막 대화 ${chat.diffLastCommentUpdatedAt}|"></small><br>
+                                </div>
+                            </div>
+                        </a>
+                        <div style="border-bottom: 1px solid #d1d2d4;">
+                            <div>
+                                <form th:action="@{/saleList/{boardId}/purchaser(boardId=${chat.board.getId()})}" th:method="post">
+                                    <button id="btn-purchaser" th:name="purchaserId" class="btn btn-primary" th:value="${chat.sender.getId()}" style="background-color: white; border-color: white; color: orange; width: 100%">구매자선택</button>
+                                </form>
+                            </div>
+                        </div>
+                    </th:block>
+                </ul>
+            </div>
+
         </div>
     </div>
 </div>

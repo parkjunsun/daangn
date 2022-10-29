@@ -43,6 +43,10 @@ public class Board extends TimeEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "purchaser_id")
+    private Member purchaser;
+
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
     private List<Attention> attentionList = new ArrayList<>();
 

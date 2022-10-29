@@ -6,6 +6,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.purchase.dto.PurchaseResponse;
 import js.daangnclone.web.sale.dto.SaleResponse;
 
 import java.util.List;
@@ -21,5 +22,8 @@ public interface BoardService {
     List<SaleResponse> inquireSaleList(Member member, BoardStatus boardStatus);
     SaleResponse inquireSale(Long boardId);
     long getCount(Member member, BoardStatus boardStatus);
+    void updatePurchaser(Long boardId, Member purchaser);
+    List<PurchaseResponse> inquirePurchaseList(Member seller);
+
 
 }
