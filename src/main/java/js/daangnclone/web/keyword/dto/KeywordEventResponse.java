@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class KeywordResponse {
+public class KeywordEventResponse {
 
     private Long id;
     private String word;
+    private Member member;
 
     @Builder
-    public KeywordResponse(Long id, String word) {
+    public KeywordEventResponse(Long id, String word, Member member) {
         this.id = id;
         this.word = word;
+        this.member = member;
     }
+
 }

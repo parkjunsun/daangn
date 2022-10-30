@@ -1,6 +1,7 @@
 package js.daangnclone.config;
 
-import js.daangnclone.domain.alarm.interceptor.AlarmInterceptor;
+import js.daangnclone.domain.alarm.activityAlarm.interceptor.ActivityAlarmInterceptor;
+import js.daangnclone.domain.alarm.keywordAlarm.interceptor.KeywordAlarmInterceptor;
 import js.daangnclone.domain.chatNotification.interceptor.ChatNotificationInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
@@ -16,8 +17,9 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
-    private final AlarmInterceptor alarmInterceptor;
+    private final ActivityAlarmInterceptor activityAlarmInterceptor;
     private final ChatNotificationInterceptor chatNotificationInterceptor;
+    private final KeywordAlarmInterceptor keywordAlarmInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -27,9 +29,9 @@ public class WebConfig implements WebMvcConfigurer {
         staticResourcePath.add("/favicon.ico");
         staticResourcePath.add("/resources/**");
         staticResourcePath.add("/error");
-        registry.addInterceptor(alarmInterceptor)
-                .excludePathPatterns(staticResourcePath);
-        registry.addInterceptor(chatNotificationInterceptor)
-                .excludePathPatterns(staticResourcePath);
+
+        registry.addInterceptor(activityAlarmInterceptor).excludePathPatterns(staticResourcePath);
+        registry.addInterceptor(chatNotificationInterceptor).excludePathPatterns(staticResourcePath);
+        registry.addInterceptor(keywordAlarmInterceptor).excludePathPatterns(staticResourcePath);
     }
 }

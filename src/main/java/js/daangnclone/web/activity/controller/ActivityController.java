@@ -5,7 +5,6 @@ import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.activity.ActivityService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.activity.dto.ActivityResponse;
-import js.daangnclone.web.alarm.dto.AlarmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
-package js.daangnclone.domain.alarm;
+package js.daangnclone.domain.alarm.activityAlarm;
 
 
-public enum AlarmType {
+public enum ActivityAlarmType {
     COMMENT_CREATED,
     ATTENTION_CREATED,
     LIKES_CREATED,

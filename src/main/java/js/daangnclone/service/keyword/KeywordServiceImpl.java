@@ -6,6 +6,7 @@ import js.daangnclone.domain.keyword.KeywordRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.keyword.dto.KeywordForm;
 import js.daangnclone.web.keyword.dto.KeywordResponse;
+import js.daangnclone.web.keyword.dto.KeywordEventResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +43,19 @@ public class KeywordServiceImpl implements KeywordService{
                 .map(keyword -> KeywordResponse.builder()
                         .id(keyword.getId())
                         .word(keyword.getWord())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<KeywordEventResponse> inquireAllKeywordList() {
+        List<Keyword> allKeywordList = keywordRepository.findAll();
+
+        return allKeywordList.stream()
+                .map(keyword -> KeywordEventResponse.builder()
+                        .id(keyword.getId())
+                        .word(keyword.getWord())
+                        .member(keyword.getMember())
                         .build())
                 .collect(Collectors.toList());
     }

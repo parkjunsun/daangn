@@ -7,11 +7,11 @@
     <div class="row py-5 text-center">
         <div class="col-3">
             <ul class="list-group">
-                <a href="#" th:href="@{/alarmList}" th:classappend="${isNew}? active" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="#" th:href="@{/activityAlarmList}" th:classappend="${isNew}? active" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     읽지 않은 알림
                     <span th:text="${numberOfNotChecked}">3</span>
                 </a>
-                <a href="#" th:href="@{/alarmList/old}" th:classappend="${!isNew}? active"
+                <a href="#" th:href="@{/activityAlarmList/old}" th:classappend="${!isNew}? active"
                    class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     읽은 알림
                     <span th:text="${numberOfChecked}">0</span>
@@ -34,7 +34,7 @@
             </ul>
 
             <ul class="list-group mt-4" th:if="${numberOfChecked > 0}">
-                <form class="row" th:action="@{/alarmList}" th:method="post">
+                <form class="row" th:action="@{/activityAlarmList}" th:method="post">
                     <button type="submit" class="btn btn-outline-warning" aria-describedby="deleteHelp">
                         읽은 알림 삭제
                     </button>
@@ -43,7 +43,7 @@
             </ul>
         </div>
         <div class="col-9">
-            <div class="card" th:if="${alarmList.size() == 0}">
+            <div class="card" th:if="${activityAlarmList.size() == 0}">
                 <div class="card-header">
                     알림 메시지가 없습니다.
                 </div>

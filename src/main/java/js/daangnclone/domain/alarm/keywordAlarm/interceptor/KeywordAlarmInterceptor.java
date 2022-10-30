@@ -1,10 +1,9 @@
-package js.daangnclone.domain.alarm.interceptor;
+package js.daangnclone.domain.alarm.keywordAlarm.interceptor;
 
-import js.daangnclone.domain.alarm.AlarmRepository;
+import js.daangnclone.domain.alarm.keywordAlarm.KeywordAlarmRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -18,21 +17,19 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
-public class AlarmInterceptor implements HandlerInterceptor {
+public class KeywordAlarmInterceptor implements HandlerInterceptor {
 
-    private final AlarmRepository alarmRepository;
+    private final KeywordAlarmRepository keywordAlarmRepository;
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (modelAndView != null && !isRedirectView(modelAndView) && authentication != null && isTypeOfMember(authentication)) {
             Member receiver = ((PrincipalUserDetails) authentication.getPrincipal()).getMember();
-            long count = alarmRepository.countByReceiverAndCheckedYn(receiver, "N");
-            modelAndView.addObject("hasAlarm", count > 0);
+            long count = keywordAlarmRepository.countByReceiverAndCheckedYn(receiver, "N");
+            modelAndView.addObject("hasKeywordAlarm", count > 0);
         }
     }
-
 
     private boolean isRedirectView(ModelAndView modelAndView) {
         Optional<ModelAndView> optionalModelAndView = Optional.ofNullable(modelAndView);

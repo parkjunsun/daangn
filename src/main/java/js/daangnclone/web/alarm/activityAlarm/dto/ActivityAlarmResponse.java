@@ -1,11 +1,11 @@
-package js.daangnclone.web.alarm.dto;
+package js.daangnclone.web.alarm.activityAlarm.dto;
 
-import js.daangnclone.domain.alarm.AlarmType;
+import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarmType;
 import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class AlarmResponse {
+public class ActivityAlarmResponse {
 
     private Long id;
     private String message;
@@ -14,10 +14,10 @@ public class AlarmResponse {
     private String checkedYn;
     private String clickYn;
     private String diffCreatedAt;
-    private AlarmType alarmType;
+    private ActivityAlarmType activityAlarmType;
 
     @Builder
-    public AlarmResponse (Long id, String message, String link, String sender, String checkedYn, String clickYn, String diffCreatedAt, AlarmType alarmType) {
+    public ActivityAlarmResponse(Long id, String message, String link, String sender, String checkedYn, String clickYn, String diffCreatedAt, ActivityAlarmType activityAlarmType) {
         this.id = id;
         this.message = message;
         this.link = link;
@@ -25,7 +25,7 @@ public class AlarmResponse {
         this.checkedYn = checkedYn;
         this.clickYn = clickYn;
         this.diffCreatedAt = diffCreatedAt;
-        this.alarmType = alarmType;
+        this.activityAlarmType = activityAlarmType;
     }
 
 }

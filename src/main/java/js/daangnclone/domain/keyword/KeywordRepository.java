@@ -11,5 +11,4 @@ public interface KeywordRepository extends JpaRepository<Keyword, Long> {
 
     List<Keyword> findByMember(Member member);
     long countByMember(Member member);
-
 }

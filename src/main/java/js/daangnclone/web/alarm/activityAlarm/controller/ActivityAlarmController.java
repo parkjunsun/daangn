@@ -1,12 +1,12 @@
-package js.daangnclone.web.alarm.controller;
+package js.daangnclone.web.alarm.activityAlarm.controller;
 
-import js.daangnclone.domain.alarm.Alarm;
-import js.daangnclone.domain.alarm.AlarmRepository;
+import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarm;
+import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarmRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
-import js.daangnclone.service.alarm.AlarmService;
+import js.daangnclone.service.alarm.activityAlarm.ActivityAlarmService;
 import js.daangnclone.service.member.MemberService;
-import js.daangnclone.web.alarm.dto.AlarmResponse;
+import js.daangnclone.web.alarm.activityAlarm.dto.ActivityAlarmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -18,69 +18,69 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
-public class AlarmController {
+public class ActivityAlarmController {
 
     private final MemberService memberService;
-    private final AlarmRepository alarmRepository;
-    private final AlarmService alarmService;
+    private final ActivityAlarmRepository activityAlarmRepository;
+    private final ActivityAlarmService activityAlarmService;
 
-    @GetMapping("/alarmList")
+    @GetMapping("/activityAlarmList")
     public String showAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
         Member receiver = memberService.findMember(memberId);
 
-        long numberOfChecked = alarmRepository.countByReceiverAndCheckedYn(receiver, "Y");
-        List<AlarmResponse> alarmList = alarmService.inquireAlarmList(receiver, "N");
+        long numberOfChecked = activityAlarmRepository.countByReceiverAndCheckedYn(receiver, "Y");
+        List<ActivityAlarmResponse> alarmList = activityAlarmService.inquireAlarmList(receiver, "N");
         putCategorizeAlarmList(model, alarmList, numberOfChecked, alarmList.size());
         model.addAttribute("isNew", true);
         model.addAttribute("certifyYn", receiver.getCertifyYn());
-        return "alarm/InquireAlarmList";
+        return "alarm/InquireActivityAlarmList";
 
     }
 
-    @GetMapping("/alarmList/show.do")
+    @GetMapping("/activityAlarmList/show.do")
     @ResponseBody
-    public List<AlarmResponse> ajaxShowAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
+    public List<ActivityAlarmResponse> ajaxShowAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
         Long receiverId = principalUserDetails.getMember().getId();
         Member receiver = memberService.findMember(receiverId);
-        return alarmService.inquireAjaxAlarmList(receiver);
+        return activityAlarmService.inquireAjaxAlarmList(receiver);
     }
 
-    @PostMapping("/alarmList/click.do")
+    @PostMapping("/activityAlarmList/click.do")
     @ResponseBody
     public void ajaxReadAlarm(@RequestParam Long alarmId) {
-        Alarm alarm = alarmService.findAlarm(alarmId);
-        alarmService.markAsClick(alarm);
+        ActivityAlarm activityAlarm = activityAlarmService.findAlarm(alarmId);
+        activityAlarmService.markAsClick(activityAlarm);
     }
 
-    @GetMapping("/alarmList/old")
+    @GetMapping("/activityAlarmList/old")
     public String showOldAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
         Member receiver = memberService.findMember(memberId);
 
-        List<AlarmResponse> alarmList = alarmService.inquireAlarmList(receiver, "Y");
-        long numberOfNotChecked = alarmRepository.countByReceiverAndCheckedYn(receiver, "N");
+        List<ActivityAlarmResponse> alarmList = activityAlarmService.inquireAlarmList(receiver, "Y");
+        long numberOfNotChecked = activityAlarmRepository.countByReceiverAndCheckedYn(receiver, "N");
         putCategorizeAlarmList(model, alarmList, alarmList.size(), numberOfNotChecked);
         model.addAttribute("isNew", false);
         model.addAttribute("certifyYn", receiver.getCertifyYn());
-        return "alarm/InquireAlarmList";
+        return "alarm/InquireActivityAlarmList";
     }
 
-    @PostMapping("/alarmList")
+    @PostMapping("/activityAlarmList")
     public String deleteAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
         Long memberId = principalUserDetails.getMember().getId();
         Member receiver = memberService.findMember(memberId);
-        alarmService.deleteReadAlarm(receiver, "Y");
-        return "redirect:/alarmList";
+        activityAlarmService.deleteReadAlarm(receiver, "Y");
+        return "redirect:/activityAlarmList";
     }
 
-    private void putCategorizeAlarmList(Model model, List<AlarmResponse> alarmList, long numberOfChecked, long numberOfNotChecked) {
+    private void putCategorizeAlarmList(Model model, List<ActivityAlarmResponse> activityAlarmList, long numberOfChecked, long numberOfNotChecked) {
 
-        ArrayList<AlarmResponse> newAttentionAlarmList = new ArrayList<>();
-        ArrayList<AlarmResponse> newCommentAlarmList = new ArrayList<>();
-        ArrayList<AlarmResponse> newLikesAlarmList = new ArrayList<>();
-        for (AlarmResponse alarm : alarmList) {
-            switch (alarm.getAlarmType()) {
+        ArrayList<ActivityAlarmResponse> newAttentionAlarmList = new ArrayList<>();
+        ArrayList<ActivityAlarmResponse> newCommentAlarmList = new ArrayList<>();
+        ArrayList<ActivityAlarmResponse> newLikesAlarmList = new ArrayList<>();
+        for (ActivityAlarmResponse alarm : activityAlarmList) {
+            switch (alarm.getActivityAlarmType()) {
                 case ATTENTION_CREATED:
                     newAttentionAlarmList.add(alarm);
                     break;
@@ -95,7 +95,7 @@ public class AlarmController {
 
         model.addAttribute("numberOfNotChecked", numberOfNotChecked);
         model.addAttribute("numberOfChecked", numberOfChecked);
-        model.addAttribute("alarmList", alarmList);
+        model.addAttribute("activityAlarmList", activityAlarmList);
         model.addAttribute("newAttentionAlarmList", newAttentionAlarmList);
         model.addAttribute("newCommentAlarmList", newCommentAlarmList);
         model.addAttribute("newLikesAlarmList", newLikesAlarmList);

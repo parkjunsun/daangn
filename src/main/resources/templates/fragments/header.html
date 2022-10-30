@@ -55,12 +55,12 @@
                         <img th:if="${hasChatNotification}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-chatting-support-anggara-blue-anggara-putra-2.png"/>
                     </a>
                 </li>
-                <li id="alarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
+                <li id="activityAlarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
                     <a id="alarmBtn" class="nav-link alarmClass" href="#" role="button" data-bs-toggle="dropdown">
-                        <img id="notHasAlarm" th:if="${!hasAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="alarm" class="alarmClass"/>
-                        <img id="hasAlarm" th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newAlarm" class="alarmClass"/>
+                        <img id="notHasAlarm" th:if="${!hasActivityAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="activityAlarm" class="alarmClass"/>
+                        <img id="hasAlarm" th:if="${hasActivityAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newActivityAlarm" class="alarmClass"/>
                     </a>
-                    <ul id="alarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
+                    <ul id="activityAlarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
 
                     </ul>
                 </li>
@@ -95,53 +95,53 @@
 
         $(document).on('click', function (e) {
            if(!$(e.target).hasClass("alarmClass")) {
-               $("#alarmList").css("display", "none");
+               $("#activityAlarmList").css("display", "none");
            }
         });
 
         $("#hasAlarm").on('click', function () {
             $("#hasAlarm").remove();
             $("#alarmBtn").append(
-                "<img id=\"notHasAlarm\" src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png\" alt=\"alarm\" class=\"alarmClass\"/>"
+                "<img id=\"notHasAlarm\" src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png\" alt=\"activityAlarm\" class=\"alarmClass\"/>"
             );
         });
 
-        $("#alarm").on('click', function () {
+        $("#activityAlarm").on('click', function () {
 
-            $("#alarmList").css("display", "");
+            $("#activityAlarmList").css("display", "");
 
             $.ajax({
-                url:"/alarmList/show.do",
+                url:"/activityAlarmList/show.do",
                 type:"get",
                 sync: false,
-                success: function (alarmList) {
-                    $("#alarmList").empty();
-                    $("#alarmList").append(
+                success: function (activityAlarmList) {
+                    $("#activityAlarmList").empty();
+                    $("#activityAlarmList").append(
                         "<div style='height: 30px; vertical-align: middle;'>" +
                             "<span style='float: left; margin-left: 13px; line-height: 40px;'>알림</span>" +
-                            "<span style='float: right; margin-right: 13px; line-height: 28px;'><a href='/alarmList'><img src=\"https://img.icons8.com/ios/28/000000/search-in-list.png\"/></a></span>" +
+                            "<span style='float: right; margin-right: 13px; line-height: 28px;'><a href='/activityAlarmList'><img src=\"https://img.icons8.com/ios/28/000000/search-in-list.png\"/></a></span>" +
                         "</div>" +
                         "<hr>"
                     )
-                    $.each(alarmList, function (index, alarm) {
+                    $.each(activityAlarmList, function (index, activityAlarm) {
 
                         let clickYnTag;
 
-                        if (alarm.clickYn === "Y") {
+                        if (activityAlarm.clickYn === "Y") {
                             clickYnTag = "<div id='circle2'></div>";
                         } else {
                             clickYnTag = "<div id='circle1'></div>";
                         }
 
-                        $("#alarmList").append(
+                        $("#activityAlarmList").append(
                             "<li>" +
-                                "<a href=\"" + alarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"alarm-" + alarm.id + "\" onclick='alarmClick(this)'>" +
+                                "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
                                     "<div style='float:left; display: inline-block; margin-right: 5px; margin-top: 10px;'>" +
                                         clickYnTag +
                                     "</div>" +
                                     "<div style='display: inline-block'>" +
-                                        "<small class=\"text-muted\" style='white-space: normal'>" + "<span style='color:#0090F9'>" + alarm.sender + "</span>" + "님이 " + alarm.message + "</small>" +
-                                        "<small class=\"fromNow text-muted\" style='display: block'>" + alarm.diffCreatedAt + "</small>" +
+                                        "<small class=\"text-muted\" style='white-space: normal'>" + "<span style='color:#0090F9'>" + activityAlarm.sender + "</span>" + "님이 " + activityAlarm.message + "</small>" +
+                                        "<small class=\"fromNow text-muted\" style='display: block'>" + activityAlarm.diffCreatedAt + "</small>" +
                                     "</div>" +
                                 "</a>" +
                             "</li>" +
@@ -153,10 +153,10 @@
             });
         });
 
-        function alarmClick(alarm) {
-            let alarmId = alarm.id.toString().substring(6);
+        function alarmClick(activityAlarm) {
+            let alarmId = activityAlarm.id.toString().substring(14);
             $.ajax({
-                url:"/alarmList/click.do",
+                url:"/activityAlarmList/click.do",
                 type:"post",
                 sync: false,
                 data: {"alarmId" : alarmId}
