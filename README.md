@@ -22,7 +22,8 @@
 
 ## 💾 ERD 설계
 
-<img src="https://user-images.githubusercontent.com/50009692/198832771-18108903-5cb4-46c0-a807-17b532a0c4f2.png">
+<img src="(https://user-images.githubusercontent.com/50009692/198861194-4bd63b83-93b3-4a8a-a7d4-4409cb2e44b2.png">
+
 
 <br><br>
 
