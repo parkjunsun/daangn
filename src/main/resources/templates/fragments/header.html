@@ -46,6 +46,7 @@
                         <li><a class="dropdown-item" href="/saleList/saleOn"><img src="https://img.icons8.com/ios/24/000000/land-sales.png" alt="sale"/> 판매 내역</a></li>
                         <li><a class="dropdown-item" href="/purchaseList"><img src="https://img.icons8.com/material-outlined/24/000000/shopping-cart--v1.png" alt="buy"/> 구매 내역</a></li>
                         <li><a class="dropdown-item" href="/attentionList"><img src="https://img.icons8.com/ios/24/000000/novel--v1.png" alt="attention"/> 관심목록</a></li>
+                        <li><a class="dropdown-item" href="/keyword/new"><img src="https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/000000/external-tag-social-media-interface-anggara-basic-outline-anggara-putra.png" alt="keyword" /> 키워드 설정</a></li>
                     </ul>
                 </li>
                 <li sec:authorize="isAuthenticated()" class="nav-item">
@@ -60,6 +61,14 @@
                         <img id="hasAlarm" th:if="${hasAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newAlarm" class="alarmClass"/>
                     </a>
                     <ul id="alarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
+
+                    </ul>
+                </li>
+                <li sec:authorize="isAuthenticated()" class="nav-item dropdown">
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                        <img src="https://img.icons8.com/ios/32/000000/tags--v1.png" alt="tags"/>
+                    </a>
+                    <ul id="keywordList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
 
                     </ul>
                 </li>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3">키워드 등록</h4>
+            <form class="validation-form" novalidate th:action="@{/keyword/new}" th:method="post" th:object="${keywordForm}">
+                <div class="mb-5">
+                    <label th:for="keyword">키워드 설정</label><br>
+                    <input type="text" style="width:581px; display: inline-block" class="form-control" th:field="*{keyword}" th:class="${#fields.hasErrors('keyword')} ? 'form-control fieldError' : 'form-control'" placeholder="키워드를 입력해주세요." required />
+                    <p th:if="${#fields.hasErrors('keyword')}" th:errors="*{keyword}" style="color:#bd2130;">Incorrect Data</p>
+                </div>
+                <div class="mb-4"></div>
+                <button id="submitBtn" class="btn btn-primary btn-lg btn-block" type="submit">등록</button>
+            </form>
+            <div style="margin-top: 20px;">
+                <span>등록한 키워드</span> <span id="keywordListSize" style="color: orange" th:text="${keywordList.size()}"></span>/30
+            </div>
+            <div style="margin-top: 10px;">
+                <th:block th:each="keyword : ${keywordList}">
+                    <button th:value="${keyword.id}" style="border: 1px solid gray; border-radius: 20px; display: inline-block; padding: 5px; margin-right: 10px; margin-bottom: 10px; background-color:transparent;" onclick="deleteKeyword(this)" th:text="|${keyword.word} X|"></button>
+                </th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    var errorMessage = /*[[${errorMsg}]]*/;
+    var successMessage = /*[[${successMsg}]]*/;
+
+    if (errorMessage != null) {
+        Swal.fire({
+            title: 'Error',
+            html: errorMessage,
+            icon: "error"
+        });
+    } else if (successMessage != null) {
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
+    }
+
+    function deleteKeyword(e) {
+        let curKeywordListSize = parseInt($("#keywordListSize").text());
+        $.ajax({
+            url: "/keyword/" + $(e).val() + "/delete.do",
+            type: "post",
+            sync: false,
+            success: function () {
+                $(e).remove();
+                $("#keywordListSize").text(curKeywordListSize - 1);
+            }
+        })
+    }
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+
+</html>
+

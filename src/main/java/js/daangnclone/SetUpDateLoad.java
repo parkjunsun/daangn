@@ -91,7 +91,7 @@ public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent>
         Board board1 = Board.builder()
                 .title("보테가 팝니다~")
                 .category(Category.of(106001L))
-                .content("저렴하게 팝니다.\n직거래 선호합니다\n연락주세요\n".replace("\r\n", "<br>"))
+                .content("저렴하게 팝니다.\r\n직거래 선호합니다\r\n연락주세요\r\n".replace("\r\n", "<br>"))
                 .detail("보테가 베네타")
                 .price(750000)
                 .boardStatus(BoardStatus.SALE_ON)
