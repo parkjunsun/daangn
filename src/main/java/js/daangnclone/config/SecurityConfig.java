@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers("/login/**").permitAll()
                 .antMatchers("/signup/**").permitAll()
-                .antMatchers("/certify").permitAll()
+                .antMatchers("/certify/**").permitAll()
                 .anyRequest()
                 .authenticated()
         // 인가되지 않은 url 접속시 /login 으로 redirect
