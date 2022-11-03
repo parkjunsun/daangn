@@ -1,4 +1,4 @@
-package js.daangnclone.cmn;
+package js.daangnclone.cmn.area;
 
 import lombok.Builder;
 import lombok.Getter;

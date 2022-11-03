@@ -1,6 +1,6 @@
 package js.daangnclone.web.sale.dto;
 
-import js.daangnclone.cmn.Area;
+import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import lombok.Builder;

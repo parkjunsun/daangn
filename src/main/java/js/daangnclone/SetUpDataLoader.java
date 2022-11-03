@@ -1,17 +1,14 @@
 package js.daangnclone;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
-import js.daangnclone.cmn.Area;
-import js.daangnclone.cmn.Category;
+import js.daangnclone.cmn.area.Area;
+import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
-import js.daangnclone.service.board.BoardService;
-import js.daangnclone.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -22,7 +19,7 @@ import static js.daangnclone.Exception.ErrorCode.USER_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor
-public class SetUpDateLoad implements ApplicationListener<ContextRefreshedEvent> {
+public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
     private boolean alreadySetup = false;
     private final MemberRepository memberRepository;

@@ -1,7 +1,6 @@
 package js.daangnclone.domain.member;
 
-import js.daangnclone.cmn.Area;
-import js.daangnclone.cmn.Category;
+import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.board.Board;

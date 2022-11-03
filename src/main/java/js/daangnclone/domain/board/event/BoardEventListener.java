@@ -49,6 +49,7 @@ public class BoardEventListener {
                 KeywordAlarm keywordAlarm = KeywordAlarm.builder()
                         .board(board)
                         .receiver(keywordEvent.getMember())
+                        .keyword(keywordEvent.getWord())
                         .checkedYn("N")
                         .clickYn("N")
                         .createdAt(LocalDateTime.now())

@@ -1,8 +1,8 @@
 package js.daangnclone.web.board.controller;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.cmn.Category;
-import js.daangnclone.cmn.CategoryDto;
+import js.daangnclone.cmn.category.Category;
+import js.daangnclone.cmn.category.CategoryDto;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;

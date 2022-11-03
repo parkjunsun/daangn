@@ -1,5 +1,4 @@
 package js.daangnclone.web.member.dto;
-import js.daangnclone.cmn.Area;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;

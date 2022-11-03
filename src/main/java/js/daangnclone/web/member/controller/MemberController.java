@@ -1,7 +1,7 @@
 package js.daangnclone.web.member.controller;
 
-import js.daangnclone.cmn.Area;
-import js.daangnclone.cmn.AreaDto;
+import js.daangnclone.cmn.area.Area;
+import js.daangnclone.cmn.area.AreaDto;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;

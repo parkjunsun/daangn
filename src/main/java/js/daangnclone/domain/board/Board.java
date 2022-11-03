@@ -1,6 +1,6 @@
 package js.daangnclone.domain.board;
 
-import js.daangnclone.cmn.Category;
+import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
 import js.daangnclone.domain.comment.Comment;

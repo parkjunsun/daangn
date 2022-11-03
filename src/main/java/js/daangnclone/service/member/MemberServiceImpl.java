@@ -1,8 +1,7 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
-import js.daangnclone.cmn.Area;
+import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;

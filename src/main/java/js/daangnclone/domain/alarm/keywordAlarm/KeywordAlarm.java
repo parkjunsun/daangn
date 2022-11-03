@@ -25,17 +25,24 @@ public class KeywordAlarm {
     @JoinColumn(name = "board_id")
     private Board board;
 
+    private String keyword;
     private String checkedYn;
     private String clickYn;
 
     private LocalDateTime createdAt;
 
     @Builder
-    public KeywordAlarm(Member receiver, Board board, String checkedYn, String clickYn, LocalDateTime createdAt) {
+    public KeywordAlarm(Member receiver, Board board, String keyword, String checkedYn, String clickYn, LocalDateTime createdAt) {
         this.receiver = receiver;
         this.board = board;
+        this.keyword = keyword;
         this.checkedYn = checkedYn;
         this.clickYn = clickYn;
         this.createdAt = createdAt;
     }
+
+    public void read() {
+        this.checkedYn = "Y";
+    }
+    public void click() {this.clickYn = "Y";}
 }

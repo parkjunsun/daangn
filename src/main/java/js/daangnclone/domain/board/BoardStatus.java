@@ -1,6 +1,5 @@
 package js.daangnclone.domain.board;
 
-import js.daangnclone.cmn.Area;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 

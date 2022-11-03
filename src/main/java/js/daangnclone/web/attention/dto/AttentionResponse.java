@@ -1,6 +1,6 @@
 package js.daangnclone.web.attention.dto;
 
-import js.daangnclone.cmn.Area;
+import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.board.BoardStatus;
 import lombok.Builder;
 import lombok.Data;

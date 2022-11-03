@@ -31,6 +31,7 @@ public enum ErrorCode {
     CHAT_NOT_FOUND(HttpStatus.NOT_FOUND, "E307", "해당 채팅 정보를 찾을 수 없습니다."),
     CHAT_NOTIFICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "E308", "해당 채팅알람 정보를 찾을 수 없습니다"),
     KEYWORD_NOT_FOUND(HttpStatus.NOT_FOUND, "E309", "해당 키워드 정보를 찾을 수 없습니다."),
+    KEYWORD_ALARM_NOT_FOUND(HttpStatus.NOT_FOUND, "E310", "해당 키워드 알림 정보를 찾을 수 없습니다."),
 
     //409 CONFLICT : Resource 의 현재 상태와 충돌, 보통 중복된 데이터 존재
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "E4O1","중복된 EMAIL 이 존재합니다."),

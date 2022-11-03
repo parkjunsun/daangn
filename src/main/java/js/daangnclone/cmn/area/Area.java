@@ -1,7 +1,6 @@
-package js.daangnclone.cmn;
+package js.daangnclone.cmn.area;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 
 import java.util.ArrayList;
