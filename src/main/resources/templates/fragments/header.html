@@ -55,21 +55,12 @@
                         <img th:if="${hasChatNotification}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-chatting-support-anggara-blue-anggara-putra-2.png" alt="notChatNotification"/>
                     </a>
                 </li>
-                <li id="activityAlarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
+                <li id="alarm" sec:authorize="isAuthenticated()" class="nav-item dropdown alarmClass">
                     <a id="alarmBtn" class="nav-link alarmClass" href="#" role="button" data-bs-toggle="dropdown">
-                        <img id="notHasAlarm" class="alarmClass" th:if="${!hasActivityAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="activityAlarm"/>
-                        <img id="hasAlarm" class="alarmClass" th:if="${hasActivityAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newActivityAlarm"/>
+                        <img id="notHasAlarm" class="alarmClass" th:if="${!hasActivityAlarm} and ${!hasKeywordAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="activityAlarm"/>
+                        <img id="hasAlarm" class="alarmClass" th:if="${hasActivityAlarm} or ${hasKeywordAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-notification-basic-user-interface-anggara-blue-anggara-putra.png" alt="newActivityAlarm"/>
                     </a>
-                    <ul id="activityAlarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
-
-                    </ul>
-                </li>
-                <li id="keywordAlarm" sec:authorize="isAuthenticated()" class="nav-item dropdown keywordAlarmClass">
-                    <a id="keywordAlarmBtn" class="nav-link keywordAlarmClass" href="#" role="button" data-bs-toggle="dropdown">
-                        <img id="notHasKeywordAlarm" class="keywordAlarmClass" th:if="${!hasKeywordAlarm}" src="https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-tag-basic-user-interface-anggara-outline-color-anggara-putra.png" alt="keywordAlarm"/>
-                        <img id="hasKeywordAlarm" class="keywordAlarmClass" th:if="${hasKeywordAlarm}" src="https://img.icons8.com/external-anggara-blue-anggara-putra/32/000000/external-tag-basic-user-interface-anggara-blue-anggara-putra.png" alt="newKeywordAlarm"/>
-                    </a>
-                    <ul id="keywordAlarmList" class="dropdown-menu list-group list-group-flush" style="overflow:auto; height: 700px; width: 420px; display: none">
+                    <ul id="alarmList" class="dropdown-menu list-group list-group-flush alarmClass" style="overflow:auto; height: 700px; width: 420px; display: none">
 
                     </ul>
                 </li>
@@ -96,11 +87,7 @@
 
         $(document).on('click', function (e) {
            if(!$(e.target).hasClass("alarmClass")) {
-               $("#activityAlarmList").css("display", "none");
-           }
-
-           if(!$(e.target).hasClass("keywordAlarmClass")) {
-               $("#keywordAlarmList").css("display", "none");
+               $("#alarmList").css("display", "none");
            }
 
         });
@@ -112,32 +99,25 @@
             );
         });
 
-        $("#hasKeywordAlarm").on('click', function () {
-           $("#hasKeywordAlarm").remove();
-           $("#keywordAlarmBtn").append(
-             "<img id=\"notHasKeywordAlarm\" class=\"keywordAlarmClass\" src=\"https://img.icons8.com/external-anggara-outline-color-anggara-putra/32/000000/external-tag-basic-user-interface-anggara-outline-color-anggara-putra.png\" alt=\"keywordAlarm\"/>"
-           );
-        });
-
-
-        $("#activityAlarm").on('click', function () {
-            $("#activityAlarmList").css("display", "");
-
+        $("#alarm").on('click', function () {
             $.ajax({
                 url:"/activityAlarmList/show.do",
                 type:"get",
                 sync: false,
                 success: function (activityAlarmList) {
-                    $("#activityAlarmList").empty();
-                    $("#activityAlarmList").append(
-                        "<div style='height: 30px; vertical-align: middle;'>" +
-                            "<span style='float: left; margin-left: 13px; line-height: 40px;'>활동알림</span>" +
-                            "<span style='float: right; margin-right: 13px; line-height: 28px;'><a href='/activityAlarmList'><img src=\"https://img.icons8.com/ios/28/000000/search-in-list.png\"/></a></span>" +
-                        "</div>" +
-                        "<hr>"
-                    )
-                    $.each(activityAlarmList, function (index, activityAlarm) {
 
+                    $("#alarmList").css("display", "").empty().append(
+                        "<div style='height:50px; vertical-align:middle'>" +
+                            "<div id='activitiyAlarmBtnSection' style='width: 50%; display: inline-block; border-bottom: 1px solid orange'>" +
+                                "<button id='activityAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; color: orange; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>활동알림</button>" +
+                            "</div>" +
+                            "<div id='keywordAlarmBtnSection' style='width: 50%; display: inline-block'>" +
+                                "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
+                            "</div>" +
+                        "</div>"
+                    )
+
+                    $.each(activityAlarmList, function (index, activityAlarm) {
                         let clickYnTag;
 
                         if (activityAlarm.clickYn === "Y") {
@@ -146,7 +126,7 @@
                             clickYnTag = "<div id='circle1'></div>";
                         }
 
-                        $("#activityAlarmList").append(
+                        $("#alarmList").append(
                             "<li>" +
                                 "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
                                     "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
@@ -165,31 +145,81 @@
             });
         });
 
+        $(document).on('click', '#activityAlarmSection', function () {
+            $.ajax({
+                url:"/activityAlarmList/show.do",
+                type:"get",
+                sync: false,
+                success: function (activityAlarmList) {
 
-        $("#keywordAlarm").on('click', function () {
-            $("#keywordAlarmList").css("display", "");
+                    $("#alarmList").css("display", "").empty().append(
+                        "<div style='height:50px; vertical-align:middle'>" +
+                            "<div id='activitiyAlarmBtnSection' style='width: 50%; display: inline-block; border-bottom: 1px solid orange'>" +
+                                "<button id='activityAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; color: orange; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>활동알림</button>" +
+                            "</div>" +
+                            "<div id='keywordAlarmBtnSection' style='width: 50%; display: inline-block'>" +
+                                "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
+                            "</div>" +
+                        "</div>"
+                    )
 
+                    $.each(activityAlarmList, function (index, activityAlarm) {
+
+                        let clickYnTag;
+
+                        if (activityAlarm.clickYn === "Y") {
+                            clickYnTag = "<div id='circle2'></div>";
+                        } else {
+                            clickYnTag = "<div id='circle1'></div>";
+                        }
+
+                        $("#alarmList").append(
+                            "<li>" +
+                                "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
+                                    "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
+                                        clickYnTag +
+                                    "</div>" +
+                                    "<div style='display: inline-block'>" +
+                                        "<small class=\"text-muted\" style='white-space: normal'>" + "<span style='color:#0090F9'>" + activityAlarm.sender + "</span>" + "님이 " + activityAlarm.message + "</small>" +
+                                        "<small class=\"fromNow text-muted\" style='display: block'>" + activityAlarm.diffCreatedAt + "</small>" +
+                                    "</div>" +
+                                "</a>" +
+                            "</li>" +
+                            "<hr>"
+                        )
+                    })
+                }
+            });
+        })
+
+
+        $(document).on('click', '#keywordAlarmSection', function () {
             $.ajax({
                 url: "/keywordAlarmList/show.do",
                 type: "get",
                 sync: false,
                 success: function (keywordAlarmList) {
-                    $("#keywordAlarmList").empty().append(
-                        "<div style='height: 30px; vertical-align:middle;'>" +
-                            "<span style='float: left; margin-left: 13px; line-height: 40px;'>키워드알림</span>" +
-                        "</div>" +
-                        "<hr>"
-                    );
+                    $("#alarmList").css("display", "").empty().append(
+                        "<div style='height:50px; vertical-align:middle'>" +
+                            "<div id='activitiyAlarmBtnSection' style='width: 50%; display: inline-block;'>" +
+                                "<button id='activityAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>활동알림</button>" +
+                            "</div>" +
+                            "<div id='keywordAlarmBtnSection' style='width: 50%; display: inline-block; border-bottom: 1px solid orange'>" +
+                                "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; color: orange; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
+                            "</div>" +
+                        "</div>"
+                    )
+
                     $.each(keywordAlarmList, function (index, keywordAlarm) {
-                       let clickYnTag;
+                        let clickYnTag;
 
-                       if (keywordAlarm.clickYn === "Y") {
-                           clickYnTag = "<div id='circle2'></div>";
-                       } else {
-                           clickYnTag = "<div id='circle1'></div>";
-                       }
+                        if (keywordAlarm.clickYn === "Y") {
+                            clickYnTag = "<div id='circle2'></div>";
+                        } else {
+                            clickYnTag = "<div id='circle1'></div>";
+                        }
 
-                       $("#keywordAlarmList").append(
+                        $("#alarmList").append(
                             "<li>" +
                                 "<a href=\"" + keywordAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"keyAlarm-" + keywordAlarm.id + "\" onclick='keywordAlarmClick(this)'>" +
                                     "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
@@ -198,19 +228,19 @@
                                     "<div>" +
                                         "<img src=\"" + keywordAlarm.boardImage + "\" style='width: 80px; height: 80px; float: left; display: inline-block'>" +
                                         "<div style='margin-top: 15px; margin-left: 20px; display: inline-block'>" +
-                                            "<p style='display: inline-block; font-weight: bolder'>" + keywordAlarm.keyword + " -" +  "</p>" + " <p style='display: inline-block'>" + keywordAlarm.boardTitle + "</p><br>" +
-                                            "<small class='text-muted'>" + keywordAlarm.areaName + "</small>" +  " · " +
+                                            "<p style='display: inline-block; font-weight: bolder'>" + keywordAlarm.keyword + " -" + "</p>" + " <p style='display: inline-block'>" + keywordAlarm.boardTitle + "</p><br>" +
+                                            "<small class='text-muted'>" + keywordAlarm.areaName + "</small>" + " · " +
                                             "<small class='text-muted'>" + keywordAlarm.diffCreatedAt + "</small>" +
                                         "</div>" +
                                     "</div>" +
-                               "</a>" +
-                           "</li>" +
-                           "<hr>"
-                       )
+                                "</a>" +
+                            "</li>" +
+                            "<hr>"
+                        )
                     });
                 }
             });
-        })
+        });
 
 
         function alarmClick(activityAlarm) {

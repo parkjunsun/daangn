@@ -1,10 +1,6 @@
 package js.daangnclone.domain.activity;
 
-import js.daangnclone.domain.attention.Attention;
-import js.daangnclone.domain.board.Board;
-import js.daangnclone.domain.chat.Chat;
-import js.daangnclone.domain.comment.Comment;
-import js.daangnclone.domain.like.Likes;
+import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 
@@ -14,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter @Setter
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Activity {
+public class Activity{
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "activity_id")
@@ -45,6 +41,5 @@ public class Activity {
         this.activityType = activityType;
         this.sender = sender;
         this.receiver = receiver;
-        this.createdAt = createdAt;
     }
 }

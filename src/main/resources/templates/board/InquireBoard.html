@@ -89,7 +89,7 @@
 
     $(function () {
         if (loginMemberId === boardMemberId) {
-            $("#chatBtn").hide();
+            $("#chatBtn").text("대화 중인 채팅방");
         }
 
         if (boardStatus === "SALE_COMP" || boardStatus === "SALE_RSRVT"){
@@ -98,7 +98,11 @@
 
         let encryptBoardId = btoa(boardId.toString() + loginMemberId.toString() + boardMemberId.toString());
         $("#chatBtn").click(function () {
-            $(location).attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
+            if (loginMemberId === boardMemberId) {
+                $(location).attr("href", "/chatList");
+            } else {
+                $(location).attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
+            }
         })
     });
 
