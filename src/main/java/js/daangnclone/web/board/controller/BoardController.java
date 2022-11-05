@@ -62,6 +62,28 @@ public class BoardController {
         return "board/InquireBoardList";
     }
 
+    @GetMapping("/search")
+    public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam String searchWord) {
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+            model.addAttribute("certifyYn", findMember.getCertifyYn());
+
+            if (findMember.getArea() == null) {
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
+                return "member/AddDetailsMemberForm";
+            }
+
+            model.addAttribute("provider", findMember.getProvider());
+            model.addAttribute("nickname", findMember.getNickname());
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(searchWord);
+        model.addAttribute("boardList", boardList);
+        return "board/InquireBoardList";
+
+    }
+
     @GetMapping("/board/new")
     public String createBoardForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();

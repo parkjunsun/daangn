@@ -53,6 +53,13 @@ public class ActivityAlarmController {
         activityAlarmService.markAsClick(activityAlarm);
     }
 
+    @PostMapping("/activityAlarmList/{activityAlarmId}/delete.do")
+    @ResponseBody
+    public void ajaxDeleteActivityAlarm(@PathVariable("activityAlarmId") Long activityAlarmId) {
+        ActivityAlarm activityAlarm = activityAlarmService.findAlarm(activityAlarmId);
+        activityAlarmService.deleteActivityAlarm(activityAlarm);
+    }
+
     @GetMapping("/activityAlarmList/old")
     public String showOldAlarmList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();

@@ -29,4 +29,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<Board> findByTitle(String title);
 
+    List<Board> findByTitleContains(String searchWord);
+
 }

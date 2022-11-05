@@ -22,13 +22,13 @@ public class DaangnCloneApplication {
         SpringApplication.run(DaangnCloneApplication.class, args);
     }
 
-//    @Bean
-//    public ApplicationRunner applicationRunner() {
-//        return args -> {
-//            reactiveMongoTemplate.dropCollection(Message.class).then(reactiveMongoTemplate.createCollection(
-//                    Message.class, CollectionOptions.empty().capped().size(5242880)
-//            )).block();
-//        };
-//    }
+    @Bean
+    public ApplicationRunner applicationRunner() {
+        return args -> {
+            reactiveMongoTemplate.dropCollection(Message.class).then(reactiveMongoTemplate.createCollection(
+                    Message.class, CollectionOptions.empty().capped().size(5242880)
+            )).block();
+        };
+    }
 
 }
