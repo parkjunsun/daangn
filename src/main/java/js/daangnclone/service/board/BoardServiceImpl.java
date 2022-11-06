@@ -81,6 +81,29 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    public List<BoardMultiResponse> inquireSearchBoardList(String searchWord) {
+        List<Board> findBoardList = boardRepository.findByTitleContains(searchWord);
+
+        return findBoardList.stream()
+                .map(board -> BoardMultiResponse.builder()
+                    .id(board.getId())
+                    .title(board.getTitle())
+                    .image(board.getImage())
+                    .price(board.getPrice())
+                    .content(board.getContent())
+                    .detail(board.getDetail())
+                    .category(board.getCategory().getCategoryName())
+                    .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
+                    .nickname(board.getMember().getNickname())
+                    .city(board.getMember().getArea().getAreaName())
+                    .boardStatus(board.getBoardStatus())
+                    .attentionCnt(attentionRepository.countByBoard(board))
+                    .chatRoomCnt(chatRepository.countByBoard(board))
+                    .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public BoardSingleResponse inquireBoard(Long id) {
         Board findBoard = boardRepository.findBoard(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 

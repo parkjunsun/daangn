@@ -15,6 +15,7 @@ public interface BoardService {
 
     Board registerItem(BoardForm boardForm, Member member);
     List<BoardMultiResponse> inquireAllBoardList();
+    List<BoardMultiResponse> inquireSearchBoardList(String searchWord);
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);
     Board updateBoardStatus(Long id, BoardStatus boardStatus);

@@ -6,7 +6,7 @@
 ## ⚒ 기술스택
 * ### Backend
   * Java
-  * Spring
+  * Spring booy
   * Spring Security
   * Thymeleaf
 

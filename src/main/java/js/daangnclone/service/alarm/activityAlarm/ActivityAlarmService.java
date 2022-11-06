@@ -15,5 +15,6 @@ public interface ActivityAlarmService {
     List<ActivityAlarmResponse> inquireAlarmList(Member receiver, String checkedYn);
     List<ActivityAlarmResponse> inquireAjaxAlarmList(Member receiver);
     void deleteReadAlarm(Member receiver, String checkedYn);
+    void deleteActivityAlarm(ActivityAlarm activityAlarm);
 
 }

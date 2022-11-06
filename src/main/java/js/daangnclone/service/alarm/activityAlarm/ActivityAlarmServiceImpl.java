@@ -89,4 +89,10 @@ public class ActivityAlarmServiceImpl implements ActivityAlarmService {
     public void deleteReadAlarm(Member receiver, String checkedYn) {
         activityAlarmRepository.deleteByReceiverAndCheckedYn(receiver, checkedYn);
     }
+
+    @Override
+    @Transactional
+    public void deleteActivityAlarm(ActivityAlarm activityAlarm) {
+        activityAlarmRepository.delete(activityAlarm);
+    }
 }
