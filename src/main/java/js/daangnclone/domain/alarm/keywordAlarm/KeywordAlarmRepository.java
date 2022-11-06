@@ -13,5 +13,4 @@ public interface KeywordAlarmRepository extends JpaRepository<KeywordAlarm, Long
 
     long countByReceiverAndCheckedYn(Member receiver, String checkedYn);
     List<KeywordAlarm> findByReceiverAndCreatedAtAfterOrderByCreatedAtDesc(Member receiver, LocalDateTime oneMonthAgo);
-
 }

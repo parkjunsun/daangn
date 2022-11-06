@@ -127,8 +127,8 @@
                         }
 
                         $("#alarmList").append(
-                            "<li>" +
-                                "<div style='float:left; display: inline-block; width: 90%'>" +
+                            "<li id=\"activeAlarm-" + activityAlarm.id + "\" >" +
+                                "<div style='float:left; display: inline-block; width: 88%'>" +
                                     "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
                                         "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
                                             clickYnTag +
@@ -140,12 +140,11 @@
                                     "</a>" +
                                 "</div>" +
                                 "<div style='float: right; display: inline-block; margin-right: 20px;'>" +
-                                    "<button id='deleteActiveAlarmBtn' style='float:right; display: inline-block; margin-top: 12px; line-height: 10px; background-color:transparent; border: 0; outline: 0;' value=\"" + activityAlarm.id + "\">" +
-                                        "X" +
+                                    "<button id='deleteActiveAlarmBtn' style='float:right; display: inline-block; margin-top: 4px; background-color:transparent; border: 0; outline: 0;' value=\"" + activityAlarm.id + "\">" +
+                                        "<img src=\"https://img.icons8.com/tiny-color/16/null/cancel.png\" alt='X'/>" +
                                     "</button>" +
                                 "</div>" +
-                            "</li>" +
-                            "<hr>"
+                            "</li>"
                         )
                     })
                 }
@@ -181,18 +180,24 @@
                         }
 
                         $("#alarmList").append(
-                            "<li>" +
-                                "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
-                                    "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
-                                        clickYnTag +
-                                    "</div>" +
-                                    "<div style='display: inline-block'>" +
-                                        "<small class=\"text-muted\" style='white-space: normal'>" + "<span style='color:#0090F9'>" + activityAlarm.sender + "</span>" + "님이 " + activityAlarm.message + "</small>" +
-                                        "<small class=\"fromNow text-muted\" style='display: block'>" + activityAlarm.diffCreatedAt + "</small>" +
-                                    "</div>" +
-                                "</a>" +
-                            "</li>" +
-                            "<hr>"
+                            "<li id=\"activeAlarm-" + activityAlarm.id + "\">" +
+                                "<div style='float:left; display: inline-block; width: 88%'>" +
+                                    "<a href=\"" + activityAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"activityAlarm-" + activityAlarm.id + "\" onclick='alarmClick(this)'>" +
+                                        "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
+                                            clickYnTag +
+                                        "</div>" +
+                                        "<div style='display: inline-block'>" +
+                                            "<small class=\"text-muted\" style='white-space: normal'>" + "<span style='color:#0090F9'>" + activityAlarm.sender + "</span>" + "님이 " + activityAlarm.message + "</small>" +
+                                            "<small class=\"fromNow text-muted\" style='display: block'>" + activityAlarm.diffCreatedAt + "</small>" +
+                                        "</div>" +
+                                    "</a>" +
+                                "</div>" +
+                                "<div style='float: right; display: inline-block; margin-right: 20px;'>" +
+                                    "<button id='deleteActiveAlarmBtn' style='float:right; display: inline-block; margin-top: 4px; background-color:transparent; border: 0; outline: 0;' value=\"" + activityAlarm.id + "\">" +
+                                        "<img src=\"https://img.icons8.com/tiny-color/16/null/cancel.png\" alt='X'/>" +
+                                    "</button>" +
+                                "</div>" +
+                            "</li>"
                         )
                     })
                 }
@@ -227,22 +232,28 @@
                         }
 
                         $("#alarmList").append(
-                            "<li>" +
-                                "<a href=\"" + keywordAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"keyAlarm-" + keywordAlarm.id + "\" onclick='keywordAlarmClick(this)'>" +
-                                    "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
-                                        clickYnTag +
-                                    "</div>" +
-                                    "<div>" +
-                                        "<img src=\"" + keywordAlarm.boardImage + "\" style='width: 80px; height: 80px; float: left; display: inline-block'>" +
-                                        "<div style='margin-top: 15px; margin-left: 20px; display: inline-block'>" +
-                                            "<p style='display: inline-block; font-weight: bolder'>" + keywordAlarm.keyword + " -" + "</p>" + " <p style='display: inline-block'>" + keywordAlarm.boardTitle + "</p><br>" +
-                                            "<small class='text-muted'>" + keywordAlarm.areaName + "</small>" + " · " +
-                                            "<small class='text-muted'>" + keywordAlarm.diffCreatedAt + "</small>" +
+                            "<li id=\"keywordAlarm-" + keywordAlarm.id + "\" >" +
+                                "<div style='float:left; display: inline-block; width: 88%'>" +
+                                    "<a href=\"" + keywordAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"keyAlarm-" + keywordAlarm.id + "\" onclick='keywordAlarmClick(this)'>" +
+                                        "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
+                                            clickYnTag +
                                         "</div>" +
-                                    "</div>" +
-                                "</a>" +
-                            "</li>" +
-                            "<hr>"
+                                        "<div>" +
+                                            "<img src=\"" + keywordAlarm.boardImage + "\" style='width: 80px; height: 80px; float: left; display: inline-block'>" +
+                                            "<div style='margin-top: 15px; margin-left: 20px; display: inline-block'>" +
+                                                "<p style='display: inline-block; font-weight: bolder'>" + keywordAlarm.keyword + " -" + "</p>" + " <p style='display: inline-block'>" + keywordAlarm.boardTitle + "</p><br>" +
+                                                "<small class='text-muted'>" + keywordAlarm.areaName + "</small>" + " · " +
+                                                "<small class='text-muted'>" + keywordAlarm.diffCreatedAt + "</small>" +
+                                            "</div>" +
+                                        "</div>" +
+                                    "</a>" +
+                                "</div>" +
+                                "<div style='float: right; display: inline-block; margin-right: 20px;'>" +
+                                    "<button id='deleteKeywordAlarmBtn' style='float:right; display: inline-block; margin-top: 4px; background-color:transparent; border: 0; outline: 0;' value=\"" + keywordAlarm.id + "\">" +
+                                        "<img src=\"https://img.icons8.com/tiny-color/16/null/cancel.png\" alt='X'/>" +
+                                    "</button>" +
+                                "</div>" +
+                            "</li>"
                         )
                     });
                 }
@@ -251,17 +262,82 @@
 
 
         $(document).on('click', '#deleteActiveAlarmBtn', function () {
-            let activeAlarmTag = $(this).parent().parent();
+            let activeAlarmTagId = "#activeAlarm-" + $(this).val();
             $.ajax({
                 url: "/activityAlarmList/" + $(this).val() + "/delete.do",
                 type: "post",
                 sync: false,
                 success: function () {
-                    activeAlarmTag.remove();
+                    $(activeAlarmTagId).remove();
                 }
             })
         });
 
+
+        $(document).on('click', '#deleteKeywordAlarmBtn', function () {
+           let keywordAlarmTagId = "#keywordAlarm-" + $(this).val();
+           $.ajax({
+               url: "/keywordAlarmList/" + $(this).val() + "/delete.do",
+               type: "post",
+               sync: false,
+               success: function () {
+                   $(keywordAlarmTagId).remove();
+
+                   $.ajax({
+                       url: "/keywordAlarmList/show.do",
+                       type: "get",
+                       sync: false,
+                       success: function (keywordAlarmList) {
+                            $("#alarmList").css("display", "").empty().append(
+                                "<div style='height:50px; vertical-align:middle'>" +
+                                    "<div id='activitiyAlarmBtnSection' style='width: 50%; display: inline-block;'>" +
+                                        "<button id='activityAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>활동알림</button>" +
+                                    "</div>" +
+                                    "<div id='keywordAlarmBtnSection' style='width: 50%; display: inline-block; border-bottom: 1px solid orange'>" +
+                                        "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; color: orange; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
+                                    "</div>" +
+                                "</div>"
+                            )
+
+                            $.each(keywordAlarmList, function (index, keywordAlarm) {
+                                   let clickYnTag;
+
+                                   if (keywordAlarm.clickYn === "Y") {
+                                       clickYnTag = "<div id='circle2'></div>";
+                                   } else {
+                                       clickYnTag = "<div id='circle1'></div>";
+                                   }
+
+                                   $("#alarmList").append(
+                                        "<li id=\"keywordAlarm-" + keywordAlarm.id + "\" >" +
+                                            "<div style='float:left; display: inline-block; width: 88%'>" +
+                                                "<a href=\"" + keywordAlarm.link + "\" class=\"dropdown-item list-group-item-action\" id=\"keyAlarm-" + keywordAlarm.id + "\" onclick='keywordAlarmClick(this)'>" +
+                                                    "<div style='float:left; display: inline-block; margin-right: 10px; margin-top: 10px;'>" +
+                                                        clickYnTag +
+                                                    "</div>" +
+                                                    "<div>" +
+                                                        "<img src=\"" + keywordAlarm.boardImage + "\" style='width: 80px; height: 80px; float: left; display: inline-block'>" +
+                                                        "<div style='margin-top: 15px; margin-left: 20px; display: inline-block'>" +
+                                                            "<p style='display: inline-block; font-weight: bolder'>" + keywordAlarm.keyword + " -" + "</p>" + " <p style='display: inline-block'>" + keywordAlarm.boardTitle + "</p><br>" +
+                                                            "<small class='text-muted'>" + keywordAlarm.areaName + "</small>" + " · " +
+                                                            "<small class='text-muted'>" + keywordAlarm.diffCreatedAt + "</small>" +
+                                                        "</div>" +
+                                                    "</div>" +
+                                                "</a>" +
+                                            "</div>" +
+                                            "<div style='float: right; display: inline-block; margin-right: 20px;'>" +
+                                                "<button id='deleteKeywordAlarmBtn' style='float:right; display: inline-block; margin-top: 4px; background-color:transparent; border: 0; outline: 0;' value=\"" + keywordAlarm.id + "\">" +
+                                                    "<img src=\"https://img.icons8.com/tiny-color/16/null/cancel.png\" alt='X'/>" +
+                                                "</button>" +
+                                            "</div>" +
+                                        "</li>"
+                                   )
+                            });
+                       }
+                   });
+               }
+           })
+        });
 
         function alarmClick(activityAlarm) {
             let alarmId = activityAlarm.id.toString().substring(14);

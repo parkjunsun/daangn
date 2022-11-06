@@ -14,5 +14,6 @@ public interface KeywordAlarmService {
     void markAsRead(List<KeywordAlarm> activityAlarmList);
     void markAsClick(KeywordAlarm activityAlarm);
     List<KeywordAlarmResponse> inquireAjaxKeywordAlarmList(Member receiver);
+    void deleteKeywordAlarm(KeywordAlarm keywordAlarm);
 
 }

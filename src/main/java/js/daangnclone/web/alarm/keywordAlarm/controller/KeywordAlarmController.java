@@ -9,10 +9,7 @@ import js.daangnclone.web.alarm.keywordAlarm.dto.KeywordAlarmResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,10 +29,17 @@ public class KeywordAlarmController {
         return keywordAlarmService.inquireAjaxKeywordAlarmList(receiver);
     }
 
-    @PostMapping("keywordAlarmList/click.do")
+    @PostMapping("/keywordAlarmList/click.do")
     @ResponseBody
     public void ajaxReadKeywordAlarm(@RequestParam Long keywordAlarmId) {
         KeywordAlarm keywordAlarm = keywordAlarmService.findKeywordAlarm(keywordAlarmId);
         keywordAlarmService.markAsClick(keywordAlarm);
+    }
+
+    @PostMapping("/keywordAlarmList/{keywordAlarmId}/delete.do")
+    @ResponseBody
+    public void ajaxDeleteKeywordAlarm(@PathVariable("keywordAlarmId") Long keywordAlarmId) {
+        KeywordAlarm keywordAlarm = keywordAlarmService.findKeywordAlarm(keywordAlarmId);
+        keywordAlarmService.deleteKeywordAlarm(keywordAlarm);
     }
 }

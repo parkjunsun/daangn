@@ -71,4 +71,10 @@ public class KeywordAlarmServiceImpl implements KeywordAlarmService{
                         .build())
                 .collect(Collectors.toList());
     }
+
+    @Override
+    @Transactional
+    public void deleteKeywordAlarm(KeywordAlarm keywordAlarm) {
+        keywordAlarmRepository.delete(keywordAlarm);
+    }
 }
