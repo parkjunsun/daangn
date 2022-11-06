@@ -6,7 +6,6 @@
 <div class="container">
     <div class="row py-5 text-center">
         <div class="col-3">
-
             <ul class="list-group mt-4">
                 <a href="#" th:if="${newBoardActivityList.size() > 0}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     상품 등록
@@ -29,7 +28,6 @@
                     <span th:text="${newChatActivityList.size()}">0</span>
                 </a>
             </ul>
-
         </div>
         <div class="col-9">
             <div class="card" th:if="${activityList.size() == 0}">
@@ -38,67 +36,67 @@
                 </div>
             </div>
 
-            <div class="card" th:if="${newBoardActivityList.size() > 0}">
+            <div class="card" style="margin-bottom: 20px;" th:if="${newBoardActivityList.size() > 0}">
                 <div class="card-header">
                     판매 상품을 등록했습니다.
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${boardActivity.link}}" th:each="boardActivity : ${newBoardActivityList}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
-                            <small class="text-muted"><span th:text="${boardActivity.receiverName}" style="color: #0090F9"></span>[[${boardActivity.message}]]</small><br>
-                            <span th:text="${boardActivity.content}"></span>
-                            <small class="fromNow text-muted" th:text="${attentionAlarm.diffCreatedAt}"></small>
+                        <div>
+                            <small class="text-muted" style="float: left"><span th:text="|${boardActivity.receiverName}님이 |" style="color: #0090F9"></span>[[${boardActivity.message}]]</small><br>
+                            <span style="float: left" th:text="${boardActivity.content}"></span>
+                            <small class="fromNow text-muted" style="float: right" th:text="${boardActivity.diffCreatedAt}"></small>
                         </div>
                     </a>
                 </ul>
-            </div><br>
+            </div>
 
-            <div class="card" th:if="${newAttentionActivityList.size() > 0}">
+            <div class="card" style="margin-bottom: 20px;" th:if="${newAttentionActivityList.size() > 0}">
                 <div class="card-header">
                     판매상품에 관심을 가졌습니다.
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${attentionActivity.link}}" th:each="attentionActivity : ${newAttentionActivityList}" class="list-group-item list-group-item-action">
                         <div>
-                            <small class="text-muted" style="float: left"><span th:text="${attentionActivity.receiverName}" style="color: #0090F9"></span>[[${attentionActivity.message}]]</small><br>
+                            <small class="text-muted" style="float: left"><span th:text="|${attentionActivity.receiverName}님이 |" style="color: #0090F9"></span>[[${attentionActivity.message}]]</small><br>
                             <span style="float: left" th:text="${attentionActivity.content}"></span>
                             <small style="float: right" class="text-muted" th:text="${attentionActivity.diffCreatedAt}"></small>
                         </div>
                     </a>
                 </ul>
-            </div><br>
+            </div>
 
-            <div class="card" th:if="${newCommentActivityList.size() > 0}">
+            <div class="card" style="margin-bottom: 20px;" th:if="${newCommentActivityList.size() > 0}">
                 <div class="card-header">
                     판매상품에 댓글을 등록했습니다.
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${commentActivity.link}}" th:each="commentActivity : ${newCommentActivityList}" class="list-group-item list-group-item-action">
                         <div>
-                            <small class="text-muted" style="float: left"><span th:text="${commentActivity.receiverName}" style="color: #0090F9"></span>[[${commentActivity.message}]]</small><br>
+                            <small class="text-muted" style="float: left"><span th:text="|${commentActivity.receiverName}님이 |" style="color: #0090F9"></span>[[${commentActivity.message}]]</small><br>
                             <span style="float: left" th:text="${commentActivity.content}"></span>
                             <small style="float: right" class="fromNow text-muted" th:text="${commentActivity.diffCreatedAt}"></small>
                         </div>
                     </a>
                 </ul>
-            </div><br>
+            </div>
 
-            <div class="card" th:if="${newLikesActivityList.size() > 0}">
+            <div class="card" style="margin-bottom: 20px;" th:if="${newLikesActivityList.size() > 0}">
                 <div class="card-header">
                     판매상품에 등록된 댓글에 좋아요를 눌렀습니다.
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${likesActivity.link}}" th:each="likesActivity : ${newLikesActivityList}" class="list-group-item list-group-item-action">
                         <div>
-                            <small class="text-muted" style="float: left"><span th:text="${likesActivity.receiverName}" style="color: #0090F9"></span>[[${likesActivity.message}]]</small>
+                            <small class="text-muted" style="float: left"><span th:text="|${likesActivity.receiverName}님이 |" style="color: #0090F9"></span>[[${likesActivity.message}]]</small>
                             <span style="float: left" th:text="${likesActivity.content}"></span>
                             <small style="float: right" class="fromNow text-muted" th:text="${likesActivity.diffCreatedAt}"></small>
                         </div>
                     </a>
                 </ul>
-            </div><br>
+            </div>
 
-            <div class="card" th:if="${newChatActivityList.size() > 0}">
+            <div class="card" style="margin-bottom: 20px;" th:if="${newChatActivityList.size() > 0}">
                 <div class="card-header">
                     판매상품에 채팅을 오픈했습니다.
                 </div>

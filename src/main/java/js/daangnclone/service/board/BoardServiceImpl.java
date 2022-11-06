@@ -52,8 +52,9 @@ public class BoardServiceImpl implements BoardService{
                 .member(member)
                 .build();
 
-        eventPublisher.publishEvent(new BoardCreatedEvent(board));
-        return boardRepository.save(board);
+        Board newBoard = boardRepository.save(board);
+        eventPublisher.publishEvent(new BoardCreatedEvent(newBoard));
+        return newBoard;
     }
 
     @Override

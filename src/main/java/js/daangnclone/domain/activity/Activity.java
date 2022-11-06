@@ -41,5 +41,6 @@ public class Activity{
         this.activityType = activityType;
         this.sender = sender;
         this.receiver = receiver;
+        this.createdAt = createdAt;
     }
 }
