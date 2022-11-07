@@ -22,7 +22,7 @@
             </div>
             <div style="margin-top: 10px;">
                 <th:block th:each="keyword : ${keywordList}">
-                    <button th:value="${keyword.id}" style="border: 1px solid gray; border-radius: 20px; display: inline-block; padding: 5px; margin-right: 10px; margin-bottom: 10px; background-color:transparent;" onclick="deleteKeyword(this)" th:text="|${keyword.word} X|"></button>
+                    <button th:value="${keyword.id}" style="border: 1px solid gray; border-radius: 20px; display: inline-block; padding: 5px; margin-right: 10px; margin-bottom: 10px; background-color:transparent;" onclick="deleteKeyword(this)">[[${keyword.word}]] <img src="https://img.icons8.com/tiny-color/16/null/cancel.png" alt='X' style="margin-bottom: 2px;"/></button>
                 </th:block>
             </div>
         </div>

@@ -4,9 +4,7 @@ import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.like.Likes;
 import js.daangnclone.domain.member.Member;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Comment extends TimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,6 +31,13 @@ public class Comment extends TimeEntity {
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<Likes> likeList = new ArrayList<>();
+
+    @Builder
+    public Comment(String content, Member member, Board board) {
+        this.content = content;
+        setMember(member);
+        setBoard(board);
+    }
 
     public void setMember(Member member) {
         this.member = member;

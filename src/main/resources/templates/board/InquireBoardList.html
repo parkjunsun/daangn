@@ -54,6 +54,10 @@
                 </div>
             </th:block>
         </div>
+        <form action="/" method="get">
+            <input type="hidden" name="offset" th:value="${boardList.size()}" />
+            <button type="submit">더보기 버튼</button>
+        </form>
     </div>
 </div>
 </body>

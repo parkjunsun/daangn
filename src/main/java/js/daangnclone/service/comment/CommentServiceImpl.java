@@ -34,10 +34,12 @@ public class CommentServiceImpl implements CommentService{
     @Override
     @Transactional
     public Comment writeComment(CommentForm commentForm, Board board, Member member) {
-        Comment comment = new Comment();
-        comment.setContent(commentForm.getContent());
-        comment.setBoard(board);
-        comment.setMember(member);
+
+        Comment comment = Comment.builder()
+                .content(commentForm.getContent())
+                .board(board)
+                .member(member)
+                .build();
 
         //로그인 사용자와 게시글 사용자가 다를 때만 댓글 알림 이벤트를 생성한다.
         if (!member.equals(board.getMember())) {

@@ -19,6 +19,9 @@ import js.daangnclone.web.comment.dto.CommentResponse;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -41,7 +44,7 @@ public class BoardController {
     private final ChatService chatService;
 
     @GetMapping("/")
-    public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+    public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam(required = false) Integer offset) {
 
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
@@ -57,7 +60,16 @@ public class BoardController {
             model.addAttribute("nickname", findMember.getNickname());
         }
 
-        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
+//        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
+
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardListV2(pageable);
+
         model.addAttribute("boardList", boardResponsesList);
         return "board/InquireBoardList";
     }

@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 @Getter @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Board extends TimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)

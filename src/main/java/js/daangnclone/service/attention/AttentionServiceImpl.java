@@ -39,9 +39,11 @@ public class AttentionServiceImpl implements AttentionService{
     }
 
     private void registerAttention(Member member, Board board) {
-        Attention attention = new Attention();
-        attention.setMember(member);
-        attention.setBoard(board);
+
+        Attention attention = Attention.builder()
+                .member(member)
+                .board(board)
+                .build();
 
         //로그인 사용자와 게시글 사용자가 다를 때만 관심 알림 이벤트를 생성한다.
         if (!member.equals(board.getMember())) {

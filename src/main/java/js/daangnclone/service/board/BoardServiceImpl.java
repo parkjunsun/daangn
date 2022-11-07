@@ -18,6 +18,8 @@ import js.daangnclone.web.sale.dto.SaleResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +62,29 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<BoardMultiResponse> inquireAllBoardList() {
         List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        return findBoardList.stream()
+                .map(board -> BoardMultiResponse.builder()
+                        .id(board.getId())
+                        .title(board.getTitle())
+                        .image(board.getImage())
+                        .price(board.getPrice())
+                        .content(board.getContent())
+                        .detail(board.getDetail())
+                        .category(board.getCategory().getCategoryName())
+                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
+                        .nickname(board.getMember().getNickname())
+                        .city(board.getMember().getArea().getAreaName())
+                        .boardStatus(board.getBoardStatus())
+                        .attentionCnt(attentionRepository.countByBoard(board))
+                        .chatRoomCnt(chatRepository.countByBoard(board))
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardMultiResponse> inquireAllBoardListV2(Pageable pageable) {
+        List<Board> findBoardList = boardRepository.findAllV2(pageable).getContent();
 
         return findBoardList.stream()
                 .map(board -> BoardMultiResponse.builder()

@@ -45,9 +45,10 @@ public class LikesServiceImpl implements LikesService {
         Member findMember = memberRepository.findById(memberId).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         Comment findComment = commentRepository.findById(commentId).orElseThrow(() -> new CustomException(COMMENT_NOT_FOUND));
 
-        Likes like = new Likes();
-        like.setMember(findMember);
-        like.setComment(findComment);
+        Likes like = Likes.builder()
+                .member(findMember)
+                .comment(findComment)
+                .build();
 
         //로그인 사용자와 댓글 작성자가 다를 때만 좋아요 이벤트를 생성한다.
         if (!findMember.equals(findComment.getMember())) {
@@ -58,7 +59,7 @@ public class LikesServiceImpl implements LikesService {
 
     private void removeLike(Long memberId, Long commentId) {
         Optional<Likes> findLike = likeRepository.findByMemberIdAndCommentId(memberId, commentId);
-        findLike.ifPresent(likes -> likeRepository.delete(likes));
+        findLike.ifPresent(likeRepository::delete);
     }
 
     @Override

@@ -3,13 +3,13 @@ package js.daangnclone.domain.like;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter @Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "likes")
 public class Likes extends TimeEntity {
 
@@ -24,6 +24,12 @@ public class Likes extends TimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "comment_id")
     private Comment comment;
+
+    @Builder
+    public Likes(Member member, Comment comment) {
+        setMember(member);
+        setComment(comment);
+    }
 
     public void setMember(Member member) {
         this.member = member;

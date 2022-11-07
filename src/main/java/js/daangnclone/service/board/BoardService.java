@@ -8,6 +8,7 @@ import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
 import js.daangnclone.web.purchase.dto.PurchaseResponse;
 import js.daangnclone.web.sale.dto.SaleResponse;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,6 +16,7 @@ public interface BoardService {
 
     Board registerItem(BoardForm boardForm, Member member);
     List<BoardMultiResponse> inquireAllBoardList();
+    List<BoardMultiResponse> inquireAllBoardListV2(Pageable pageable);
     List<BoardMultiResponse> inquireSearchBoardList(String searchWord);
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);

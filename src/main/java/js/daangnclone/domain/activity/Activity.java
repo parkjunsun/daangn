@@ -1,6 +1,5 @@
 package js.daangnclone.domain.activity;
 
-import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 

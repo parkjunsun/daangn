@@ -99,13 +99,12 @@
             );
         });
 
-        $("#alarm").on('click', function () {
+        $("#alarmBtn").on('click', function () {
             $.ajax({
                 url:"/activityAlarmList/show.do",
                 type:"get",
                 sync: false,
                 success: function (activityAlarmList) {
-
                     $("#alarmList").css("display", "").empty().append(
                         "<div style='height:50px; vertical-align:middle'>" +
                             "<div id='activitiyAlarmBtnSection' style='width: 50%; display: inline-block; border-bottom: 1px solid orange'>" +
@@ -167,7 +166,7 @@
                                 "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
                             "</div>" +
                         "</div>"
-                    )
+                    );
 
                     $.each(activityAlarmList, function (index, activityAlarm) {
 
@@ -220,7 +219,7 @@
                                 "<button id='keywordAlarmSection' class='alarmClass' style='float: left; margin-left: 60px; color: orange; line-height: 40px; background-color:transparent; border: 0; outline: 0;'>키워드알림</button>" +
                             "</div>" +
                         "</div>"
-                    )
+                    );
 
                     $.each(keywordAlarmList, function (index, keywordAlarm) {
                         let clickYnTag;

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member extends TimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
