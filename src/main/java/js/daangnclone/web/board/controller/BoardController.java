@@ -68,9 +68,12 @@ public class BoardController {
         } else {
             pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
+
         List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardListV2(pageable);
+        String hasNextPageYn = boardService.hasNextPage(pageable);
 
         model.addAttribute("boardList", boardResponsesList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
         return "board/InquireBoardList";
     }
 
@@ -112,7 +115,6 @@ public class BoardController {
 
         model.addAttribute("boardForm", new BoardForm());
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "board/BoardForm";
@@ -124,6 +126,50 @@ public class BoardController {
         Member member = memberService.findMember(principalUserDetails.getMember().getId());
         boardService.registerItem(boardForm, member);
         redirectAttributes.addFlashAttribute("successMsg", "상품 등록 성공!!");
+        return "redirect:/";
+    }
+
+    @GetMapping("/board/{boardId}/update")
+    public String UpdateBoardForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable Long boardId, Model model) {
+        Member findMember = memberService.findMember(principalUserDetails.getMember().getId());
+        Board findBoard = boardService.findBoard(boardId);
+
+        BoardForm boardForm = BoardForm.builder()
+                .boardId(findBoard.getId())
+                .image(findBoard.getImage())
+                .title(findBoard.getTitle())
+                .category(findBoard.getCategory().getCategoryCd())
+                .price(findBoard.getPrice())
+                .content(findBoard.getContent())
+                .detail(findBoard.getDetail())
+                .build();
+
+        List<CategoryDto> categoryList = Arrays.stream(Category.values())
+                .map(category -> CategoryDto.builder()
+                        .categoryCd(category.getCategoryCd())
+                        .categoryName(category.getCategoryName())
+                        .build())
+                .collect(Collectors.toList());
+
+        model.addAttribute("boardForm", boardForm);
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("nickname", findMember.getNickname());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
+
+        return "/board/BoardUpdateForm";
+    }
+
+    @PostMapping("/board/{boardId}/update")
+    public String updateBoard(@PathVariable Long boardId, @ModelAttribute BoardForm boardForm, RedirectAttributes redirectAttributes) {
+        boardService.updateItem(boardId, boardForm);
+        redirectAttributes.addFlashAttribute("successMsg", "상품 수정 성공!!");
+        return "redirect:/";
+    }
+
+    @PostMapping("/board/{boardId}/delete")
+    public String deleteBoard(@PathVariable Long boardId, RedirectAttributes redirectAttributes) {
+        boardService.deleteItem(boardId);
+        redirectAttributes.addFlashAttribute("successMsg", "상품 삭제 성공!!");
         return "redirect:/";
     }
 
@@ -146,7 +192,6 @@ public class BoardController {
         model.addAttribute("commentList", commentResponseList);
         model.addAttribute("attentionInpYn", attentionInpYn);
         model.addAttribute("attentionCnt", attentionCnt);
-        model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("memberId", findMember.getId());
@@ -182,4 +227,5 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
         return "redirect:/";
     }
+
 }

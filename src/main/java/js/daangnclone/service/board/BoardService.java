@@ -15,8 +15,11 @@ import java.util.List;
 public interface BoardService {
 
     Board registerItem(BoardForm boardForm, Member member);
+    void updateItem(Long boardId, BoardForm boardForm);
+    void deleteItem(Long boardId);
     List<BoardMultiResponse> inquireAllBoardList();
     List<BoardMultiResponse> inquireAllBoardListV2(Pageable pageable);
+    String hasNextPage(Pageable pageable);
     List<BoardMultiResponse> inquireSearchBoardList(String searchWord);
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);

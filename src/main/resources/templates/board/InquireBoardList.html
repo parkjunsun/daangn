@@ -54,10 +54,17 @@
                 </div>
             </th:block>
         </div>
-        <form action="/" method="get">
-            <input type="hidden" name="offset" th:value="${boardList.size()}" />
-            <button type="submit">더보기 버튼</button>
-        </form>
+    </div>
+    <div style="text-align: center; margin-top: 20px;">
+        <th:block th:if="${hasNextPageYn eq 'Y'}">
+            <form action="/" method="get">
+                <input type="hidden" name="offset" th:value="${boardList.size()}" />
+                <button type="submit" class="btn btn-primary btn-lg btn-block" style="background-color: orange; color: white; border: 1px solid orange">등록 상품 더보기</button>
+            </form>
+        </th:block>
+        <th:block th:if="${hasNextPageYn eq 'N'}">
+            <span style="color: orange">마지막 상품 입니다.</span>
+        </th:block>
     </div>
 </div>
 </body>

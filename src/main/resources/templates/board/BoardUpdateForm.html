@@ -4,54 +4,77 @@
 
 <header th:replace="fragments/header::header"></header>
 <body>
-    <div class="container">
-        <div class="input-form-background row">
-            <div class="input-form mx-auto">
-                <h4 class="mb-3">상품 등록</h4>
-                <form th:action="@{/board/new}" th:object="${boardForm}" method="post">
-                    <div class="mb-5">
-                        <div style="margin-left: 12px; color:#dc3545">
-                            대표이미지
-                        </div>
-                        <div class="image-box" style="display: inline-block; margin-right: 30px;">
-                            <div class="image-show" id="image-show">
-                                <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 100px; height: 100px;">
-                            </div>
-                        </div>
-                        <div class="filebox" style="display: inline-block;">
-                            <label th:for="image">업로드</label>
-                            <input th:type="file" th:field="*{image}" accept=".gif, .jpg, .png" onchange="return loadFile(this)" style="display: none;">
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3">상품 수정</h4>
+            <form th:action="@{/board/{boardId}/update(boardId = ${boardForm.boardId})}" th:object="${boardForm}" method="post">
+                <div class="mb-5">
+                    <div style="margin-left: 12px; color:#dc3545">
+                        대표이미지
+                    </div>
+                    <div class="image-box" style="display: inline-block; margin-right: 30px;">
+                        <div class="image-show" id="image-show">
+                            <img src="https://icon-library.com/images/no-image-icon/no-image-icon-0.jpg" style="width: 100px; height: 100px;">
                         </div>
                     </div>
-                    <div class="mb-5">
-                        <label th:for="title">글 제목</label>
-                        <input th:type="text" th:field="*{title}" class="form-control" placeholder="글 제목">
+                    <div class="filebox" style="display: inline-block;">
+                        <label th:for="image">업로드</label>
+                        <input th:type="file" th:field="*{image}" accept=".gif, .jpg, .png" onchange="return loadFile(this)" style="display: none;">
                     </div>
-                    <div class="mb-5">
-                        <label th:for="category">카테고리</label>
-                        <select class="form-select" th:field="*{category}">
-                            <option value=""> --카테고리 선택-- </option>
-                            <option th:each="category : ${categoryList}" th:value="${category.categoryCd}" th:text="${category.categoryName}"></option>
-                        </select>
-                    </div>
-                    <div class="mb-5">
-                        <label th:for="price">가격</label>
-                        <input th:type="text" th:field="*{price}" class="form-control" placeholder="￦ 가격">
-                    </div>
-                    <div class="mb-5" id="contentBox" style="display: none">
-                        <textarea th:rows="10" th:type="text" th:field="*{content}" class="form-control" placeholder="글 제목" wrap="hard"></textarea>
-                    </div>
-                    <div class="mb-5" id="detailBox" style="display: none">
-                        <label th:for="detail" id="detailLabel"></label>
-                        <input th:type="text" th:field="*{detail}" class="form-control" placeholder="">
-                    </div>
-                    <button class="btn btn-primary btn-lg btn-block" type="submit">등록 하기</button>
-                </form>
-            </div>
+                </div>
+                <div class="mb-5">
+                    <label th:for="title">글 제목</label>
+                    <input th:type="text" th:field="*{title}" class="form-control" placeholder="글 제목">
+                </div>
+                <div class="mb-5">
+                    <label th:for="category">카테고리</label>
+                    <select class="form-select" th:field="*{category}">
+                        <option value=""> --카테고리 선택-- </option>
+                        <option th:each="category : ${categoryList}" th:value="${category.categoryCd}" th:text="${category.categoryName}"></option>
+                    </select>
+                </div>
+                <div class="mb-5">
+                    <label th:for="price">가격</label>
+                    <input th:type="text" th:field="*{price}" class="form-control" placeholder="￦ 가격">
+                </div>
+                <div class="mb-5" id="contentBox" style="display: none">
+                    <textarea th:rows="10" th:type="text" th:field="*{content}" class="form-control" placeholder="글 내용" wrap="hard"></textarea>
+                </div>
+                <div class="mb-5" id="detailBox" style="display: none">
+                    <label th:for="detail" id="detailLabel"></label>
+                    <input th:type="text" th:field="*{detail}" class="form-control" placeholder="">
+                </div>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">수정 하기</button>
+            </form>
         </div>
     </div>
+</div>
 <script async th:inline="javascript">
+
+    $(function () {
+
+        let contentStr = [[${boardForm.content}]].replaceAll("<br>", "\r\n");
+        let detailStr = [[${boardForm.detail}]];
+
+        $("#contentBox").css("display", "block");
+        $("#content").text(contentStr);
+
+        if( detailStr === "" || detailStr === null || detailStr === undefined || (typeof detailStr === "object" && !Object.keys(detailStr).length)) {
+            $("#detailBox").css("display", "none");
+        } else {
+            $("#detailBox").css("display", "block");
+        }
+
+    });
+
     $("#category").on('change', function () {
+
+        $("#contentBox").css("display", "none");
+        $("#contentBox > textarea").val("");
+        $("#detailBox").css("display", "none");
+        $("#detailBox > input").val("");
+
         let categoryCd = $(this).val();
         let contentBox = document.getElementById("contentBox");
         let content = document.getElementById("content");
@@ -61,22 +84,15 @@
         let detailLabel = document.getElementById("detailLabel");
         let detail = document.getElementById("detail");
 
-        if (categoryCd === "") {
-            contentBox.style.display = "none";
-            content.placeholder = "";
-            detailBox.style.display = "none";
-            detailLabel.innerText = "";
-            detail.placeholder = "";
-        }
-        else if (categoryCd >= 101000 && categoryCd < 102000) {
+        if (categoryCd >= 101000 && categoryCd < 102000) {
             contentBox.style.display = "block";
             content.placeholder = "-구매시기\n"
-                                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
-                                + "-구성품 포함 여부\n"
-                                + "-제조일자\n"
-                                + "-브랜드 및 모델명\n"
-                                + "-정상 작동여부, 사용감(흠집, 파손 여부, 상세 사진), 과거 수리여부, 전자파 인증번호 등\n\n\n"
-                                + defaultMsg;
+                + "-사용여부 (미개봉, OO회, OO개월 사용 등)\n"
+                + "-구성품 포함 여부\n"
+                + "-제조일자\n"
+                + "-브랜드 및 모델명\n"
+                + "-정상 작동여부, 사용감(흠집, 파손 여부, 상세 사진), 과거 수리여부, 전자파 인증번호 등\n\n\n"
+                + defaultMsg;
 
             detailBox.style.display = "block";
             detailLabel.innerText = "브랜드";

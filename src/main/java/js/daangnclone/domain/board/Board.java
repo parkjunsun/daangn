@@ -3,6 +3,8 @@ package js.daangnclone.domain.board;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.attention.Attention;
+import js.daangnclone.domain.chat.Chat;
+import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
@@ -11,6 +13,9 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.CascadeType.*;
+import static javax.persistence.CascadeType.PERSIST;
 
 @Entity
 @Getter @Setter
@@ -47,11 +52,17 @@ public class Board extends TimeEntity {
     @JoinColumn(name = "purchaser_id")
     private Member purchaser;
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = ALL)
     private List<Attention> attentionList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "board", cascade = ALL)
     private List<Comment> commentList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = ALL)
+    private List<Chat> chatList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = ALL)
+    private List<ChatNotification> chatNotificationList = new ArrayList<>();
 
 
     public void setMember(Member member) {

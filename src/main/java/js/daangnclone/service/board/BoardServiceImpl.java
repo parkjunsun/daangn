@@ -1,6 +1,7 @@
 package js.daangnclone.service.board;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.attention.AttentionRepository;
@@ -60,6 +61,25 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
+    @Transactional
+    public void updateItem(Long boardId, BoardForm boardForm) {
+        Board findBoard = boardRepository.findBoard(boardId).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
+        findBoard.setTitle(boardForm.getTitle());
+        findBoard.setCategory(Category.of(boardForm.getCategory()));
+        findBoard.setContent(boardForm.getContent().replace("\r\n", "<br>"));
+        findBoard.setPrice(boardForm.getPrice());
+        findBoard.setDetail(boardForm.getDetail());
+    }
+
+
+    @Override
+    @Transactional
+    public void deleteItem(Long boardId) {
+        Board findBoard = boardRepository.findBoard(boardId).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
+        boardRepository.delete(findBoard);
+    }
+
+    @Override
     public List<BoardMultiResponse> inquireAllBoardList() {
         List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
 
@@ -103,6 +123,15 @@ public class BoardServiceImpl implements BoardService{
                         .chatRoomCnt(chatRepository.countByBoard(board))
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String hasNextPage(Pageable pageable) {
+        if (!boardRepository.findAllV2(pageable).hasNext()) {
+            return "N";
+        } else {
+            return "Y";
+        }
     }
 
     @Override

@@ -7,7 +7,9 @@
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">
         <div class="card mb-3" style="width: 40rem; padding-top: 12px;">
-            <img th:src="${board.image}" class="card-img-top" alt="..." style="width: 610px; height: 500px;">
+            <div style="text-align: center;">
+                <img th:src="${board.image}" class="card-img-top" alt="..." style="width: 590px; height: 500px;">
+            </div>
             <div class="card-header bg-transparent">
                 <span class="card-title" th:text="${board.nickname}" style="font-weight: bold"></span>
                 <th:block th:if="${board.memberId == memberId}">
@@ -20,16 +22,34 @@
                 </th:block>
                 <p class="card-text" th:text="${board.city}"></p>
             </div>
-            <div class="card-body">
-                <h5 class="card-title" th:text="${board.title}" style="font-weight: bold; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">Card title</h5>
-                <small th:class="text-muted" th:text="${board.category}"></small> ·
-                <small th:class="text-muted" th:text="${board.diffCreatedAt}"></small>
-                <br><br>
-                <p class="card-text" th:utext="${board.content}"></p>
-                <br><br>
-                <small th:class="text-muted">채팅 </small><small id="chatCnt" th:class="text-muted" th:text="${chatRoomCnt}"></small> ·
-                <small th:class="text-muted">관심 </small><small id="attentionCnt" th:class="text-muted" th:text="${attentionCnt}"></small> ·
-                <small th:class="text-muted">조회 </small><small id="boardView" th:class="text-muted" th:text="${board.view}"></small>
+            <div style="margin-left: 20px; margin-bottom: 20px;">
+                <div style="float: left; margin-top: 20px;">
+                    <h5 class="card-title" th:text="${board.title}" style="font-weight: bold; white-space:nowrap; overflow: hidden; text-overflow: ellipsis;">Card title</h5>
+                    <small th:class="text-muted" th:text="${board.category}"></small> ·
+                    <small th:class="text-muted" th:text="${board.diffCreatedAt}"></small>
+                    <br><br>
+                    <p class="card-text" th:utext="${board.content}"></p>
+                    <br><br>
+                    <small th:class="text-muted">채팅 </small><small id="chatCnt" th:class="text-muted" th:text="${chatRoomCnt}"></small> ·
+                    <small th:class="text-muted">관심 </small><small id="attentionCnt" th:class="text-muted" th:text="${attentionCnt}"></small> ·
+                    <small th:class="text-muted">조회 </small><small id="boardView" th:class="text-muted" th:text="${board.view}"></small>
+                </div>
+                <div id="menuTab" style="float: right;">
+                    <li class="nav-item dropdown" style="list-style: none;">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown">
+                            <img src="https://img.icons8.com/external-others-inmotus-design/20/null/external-Menu-atm-others-inmotus-design-2.png" alt="menu"/>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/board/{boardId}/update(boardId = ${board.id})}"><img src="https://img.icons8.com/external-anggara-basic-outline-anggara-putra/24/null/external-edit-basic-user-interface-anggara-basic-outline-anggara-putra.png" alt="update"/> 수정하기</a></li>
+                            <li>
+                                <form th:action="@{/board/{boardId}/delete(boardId = ${board.id})}" method="post">
+<!--                                    <a class="dropdown-item" th:href="@{/board/{boardId}/delete(boardId = ${board.id})}"><img src="https://img.icons8.com/windows/24/null/trash.png" alt="delete"/> 삭제하기</a>-->
+                                    <button class="dropdown-item" type="submit"><img src="https://img.icons8.com/windows/24/null/trash.png" alt="delete"/> 삭제하기</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
+                </div>
             </div>
             <div class="card-footer bg-transparent">
                 <button id="attentionBtn" class="card-link" style="margin-right: 5px; border:0; outline: 0; background-color: transparent;">
@@ -90,6 +110,8 @@
     $(function () {
         if (loginMemberId === boardMemberId) {
             $("#chatBtn").text("대화 중인 채팅방");
+        } else {
+            $("#menuTab").css("display", "none");
         }
 
         if (boardStatus === "SALE_COMP" || boardStatus === "SALE_RSRVT"){

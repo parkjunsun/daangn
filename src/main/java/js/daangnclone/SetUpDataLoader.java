@@ -101,20 +101,20 @@ public class SetUpDataLoader implements ApplicationListener<ContextRefreshedEven
             boardRepository.save(board1);
         }
 
-        if (boardRepository.findByTitle("JPA 책 팔아욤~").isEmpty()) {
-            Board board2 = Board.builder()
-                    .title("JPA 책 팔아욤~")
-                    .category(Category.of(108000L))
-                    .content("2020년 구매.\r\n사용감X\r\n편한게 연락ㄱㄱ\r\n".replace("\r\n", "<br>"))
-                    .detail("JPA")
-                    .price(38000)
-                    .boardStatus(BoardStatus.SALE_ON)
-                    .image("https://shopping-phinf.pstatic.net/main_3243600/32436007738.20220527090954.jpg?type=w300")
-                    .member(naverMember)
-                    .build();
-
-            boardRepository.save(board2);
-        }
+//        if (boardRepository.findByTitle("JPA 책 팔아욤~").isEmpty()) {
+//            Board board2 = Board.builder()
+//                    .title("JPA 책 팔아욤~")
+//                    .category(Category.of(108000L))
+//                    .content("2020년 구매.\r\n사용감X\r\n편한게 연락ㄱㄱ\r\n".replace("\r\n", "<br>"))
+//                    .detail("JPA")
+//                    .price(38000)
+//                    .boardStatus(BoardStatus.SALE_ON)
+//                    .image("https://shopping-phinf.pstatic.net/main_3243600/32436007738.20220527090954.jpg?type=w300")
+//                    .member(naverMember)
+//                    .build();
+//
+//            boardRepository.save(board2);
+//        }
     }
 
 

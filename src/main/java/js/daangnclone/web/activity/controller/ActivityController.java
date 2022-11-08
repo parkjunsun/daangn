@@ -46,6 +46,7 @@ public class ActivityController {
             switch (activity.getActivityType()) {
                 case BOARD_CREATE:
                     newBoardActivityList.add(activity);
+                    break;
                 case ATTENTION_CREATE:
                     newAttentionActivityList.add(activity);
                     break;
