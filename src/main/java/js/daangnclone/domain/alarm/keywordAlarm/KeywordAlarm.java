@@ -1,6 +1,5 @@
 package js.daangnclone.domain.alarm.keywordAlarm;
 
-import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import lombok.*;

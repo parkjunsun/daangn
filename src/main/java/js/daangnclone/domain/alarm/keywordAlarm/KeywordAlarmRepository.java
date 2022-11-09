@@ -1,6 +1,5 @@
 package js.daangnclone.domain.alarm.keywordAlarm;
 
-import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarm;
 import js.daangnclone.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

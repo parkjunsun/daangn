@@ -2,8 +2,6 @@ package js.daangnclone.domain.chat.event;
 
 import js.daangnclone.domain.activity.Activity;
 import js.daangnclone.domain.activity.ActivityType;
-import js.daangnclone.domain.board.Board;
-import js.daangnclone.domain.board.event.BoardCreatedEvent;
 import js.daangnclone.domain.chat.Chat;
 import js.daangnclone.service.activity.ActivityService;
 import lombok.RequiredArgsConstructor;

@@ -2,14 +2,11 @@ package js.daangnclone.domain.chat;
 
 import js.daangnclone.domain.TimeEntity;
 import js.daangnclone.domain.board.Board;
-import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.member.Member;
 import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter @Setter
 @Entity

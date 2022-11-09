@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static javax.persistence.CascadeType.*;
-import static javax.persistence.CascadeType.PERSIST;
+
 
 @Entity
 @Getter @Setter
