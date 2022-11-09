@@ -1,13 +1,13 @@
 package js.daangnclone.service.board;
 
 import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.attention.AttentionRepository;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.board.SearchType;
 import js.daangnclone.domain.board.event.BoardCreatedEvent;
 import js.daangnclone.domain.chat.ChatRepository;
 import js.daangnclone.domain.member.Member;
@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -79,82 +78,44 @@ public class BoardServiceImpl implements BoardService{
         boardRepository.delete(findBoard);
     }
 
-    @Override
-    public List<BoardMultiResponse> inquireAllBoardList() {
-        List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+//    @Override
+//    public List<BoardMultiResponse> inquireAllBoardList() {
+//        List<Board> findBoardList = boardRepository.findAll(Sort.by(Sort.Direction.DESC, "createdAt"));
+//        return ConvertToBoardList(findBoardList);
+//    }
 
-        return findBoardList.stream()
-                .map(board -> BoardMultiResponse.builder()
-                        .id(board.getId())
-                        .title(board.getTitle())
-                        .image(board.getImage())
-                        .price(board.getPrice())
-                        .content(board.getContent())
-                        .detail(board.getDetail())
-                        .category(board.getCategory().getCategoryName())
-                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
-                        .nickname(board.getMember().getNickname())
-                        .city(board.getMember().getArea().getAreaName())
-                        .boardStatus(board.getBoardStatus())
-                        .attentionCnt(attentionRepository.countByBoard(board))
-                        .chatRoomCnt(chatRepository.countByBoard(board))
-                        .build())
-                .collect(Collectors.toList());
+    @Override
+    public List<BoardMultiResponse> inquireAllBoardList(Pageable pageable) {
+        List<Board> findBoardList = boardRepository.findAll(pageable).getContent();
+        return ConvertToBoardList(findBoardList);
     }
 
     @Override
-    public List<BoardMultiResponse> inquireAllBoardListV2(Pageable pageable) {
-        List<Board> findBoardList = boardRepository.findAllV2(pageable).getContent();
+    public String hasNextPage(SearchType searchType, Pageable pageable, Object condition) {
+        if (searchType.getKey().equals("01")) {
+            if (!boardRepository.findAll(pageable).hasNext()) return "N";
+            else return "Y";
+        } else if (searchType.getKey().equals("02")) {
+            if (!boardRepository.findByTitleContains(pageable, (String) condition).hasNext()) return "N";
+            else return "Y";
 
-        return findBoardList.stream()
-                .map(board -> BoardMultiResponse.builder()
-                        .id(board.getId())
-                        .title(board.getTitle())
-                        .image(board.getImage())
-                        .price(board.getPrice())
-                        .content(board.getContent())
-                        .detail(board.getDetail())
-                        .category(board.getCategory().getCategoryName())
-                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
-                        .nickname(board.getMember().getNickname())
-                        .city(board.getMember().getArea().getAreaName())
-                        .boardStatus(board.getBoardStatus())
-                        .attentionCnt(attentionRepository.countByBoard(board))
-                        .chatRoomCnt(chatRepository.countByBoard(board))
-                        .build())
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public String hasNextPage(Pageable pageable) {
-        if (!boardRepository.findAllV2(pageable).hasNext()) {
-            return "N";
         } else {
-            return "Y";
+            if (!boardRepository.findByCategory(pageable, (Category) condition).hasNext()) return "N";
+            else return "Y";
         }
     }
 
-    @Override
-    public List<BoardMultiResponse> inquireSearchBoardList(String searchWord) {
-        List<Board> findBoardList = boardRepository.findByTitleContains(searchWord);
 
-        return findBoardList.stream()
-                .map(board -> BoardMultiResponse.builder()
-                    .id(board.getId())
-                    .title(board.getTitle())
-                    .image(board.getImage())
-                    .price(board.getPrice())
-                    .content(board.getContent())
-                    .detail(board.getDetail())
-                    .category(board.getCategory().getCategoryName())
-                    .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
-                    .nickname(board.getMember().getNickname())
-                    .city(board.getMember().getArea().getAreaName())
-                    .boardStatus(board.getBoardStatus())
-                    .attentionCnt(attentionRepository.countByBoard(board))
-                    .chatRoomCnt(chatRepository.countByBoard(board))
-                    .build())
-                .collect(Collectors.toList());
+    @Override
+    public List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord) {
+        List<Board> findBoardList = boardRepository.findByTitleContains(pageable, searchWord).getContent();
+        return ConvertToBoardList(findBoardList);
+    }
+
+    @Override
+    public List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category) {
+        List<Board> findBoardList = boardRepository.findByCategory(pageable, category).getContent();
+        return ConvertToBoardList(findBoardList);
     }
 
     @Override
@@ -253,6 +214,27 @@ public class BoardServiceImpl implements BoardService{
         return purchaseList.stream()
                 .map(board -> PurchaseResponse.builder()
                         .board(board)
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+
+    private List<BoardMultiResponse> ConvertToBoardList(List<Board> findBoardList) {
+        return findBoardList.stream()
+                .map(board -> BoardMultiResponse.builder()
+                        .id(board.getId())
+                        .title(board.getTitle())
+                        .image(board.getImage())
+                        .price(board.getPrice())
+                        .content(board.getContent())
+                        .detail(board.getDetail())
+                        .category(board.getCategory().getCategoryName())
+                        .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
+                        .nickname(board.getMember().getNickname())
+                        .city(board.getMember().getArea().getAreaName())
+                        .boardStatus(board.getBoardStatus())
+                        .attentionCnt(attentionRepository.countByBoard(board))
+                        .chatRoomCnt(chatRepository.countByBoard(board))
                         .build())
                 .collect(Collectors.toList());
     }

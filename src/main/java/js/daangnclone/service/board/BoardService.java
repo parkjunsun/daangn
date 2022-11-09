@@ -1,7 +1,9 @@
 package js.daangnclone.service.board;
 
+import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.board.SearchType;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
@@ -17,10 +19,11 @@ public interface BoardService {
     Board registerItem(BoardForm boardForm, Member member);
     void updateItem(Long boardId, BoardForm boardForm);
     void deleteItem(Long boardId);
-    List<BoardMultiResponse> inquireAllBoardList();
-    List<BoardMultiResponse> inquireAllBoardListV2(Pageable pageable);
-    String hasNextPage(Pageable pageable);
-    List<BoardMultiResponse> inquireSearchBoardList(String searchWord);
+//    List<BoardMultiResponse> inquireAllBoardList();
+    List<BoardMultiResponse> inquireAllBoardList(Pageable pageable);
+    String hasNextPage(SearchType searchType, Pageable pageable, Object condition);
+    List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord);
+    List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category);
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);
     Board updateBoardStatus(Long id, BoardStatus boardStatus);

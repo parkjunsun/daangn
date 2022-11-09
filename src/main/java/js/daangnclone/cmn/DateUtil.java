@@ -12,9 +12,9 @@ public class DateUtil {
     public static final int DAY = 30;
     public static final int MONTH = 12;
 
-//    private DateUtil() {
-//        //인스턴스화를 막기 위함(이펙티브 자바 아이템4(인스턴스화를 막으려거든 private 생성자를 사용하라))
-//    }
+    private DateUtil() {
+        //인스턴스화를 막기 위함(이펙티브 자바 아이템4(인스턴스화를 막으려거든 private 생성자를 사용하라))
+    }
 
     public static String diffDate(LocalDateTime Date) {
         long curTime = System.currentTimeMillis();

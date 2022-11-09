@@ -86,27 +86,4 @@ public class CommentServiceImpl implements CommentService{
 
 //        return commentList.stream().map(comment -> convert(comment, findMember)).collect(Collectors.toList());
     }
-
-
-
-
-//    CommentResponse convert(Comment comment, Member findMember) {
-//
-//        String likeInpYn = containsMember(comment.getLikeList(), findMember.getId()) ? "Y" : "N";
-//
-//        return CommentResponse.builder()
-//                .id(comment.getId())
-//                .content(comment.getContent())
-//                .diffCreatedAt(DateUtil.diffDate(comment.getCreatedAt()))
-//                .nickname(findMember.getNickname())
-//                .city(findMember.getArea().getAreaName())
-//                .provider(findMember.getProvider())
-//                .likeInpYn(likeInpYn)
-//                .build();
-//    }
-//
-//    boolean containsMember(List<Likes> likesList, Long memberId) {
-//        return likesList.stream().anyMatch(likes -> memberId.equals(likes.getMember().getId()));
-//    }
-
 }

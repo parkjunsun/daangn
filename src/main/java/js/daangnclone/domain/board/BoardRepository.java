@@ -1,10 +1,10 @@
 package js.daangnclone.domain.board;
 
+import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.member.Member;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -16,12 +16,12 @@ import java.util.Optional;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Override
-    @EntityGraph(attributePaths = {"member"})
-    List<Board> findAll(Sort sort);
+//    @Override
+//    @EntityGraph(attributePaths = {"member"})
+//    List<Board> findAll(Sort sort);
 
     @Query("select b from Board b order by b.createdAt desc")
-    Slice<Board> findAllV2(Pageable pageable);
+    Page<Board> findAll(Pageable pageable);
 
     @Query("select b from Board b where b.id = :id")
     Optional<Board> findBoard(@Param("id") Long id);
@@ -34,6 +34,8 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
 
     Optional<Board> findByTitle(String title);
 
-    List<Board> findByTitleContains(String searchWord);
+    Page<Board> findByTitleContains(Pageable pageable, String searchWord);
+
+    Page<Board> findByCategory(Pageable pageable, Category category);
 
 }

@@ -5,6 +5,7 @@ import js.daangnclone.cmn.category.Category;
 import js.daangnclone.cmn.category.CategoryDto;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.board.SearchType;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.attention.AttentionService;
@@ -43,7 +44,14 @@ public class BoardController {
     private final CommentService commentService;
     private final ChatService chatService;
 
+
     @GetMapping("/")
+    public String redirectHome() {
+        return "redirect:/boardList";
+    }
+
+
+    @GetMapping("/boardList")
     public String inquireBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam(required = false) Integer offset) {
 
         if (principalUserDetails != null) {
@@ -60,8 +68,6 @@ public class BoardController {
             model.addAttribute("nickname", findMember.getNickname());
         }
 
-//        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList();
-
         PageRequest pageable = null;
         if (offset == null) {
             pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
@@ -69,16 +75,17 @@ public class BoardController {
             pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
-        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardListV2(pageable);
-        String hasNextPageYn = boardService.hasNextPage(pageable);
+        List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList(pageable);
+        String hasNextPageYn = boardService.hasNextPage(SearchType.ALL, pageable, null);
 
         model.addAttribute("boardList", boardResponsesList);
         model.addAttribute("hasNextPageYn", hasNextPageYn);
+        model.addAttribute("searchType", SearchType.ALL.getValue());
         return "board/InquireBoardList";
     }
 
-    @GetMapping("/search")
-    public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam String searchWord) {
+    @GetMapping("/boardList/search")
+    public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam String keyword, @RequestParam(required = false) Integer offset) {
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
@@ -93,11 +100,62 @@ public class BoardController {
             model.addAttribute("nickname", findMember.getNickname());
         }
 
-        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(searchWord);
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword);
+        String hasNextPageYn = boardService.hasNextPage(SearchType.KEYWORD, pageable, keyword);
+
+
         model.addAttribute("boardList", boardList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
+
+        model.addAttribute("searchType", SearchType.KEYWORD.getValue());
+        model.addAttribute("keyword", keyword);
         return "board/InquireBoardList";
 
     }
+
+
+    @GetMapping("/boardList/category")
+    public String inquireBoardCategory(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam Long categoryCd, @RequestParam(required = false) Integer offset) {
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+            model.addAttribute("certifyYn", findMember.getCertifyYn());
+
+            if (findMember.getArea() == null) {
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
+                return "member/AddDetailsMemberForm";
+            }
+
+            model.addAttribute("provider", findMember.getProvider());
+            model.addAttribute("nickname", findMember.getNickname());
+        }
+
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd));
+        String hasNextPageYn = boardService.hasNextPage(SearchType.CATEGORY, pageable, Category.of(categoryCd));
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
+
+        model.addAttribute("searchType", SearchType.CATEGORY.getValue());
+        model.addAttribute("category", Category.of(categoryCd).getCategoryName());
+        model.addAttribute("categoryCd", categoryCd);
+        return "board/InquireBoardList";
+    }
+
 
     @GetMapping("/board/new")
     public String createBoardForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {

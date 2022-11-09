@@ -38,9 +38,14 @@
                                     <small style="font-weight: bold" th:text="|${#numbers.formatInteger(saleComp.boardPrice, 0, 'COMMA')}￦|"></small>
                                 </div>
                             </div>
-                            <div style="float: right">
+                            <div style="float: right" th:if="${saleComp.purchaser != null}">
                                 <div style="margin-top: 50px; margin-left: 10px; display: inline-block">
                                     <small class="text-muted" th:text="|구매자 : ${saleComp.purchaser.getNickname()}|"></small>
+                                </div>
+                            </div>
+                            <div style="float: right" th:if="${saleComp.purchaser == null}">
+                                <div style="margin-top: 50px; margin-left: 10px; display: inline-block">
+                                    <small class="text-muted">구매자가 선택되지 않았어요.</small>
                                 </div>
                             </div>
                         </a>

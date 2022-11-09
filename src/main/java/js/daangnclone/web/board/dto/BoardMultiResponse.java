@@ -2,6 +2,7 @@ package js.daangnclone.web.board.dto;
 
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.board.BoardStatus;
+import js.daangnclone.domain.board.SearchType;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.web.comment.dto.CommentResponse;
 import lombok.Builder;
