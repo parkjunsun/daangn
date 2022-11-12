@@ -62,7 +62,9 @@
            $("#chat-outgoing-msg").attr("disabled", true).attr("placeholder", `${boardStatusValue}된 상품으로 메세지를 보낼 수 없어요`);
            $("#chat-outgoing-button").attr("disabled", true);
        }
+
     });
+    
 
     // SSE 연결하기
     const eventSource = new EventSource(

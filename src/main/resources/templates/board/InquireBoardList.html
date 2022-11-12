@@ -1,14 +1,36 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head th:replace="fragments/head::head"></head>
 <header th:replace="fragments/header::header"></header>
 <body>
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    var errorMessage = /*[[${errorMsg}]]*/
+    var successMessage = /*[[${successMsg}]]*/
+    /* ]]> */
+
+    if (errorMessage != null) {
+        Swal.fire({
+            title: 'Error',
+            html: errorMessage,
+            icon: "error"
+        });
+    } else if (successMessage != null) {
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
+    }
+</script>
+
 <div style="text-align: center;">
     <h3 style="text-align: center" th:if="${searchType eq 'ALL'}"></h3>
     <span style="color: orange; font-family: 'Jua', sans-serif; font-size: 30px; font-weight: bold;" th:if="${searchType eq 'KEYWORD'}">"[[${keyword}]]"</span> <small th:if="${searchType eq 'KEYWORD'}">에 대한 검색결과 입니다.</small>
     <span style="color: orange; font-family: 'Jua', sans-serif; font-size: 30px; font-weight: bold;" th:if="${searchType eq 'CATEGORY'}">"[[${category}]]"</span>
 </div>
-<div style="margin-left: 1550px;">
+<div style="margin-left: 1440px; margin-bottom: 20px;">
     <li class="nav-item dropdown" style="list-style: none">
         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" style="display: inline-block">
             <img src="https://img.icons8.com/plumpy/24/null/menu-rounded.png"/>
@@ -180,24 +202,6 @@
 </div>
 
 <script th:inline="javascript">
-    /* <![CDATA[ */
-    var errorMessage = /*[[${errorMsg}]]*/
-    var successMessage = /*[[${successMsg}]]*/
-    /* ]]> */
-
-    if (errorMessage != null) {
-        Swal.fire({
-            title: 'Error',
-            html: errorMessage,
-            icon: "error"
-        });
-    } else if (successMessage != null) {
-        Swal.fire({
-            title: 'Success',
-            html: successMessage,
-            icon: 'success'
-        })
-    }
 
     //상품 더보기 버튼 누른 후, 스크롤 하단 이동
     $(function () {
@@ -205,15 +209,13 @@
         window.scrollTo({top:document.querySelectorAll(".card")[len - 1].offsetTop, behavior:'smooth'});
     });
 
-
-
 </script>
 
 </body>
 <footer th:replace="fragments/footer::footer"></footer>
-<div style="position:fixed; bottom: 30px; margin-left: 1750px;">
+<div sec:authorize="isAuthenticated()" style="position:fixed; bottom: 30px; margin-left: 1750px;">
     <a href="/board/new">
-        <img src="https://img.icons8.com/stickers/100/null/filled-plus-2-math.png" alt="plus"/>
+        <img src="/images/add.png" alt="plus" style="width: 100px; height: 100px;"/>
     </a>
 </div>
 </html>

@@ -184,7 +184,7 @@ public class BoardController {
         Member member = memberService.findMember(principalUserDetails.getMember().getId());
         boardService.registerItem(boardForm, member);
         redirectAttributes.addFlashAttribute("successMsg", "상품 등록 성공!!");
-        return "redirect:/";
+        return "redirect:/boardList";
     }
 
     @GetMapping("/board/{boardId}/update")
@@ -221,14 +221,14 @@ public class BoardController {
     public String updateBoard(@PathVariable Long boardId, @ModelAttribute BoardForm boardForm, RedirectAttributes redirectAttributes) {
         boardService.updateItem(boardId, boardForm);
         redirectAttributes.addFlashAttribute("successMsg", "상품 수정 성공!!");
-        return "redirect:/";
+        return "redirect:/boardList";
     }
 
     @PostMapping("/board/{boardId}/delete")
     public String deleteBoard(@PathVariable Long boardId, RedirectAttributes redirectAttributes) {
         boardService.deleteItem(boardId);
         redirectAttributes.addFlashAttribute("successMsg", "상품 삭제 성공!!");
-        return "redirect:/";
+        return "redirect:/boardList";
     }
 
     @GetMapping("/board/{id}")
@@ -283,7 +283,7 @@ public class BoardController {
     @ExceptionHandler
     public String NotValidateCertifyLocationExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
-        return "redirect:/";
+        return "redirect:/boardList";
     }
 
 }

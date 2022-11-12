@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequiredArgsConstructor
@@ -41,11 +42,12 @@ public class AddressController {
     }
 
     @PostMapping("/address")
-    public String updateAddress(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute AddressForm addressForm) {
+    public String updateAddress(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute AddressForm addressForm, RedirectAttributes redirectAttributes) {
         Long memberId = principalUserDetails.getMember().getId();
         memberService.updateMemberAddress(memberId, addressForm);
+        redirectAttributes.addFlashAttribute("successMsg", "주소 변경 성공!!");
 
-        return "redirect:/address";
+        return "redirect:/boardList";
     }
 
 }

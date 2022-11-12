@@ -5,21 +5,28 @@
 <header th:replace="fragments/header::header"></header>
 <body>
     <div class="container">
-        <div class="row d-flex justify-content-center align-items-center h-100" style="text-align: center">
-            <div id="map" style="height:350px; margin-bottom: 30px;"></div>
-            <h2 id="crtInfo"></h2>
-            <p id="crtText"></p><br><br><br><br><br><br><br>
-            <form action="/certify" method="post">
-                <button id="crtBtn" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem;">동네 인증 완료하기</button>
-            </form>
+        <div class="input-form-background row">
+            <div class="input-form mx-auto">
+                <h4 class="mb-3">동네인증</h4><br>
+                <div style="text-align: center">
+                    <div id="map" style="height:350px; margin-bottom: 30px;"></div>
+                    <h2 id="crtInfo"></h2>
+                    <p id="crtText"></p><br><br><br><br><br><br><br>
+                    <form action="/certify" method="post">
+                        <button id="crtBtn" type="submit" class="btn btn-primary btn-lg" style="padding-left: 2.5rem; padding-right: 2.5rem; margin-bottom: 60px;">동네 인증 완료하기</button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=5b38eaa8823aec9cb0315315dfcb0d10&libraries=services"></script>
 <script th:inline="javascript">
 
     /* <![CDATA[ */
-    var Mycity = /*[[${city}]]*/
+    var Mycity = /*[[${city}]]*/;
     /* ]]> */
+
+    let certifyYn = [[${certifyYn}]];
 
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
         mapOption = {
@@ -52,16 +59,22 @@
                     var city = loSplit[1] + " " + loSplit[2];
                     var dong = loSplit[3];
 
-                    if (city === Mycity) {
-                        $("#crtInfo").text(" 인증이 가능해요!!!").css("color", "blue");
-                        $("#crtText").text("현재 위치가 내 동네로 설정한 '" + city + "'에 있습니다.").css("color","blue");
-                        $("#certifyYn").val("Y");
-                        $("#crtBtn").attr("disabled", false);
-                    } else {
-                        $("#crtInfo").text(" 잠깐만요!!!").css("color", "red");
-                        $("#crtText").text("현재 내 동네로 설정되어 있는 '" + Mycity + "'에서만 동네인증을 할 수 있어요. 현재 위치는 '" + city + "' 입니다.").css("color","red");
-                        $("#certifyYn").val("N");
+                    if (certifyYn === "Y") {
+                        $("#crtInfo").text(" 인증이 완료된 상태에요!!!").css("color", "orange").css("font-family", "'Jua', sans-serif");
+                        $("#crtText").text("인증완료된 나의 동네는 '" + city + "'입니다.").css("color","blue").css("font-family", "'Jua', sans-serif");
                         $("#crtBtn").attr("disabled", true);
+                    } else {
+                        if (city === Mycity) {
+                            $("#crtInfo").text(" 인증이 가능해요!!!").css("color", "blue").css("font-family", "'Jua', sans-serif");
+                            $("#crtText").text("현재 위치가 내 동네로 설정한 '" + city + "'에 있습니다.").css("color","blue").css("font-family", "'Jua', sans-serif");
+                            $("#certifyYn").val("Y");
+                            $("#crtBtn").attr("disabled", false);
+                        } else {
+                            $("#crtInfo").text(" 잠깐만요!!!").css("color", "red").css("font-family", "'Jua', sans-serif");
+                            $("#crtText").text("현재 내 동네로 설정되어 있는 '" + Mycity + "'에서만 동네인증을 할 수 있어요. 현재 위치는 '" + city + "' 입니다.").css("color","red").css("font-family", "'Jua', sans-serif");
+                            $("#certifyYn").val("N");
+                            $("#crtBtn").attr("disabled", true);
+                        }
                     }
                 }
             }
