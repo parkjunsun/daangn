@@ -69,7 +69,7 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${commentAlarm.link}}" th:each="commentAlarm : ${newCommentAlarmList}" class="list-group-item list-group-item-action">
-                        <div class="d-flex w-100 justify-content-between">
+                        <div 1>
                             <small class="text-muted"><span th:text="${commentAlarm.sender}" style="color: #0090F9"></span>님이 [[${commentAlarm.message}]]</small>
                             <small class="fromNow text-muted" th:text="${commentAlarm.diffCreatedAt}"></small>
                         </div>

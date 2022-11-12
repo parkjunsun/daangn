@@ -162,7 +162,7 @@ public class BoardServiceImpl implements BoardService{
 
     @Override
     public List<SaleResponse> inquireSaleList(Member member, BoardStatus boardStatus) {
-        List<Board> saleList = boardRepository.findByMemberAndBoardStatus(member, boardStatus);
+        List<Board> saleList = boardRepository.findByMemberAndBoardStatusOrderByCreatedAt(member, boardStatus);
 
         return saleList.stream()
                 .map(board -> SaleResponse.builder()

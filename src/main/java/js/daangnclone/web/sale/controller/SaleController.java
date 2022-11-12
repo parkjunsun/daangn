@@ -80,6 +80,7 @@ public class SaleController {
         return "redirect:/saleList/" + boardId + "/purchaser";
     }
 
+    //거래자 선택 화면 controller
     @GetMapping("/saleList/{boardId}/purchaser")
     public String PurchaserForm(@PathVariable("boardId") Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
