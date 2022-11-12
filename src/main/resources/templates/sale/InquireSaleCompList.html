@@ -49,6 +49,34 @@
                                 </div>
                             </div>
                         </a>
+                        <th:block th:if="${saleComp.purchaser == null}">
+                            <div style="border-bottom: 1px solid orange; background-color: orange;">
+                                <a th:href="@{/saleList/{boardId}/purchaser(boardId=${saleComp.boardId})}" style="text-decoration: none">
+                                    <div style="text-align: center; height: 30px; margin-top: 9px;">
+                                        <span style="color: white">구매자 선택</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </th:block>
+
+                        <th:block th:if="${saleComp.purchaser != null}">
+                            <div>
+                                <div style="float: left; border-right: 1px solid black; width: 50%; background-color: orange">
+                                    <a th:href="@{/saleList/{boardId}/purchaser(boardId=${saleComp.boardId})}" style="text-decoration: none">
+                                        <div style="text-align: center; height: 30px; margin-top: 9px;">
+                                            <span style="color: white">구매자 재선택</span>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div style="float: right; width: 50%; background-color: orange">
+                                    <a th:href="@{/saleList/{boardId}/purchaser(boardId=${saleComp.boardId})}" style="text-decoration: none">
+                                        <div style="text-align: center; height: 30px; margin-top: 9px;">
+                                            <span style="color: white">후기 보내기</span>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </th:block>
                     </th:block>
                 </ul>
             </div>

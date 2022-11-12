@@ -25,7 +25,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("select b from Board b where b.id = :id")
     Optional<Board> findBoard(@Param("id") Long id);
 
-    List<Board> findByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
+    List<Board> findByMemberAndBoardStatusOrderByCreatedAt(Member member, BoardStatus boardStatus);
 
     long countByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
 

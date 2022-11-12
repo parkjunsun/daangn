@@ -39,10 +39,10 @@
                                 </div>
                             </div>
                         </a>
-                        <div style="border-bottom: 1px solid #d1d2d4;">
-                            <div>
+                        <div style="border: 1px solid orange; background-color: orange">
+                            <div style="background-color: orange">
                                 <form th:action="@{/saleList/{boardId}/purchaser(boardId=${chat.board.getId()})}" th:method="post">
-                                    <button id="btn-purchaser" th:name="purchaserId" class="btn btn-primary" th:value="${chat.sender.getId()}" style="background-color: white; border-color: white; color: orange; width: 100%">구매자선택</button>
+                                    <button id="btn-purchaser" th:name="purchaserId" class="btn btn-primary" th:value="${chat.sender.getId()}" style="background-color: orange; border-color: white; color: white; width: 100%">구매자선택</button>
                                 </form>
                             </div>
                         </div>
