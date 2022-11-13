@@ -6,12 +6,12 @@
 ## ⚒ 기술스택
 * ### Backend
   * Java
-  * Spring booy
+  * Spring boot
   * Spring Security
   * Thymeleaf
 
 * ### DB & ORM
-  * PostgreSql
+  * PostgreSQL
   * JPA
 
 * ### Frontend
