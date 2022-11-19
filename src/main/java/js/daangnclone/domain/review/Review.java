@@ -20,20 +20,29 @@ public class Review extends TimeEntity {
     private ReviewType reviewType;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @JoinColumn(name = "sender_id")
+    private Member sender;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "receiver_id")
+    private Member receiver;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "board_id")
     private Board board;
 
+    private int reviewScore;
+    private String reviews;
     private String content;
 
     @Builder
-    public Review(ReviewType reviewType, Member member, Board board, String content) {
+    public Review(ReviewType reviewType, Member sender, Member receiver, Board board, int reviewScore, String reviews, String content) {
         this.reviewType = reviewType;
-        this.member = member;
+        this.sender = sender;
+        this.receiver = receiver;
         this.board = board;
+        this.reviewScore = reviewScore;
+        this.reviews = reviews;
         this.content = content;
     }
 

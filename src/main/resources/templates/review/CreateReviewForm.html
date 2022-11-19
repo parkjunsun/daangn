@@ -50,8 +50,9 @@
                             <img src="https://img.icons8.com/external-justicon-blue-justicon/60/null/external-mail-box-valentines-day-justicon-blue-justicon.png" alt="mail"/>
                         </div>
                     </div>
-                    <textarea rows="4" cols="113" placeholder="감사인사를 전해주세요." style="margin-top: 20px;"></textarea>
+                    <textarea th:field="*{content}" rows="4" cols="113" placeholder="감사인사를 전해주세요." style="margin-top: 20px;"></textarea>
                 </div><br><br>
+                <input type="hidden" th:value="${board.purchaserId}" th:name="receiverId" th:id="receiverId">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">보내기</button>
             </form>
         </div>

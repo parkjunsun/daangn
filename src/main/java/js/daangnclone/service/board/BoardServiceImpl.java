@@ -135,6 +135,8 @@ public class BoardServiceImpl implements BoardService{
                 .city(findBoard.getMember().getArea().getAreaName())
                 .view(findBoard.getView())
                 .boardStatus(findBoard.getBoardStatus())
+                .purchaserId(findBoard.getPurchaser().getId())
+                .purchaserNickname(findBoard.getPurchaser().getNickname())
                 .build();
     }
 

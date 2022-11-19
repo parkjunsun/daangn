@@ -3,6 +3,7 @@ package js.daangnclone.web.review.controller;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.review.ReviewScore;
+import js.daangnclone.domain.review.ReviewType;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
@@ -59,11 +60,17 @@ public class ReviewController {
         model.addAttribute("nickname", findMember.getNickname());
         return "review/CreateReviewForm";
     }
-//
-//    @PostMapping("/review/{boardId}/purchaser")
-//    public String SendReview(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
-//        Long memberId = principalUserDetails.getMember().getId();
-//        Member findMember = memberService.findMember(memberId);
-//        Board findBoard = boardService.findBoard(boardId);
-//    }
+
+
+    @PostMapping("/review/{boardId}/purchaser")
+    public String SendReview(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
+        Long senderId = principalUserDetails.getMember().getId();
+        Member sender = memberService.findMember(senderId); //sender
+        Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
+        Board findBoard = boardService.findBoard(boardId);
+
+        reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.PURCHASE_REVIEW);
+
+        return "redirect:/";
+    }
 }

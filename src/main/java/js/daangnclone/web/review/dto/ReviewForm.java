@@ -13,14 +13,18 @@ import java.util.List;
 public class ReviewForm {
 
     private Long id;
-    private ReviewScore reviewScore;
+    private int reviewScore;
     private List<String> reviews;
-    private String msg;
+    private String content;
+    private Long receiverId;
 
     @Builder
-    public ReviewForm(Long id, String msg){
+    public ReviewForm(Long id, int reviewScore, List<String> reviews, String content, Long receiverId){
         this.id = id;
-        this.msg = msg;
+        this.reviewScore = reviewScore;
+        this.reviews = reviews;
+        this.content = content;
+        this.receiverId = receiverId;
     }
 
 }
