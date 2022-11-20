@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<header th:replace="fragments/header::header"></header>
+<body>
+<div class="container">
+    <div class="input-form-background row">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3" style="display: inline-block;" th:text="|${review.senderName}님이 따듯한 후기를 보냈어요|"></h4><img style="margin-left: 50px;" src="https://img.icons8.com/external-justicon-blue-justicon/60/null/external-love-letter-valentines-day-justicon-blue-justicon.png" alt="mail"/><br><br>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="|From. ${review.senderName}|"></h5>
+                    <p class="card-text" style="font-family: 'Jua', sans-serif; color: orange" th:text="${review.reviewContent}"></p>
+                    <div th:each="review : ${review.reviews}" class="form-check">
+                        <input type="checkbox" th:value="${review.key}" class="form-check-input" disabled checked style="opacity: 1">
+                        <label th:text="${review.value}" class="form-check-label" style="color: black;opacity: 1"></label>
+                    </div>
+                </div>
+            </div><br>
+            <span class="text-muted" th:text="|${review.senderName}님과 ${review.boardTitle}를 거래했어요.|"></span>
+        </div>
+    </div>
+</div>
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    var errorMessage = /*[[${errorMsg}]]*/;
+    var successMessage = /*[[${successMsg}]]*/;
+
+    if (errorMessage != null) {
+        Swal.fire({
+            title: 'Error',
+            html: errorMessage,
+            icon: "error"
+        });
+    } else if (successMessage != null) {
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
+    }
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+
+</html>
+

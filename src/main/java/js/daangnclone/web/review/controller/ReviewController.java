@@ -9,7 +9,9 @@ import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.service.review.ReviewService;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.review.dto.ReviewDetailResponse;
 import js.daangnclone.web.review.dto.ReviewForm;
+import js.daangnclone.web.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -48,7 +51,7 @@ public class ReviewController {
         return ReviewScore.values();
     }
 
-    @GetMapping("/review/{boardId}/purchaser")
+    @GetMapping("/review/{boardId}/toPurchaser")
     public String createReviewForm(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
@@ -62,15 +65,50 @@ public class ReviewController {
     }
 
 
-    @PostMapping("/review/{boardId}/purchaser")
+    @PostMapping("/review/{boardId}/toPurchaser")
     public String SendReview(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
         Long senderId = principalUserDetails.getMember().getId();
         Member sender = memberService.findMember(senderId); //sender
         Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
         Board findBoard = boardService.findBoard(boardId);
 
-        reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.PURCHASE_REVIEW);
+        reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.SELLER_REVIEW);
 
         return "redirect:/";
+    }
+
+    @GetMapping("/reviewList/all")
+    public String inquireReviewList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member receiver = memberService.findMember(memberId);
+
+        List<ReviewResponse> reviewList = reviewService.inquireAllReviewList(receiver);
+        long reviewAllCount = reviewService.getReviewAllCount(receiver);
+        long reviewSellerCount = reviewService.getReviewTypeCount(receiver, ReviewType.SELLER_REVIEW);
+        long reviewPurchaserCount = reviewService.getReviewTypeCount(receiver, ReviewType.PURCHASER_REVIEW);
+
+        model.addAttribute("reviewList", reviewList);
+        model.addAttribute("reviewAllCount", reviewAllCount);
+        model.addAttribute("reviewSellerCount", reviewSellerCount);
+        model.addAttribute("reviewPurchaserCount", reviewPurchaserCount);
+
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
+        model.addAttribute("nickname", receiver.getNickname());
+
+        return "review/InquireAllReviewList";
+    }
+
+    @GetMapping("/reviewList/{reviewId}")
+    public String inquireReview(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable Long reviewId, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member receiver = memberService.findMember(memberId);
+
+        ReviewDetailResponse review = reviewService.inquireReview(reviewId);
+
+        model.addAttribute("review", review);
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
+        model.addAttribute("nickname", receiver.getNickname());
+
+        return "review/InquireReview";
     }
 }

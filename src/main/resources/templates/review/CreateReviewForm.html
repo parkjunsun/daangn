@@ -22,7 +22,7 @@
                     </a>
                 </ul>
             </div>
-            <form th:action="@{/review/{boardId}/purchaser(boardId = ${board.id})}" method="post" th:object="${reviewForm}">
+            <form th:action="@{/review/{boardId}/toPurchaser(boardId = ${board.id})}" method="post" th:object="${reviewForm}">
                 <div style="text-align: center; margin-top: 30px;">
                     <p><span th:text="${board.purchaserNickname}"></span>님과의 거래가 어떠셨나요?</p>
                     <small class="text-muted">선택항목은 상대방이 알 수 없어요.</small><br><br><br>

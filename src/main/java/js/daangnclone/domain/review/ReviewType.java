@@ -2,7 +2,7 @@ package js.daangnclone.domain.review;
 
 public enum ReviewType {
 
-    SALE_REVIEW,
-    PURCHASE_REVIEW
+    PURCHASER_REVIEW,
+    SELLER_REVIEW
 
 }
