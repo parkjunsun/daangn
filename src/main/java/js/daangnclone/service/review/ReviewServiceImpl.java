@@ -19,6 +19,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static js.daangnclone.Exception.ErrorCode.DUPLICATE_REVIEW;
 import static js.daangnclone.Exception.ErrorCode.REVIEW_NOT_FOUND;
 
 
@@ -51,6 +52,19 @@ public class ReviewServiceImpl implements ReviewService{
     public List<ReviewResponse> inquireAllReviewList(Member receiver) {
         List<Review> allReviewList = reviewRepository.findByReceiver(receiver);
         return allReviewList.stream()
+                .map(review -> ReviewResponse.builder()
+                        .id(review.getId())
+                        .senderName(review.getSender().getNickname())
+                        .boardTitle(review.getBoard().getTitle())
+                        .boardImage(review.getBoard().getImage())
+                        .build())
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReviewResponse> inquireReviewList(Member receiver, ReviewType reviewType) {
+        List<Review> reviewList = reviewRepository.findByReceiverAndReviewType(receiver, reviewType);
+        return reviewList.stream()
                 .map(review -> ReviewResponse.builder()
                         .id(review.getId())
                         .senderName(review.getSender().getNickname())
@@ -108,4 +122,14 @@ public class ReviewServiceImpl implements ReviewService{
     public long getReviewTypeCount(Member receiver, ReviewType reviewType) {
        return reviewRepository.countByReceiverAndReviewType(receiver, reviewType);
     }
+
+    @Override
+    public void validateDuplicateReview(Member sender, Board board) {
+        boolean isDuplicateReview = reviewRepository.existsBySenderAndBoard(sender, board);
+
+        if (isDuplicateReview) {
+            throw new CustomException(DUPLICATE_REVIEW);
+        }
+    }
+
 }

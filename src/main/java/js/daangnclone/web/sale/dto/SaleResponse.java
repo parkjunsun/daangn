@@ -18,9 +18,10 @@ public class SaleResponse {
     private Area area;
     private String diffCreatedAt;
     private Member purchaser;
+    private boolean isSentReview;
 
     @Builder
-    public SaleResponse(Long boardId, String boardTitle, String boardImage, int boardPrice, BoardStatus boardStatus, String link, Area area, String diffCreatedAt, Member purchaser) {
+    public SaleResponse(Long boardId, String boardTitle, String boardImage, int boardPrice, BoardStatus boardStatus, String link, Area area, String diffCreatedAt, Member purchaser, boolean isSentReview) {
         this.boardId = boardId;
         this.boardTitle = boardTitle;
         this.boardImage = boardImage;
@@ -30,5 +31,6 @@ public class SaleResponse {
         this.area = area;
         this.diffCreatedAt = diffCreatedAt;
         this.purchaser = purchaser;
+        this.isSentReview = isSentReview;
     }
 }

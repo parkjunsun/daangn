@@ -11,6 +11,7 @@ import js.daangnclone.domain.board.SearchType;
 import js.daangnclone.domain.board.event.BoardCreatedEvent;
 import js.daangnclone.domain.chat.ChatRepository;
 import js.daangnclone.domain.member.Member;
+import js.daangnclone.domain.review.ReviewRepository;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
@@ -37,6 +38,7 @@ public class BoardServiceImpl implements BoardService{
     private final BoardRepository boardRepository;
     private final AttentionRepository attentionRepository;
     private final ChatRepository chatRepository;
+    private final ReviewRepository reviewRepository;
     private final ApplicationEventPublisher eventPublisher;
 
     @Override
@@ -176,6 +178,7 @@ public class BoardServiceImpl implements BoardService{
                         .link("/board/" + board.getId())
                         .area(board.getMember().getArea())
                         .purchaser(board.getPurchaser())
+                        .isSentReview(reviewRepository.existsBySenderAndBoard(member, board))
                         .diffCreatedAt(DateUtil.diffDate(board.getCreatedAt()))
                         .build())
                 .collect(Collectors.toList());
@@ -215,6 +218,7 @@ public class BoardServiceImpl implements BoardService{
         return purchaseList.stream()
                 .map(board -> PurchaseResponse.builder()
                         .board(board)
+                        .isSentReview(reviewRepository.existsBySenderAndBoard(seller, board))
                         .build())
                 .collect(Collectors.toList());
     }

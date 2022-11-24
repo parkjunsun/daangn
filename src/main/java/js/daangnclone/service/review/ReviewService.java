@@ -14,7 +14,9 @@ public interface ReviewService {
 
     Review writeReview(ReviewForm reviewForm, Member sender, Member receiver, Board board, ReviewType reviewType);
     List<ReviewResponse> inquireAllReviewList(Member receiver);
+    List<ReviewResponse> inquireReviewList(Member receiver, ReviewType reviewType);
     ReviewDetailResponse inquireReview(Long reviewId);
     long getReviewAllCount(Member receiver);
     long getReviewTypeCount(Member receiver, ReviewType reviewType);
+    void validateDuplicateReview(Member sender, Board board);
 }

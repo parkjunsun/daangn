@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-9">
+            <div class="card">
+                <div class="card-header">
+                    거래한 물건
+                </div>
+                <ul class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div style="float: left">
+                            <img th:src="${board.image}" style="width: 120px; height: 120px; float: left; display: inline-block">
+                            <div style="margin-top: 25px; margin-left: 20px; display: inline-block">
+                                <h4 style="display: inline-block" th:text="${board.title}"></h4><br>
+                                <small style="font-weight: bold" th:text="|${#numbers.formatInteger(board.price, 0, 'COMMA')}￦|"></small>
+                            </div>
+                        </div>
+                    </a>
+                </ul>
+            </div>
+            <form th:action="@{/review/{boardId}/toSeller(boardId = ${board.id})}" method="post" th:object="${reviewForm}">
+                <div style="text-align: center; margin-top: 30px;">
+                    <p><span th:text="${board.nickname}"></span>님과의 거래가 어떠셨나요?</p>
+                    <small class="text-muted">선택항목은 상대방이 알 수 없어요.</small><br><br><br>
+                    <div th:each="reviewScore : ${reviewScores}" class="form-check form-check-inline">
+                        <input type="radio" th:field="*{reviewScore}" th:value="${reviewScore.score}" class="form-check-input">
+                        <label th:for="${#ids.prev('reviewScore')}" th:text="${reviewScore.description}" class="form-check-label"></label>
+                    </div>
+                </div>
+                <hr>
+                <div>
+                    <div th:each="review : ${reviews}" class="form-check">
+                        <input type="checkbox" th:field="*{reviews}" th:value="${review.key}" class="form-check-input">
+                        <label th:for="${#ids.prev('reviews')}" th:text="${review.value}" class="form-check-label"></label>
+                    </div>
+                </div>
+                <hr><br>
+                <div>
+                    <div>
+                        <div style="float: left">
+                            <h3>최고의 거래였나요?</h3>
+                            <span th:text="${board.nickname}"></span><span>님에 감사 인사도 남겨보세요:)</span><br>
+                            <span>물론 감사 인사 없이도 보낼 수 있어요.</span>
+                        </div>
+                        <div style="float: right">
+                            <img src="https://img.icons8.com/external-justicon-blue-justicon/60/null/external-mail-box-valentines-day-justicon-blue-justicon.png" alt="mail"/>
+                        </div>
+                    </div>
+                    <textarea th:field="*{content}" rows="4" cols="113" placeholder="감사인사를 전해주세요." style="margin-top: 20px;"></textarea>
+                </div><br><br>
+                <input type="hidden" th:value="${board.memberId}" th:name="receiverId" th:id="receiverId">
+                <button class="btn btn-primary btn-lg btn-block" type="submit">보내기</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

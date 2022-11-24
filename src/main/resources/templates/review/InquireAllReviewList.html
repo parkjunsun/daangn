@@ -7,16 +7,16 @@
     <div class="row py-5">
         <div class="col-3">
             <ul class="list-group mt-4">
-                <a href="/saleList/saleOn" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
+                <a href="/reviewList/all" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
                     전체후기
                     <span th:text="${reviewAllCount}">3</span>
                 </a>
-                <a href="/saleList/saleComp" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                <a href="/reviewList/seller" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                     판매자 후기
                     <span th:text="${reviewSellerCount}">0</span>
                 </a>
-                <a href="/saleList/saleComp" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                    거래자 후기
+                <a href="/reviewList/purchaser" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    구매자 후기
                     <span th:text="${reviewPurchaserCount}">0</span>
                 </a>
             </ul>
@@ -29,7 +29,7 @@
             </div>
             <div class="card" th:if="${reviewList.size() > 0}">
                 <div class="card-header">
-                    받은 후기들 입니다.
+                    판매자와 구매자들에게 받은 후기들 입니다.
                 </div>
                 <ul class="list-group list-group-flush">
                     <th:block th:each="review : ${reviewList}">

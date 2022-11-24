@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head::head"></head>
+<body>
+<header th:replace="fragments/header::header"></header>
+<div class="container">
+    <div class="row py-5">
+        <div class="col-3">
+            <ul class="list-group mt-4">
+                <a href="/reviewList/all" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    전체후기
+                    <span th:text="${reviewAllCount}">3</span>
+                </a>
+                <a href="/reviewList/seller" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    판매자 후기
+                    <span th:text="${reviewSellerCount}">0</span>
+                </a>
+                <a href="/reviewList/purchaser" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active">
+                    구매자 후기
+                    <span th:text="${reviewPurchaserCount}">0</span>
+                </a>
+            </ul>
+        </div>
+        <div class="col-9">
+            <div class="card" th:if="${reviewList.size() == 0}">
+                <div class="card-header">
+                    받은 후기가 없습니다.
+                </div>
+            </div>
+            <div class="card" th:if="${reviewList.size() > 0}">
+                <div class="card-header">
+                    구매자에게 받은 후기들 입니다.
+                </div>
+                <ul class="list-group list-group-flush">
+                    <th:block th:each="review : ${reviewList}">
+                        <a th:href="@{/reviewList/{reviewId}(reviewId=${review.id})}" class="list-group-item list-group-item-action">
+                            <div style="float: left">
+                                <img th:src="${review.boardImage}" style="width: 80px; height: 80px; float: left; display: inline-block">
+                                <div style="margin-top: 10px; margin-left: 20px; display: inline-block">
+                                    <h4 style="display: inline-block" th:text="|${review.senderName}님이 따듯한 후기를 보냈어요.|"></h4><br>
+                                    <small style="" th:text="|${review.senderName}님과 ${review.boardTitle}를 거래했어요. 클릭하여 상세 후기를 확인해보세요.|"></small>
+                                </div>
+                            </div>
+                        </a>
+                    </th:block>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script async th:inline="javascript">
+    /*<![CDATA[*/
+
+    /*]]>*/
+</script>
+
+</body>
+<footer th:replace="fragments/footer::footer"></footer>
+</html>

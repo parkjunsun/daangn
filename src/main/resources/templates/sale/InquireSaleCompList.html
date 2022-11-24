@@ -68,12 +68,17 @@
                                         </div>
                                     </a>
                                 </div>
-                                <div style="float: right; width: 50%; background-color: orange">
+                                <div th:if="${!saleComp.isSentReview}" style="float: right; width: 50%; background-color: orange">
                                     <a th:href="@{/review/{boardId}/toPurchaser(boardId=${saleComp.boardId})}" style="text-decoration: none">
                                         <div style="text-align: center; height: 30px; margin-top: 9px;">
                                             <span style="color: white">후기 보내기</span>
                                         </div>
                                     </a>
+                                </div>
+                                <div th:if="${saleComp.isSentReview}" style="float: right; width: 50%; background-color: gray; text-align: center" >
+                                    <button style="height: 39px; border: 0; outline: 0; background-color: transparent; color: white" disabled>
+                                        후기작성 완료
+                                    </button>
                                 </div>
                             </div>
                         </th:block>

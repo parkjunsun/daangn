@@ -52,7 +52,7 @@ public class ReviewController {
     }
 
     @GetMapping("/review/{boardId}/toPurchaser")
-    public String createReviewForm(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+    public String createReviewFormToPurchaser(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
         BoardSingleResponse findBoard = boardService.inquireBoard(boardId);
@@ -61,12 +61,26 @@ public class ReviewController {
         model.addAttribute("reviewForm", new ReviewForm());
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("nickname", findMember.getNickname());
-        return "review/CreateReviewForm";
+        return "review/CreateReviewFormToPurchaser";
+    }
+
+    @GetMapping("/review/{boardId}/toSeller")
+    public String createReviewFormToSeller(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(memberId);
+        BoardSingleResponse findBoard = boardService.inquireBoard(boardId);
+
+        model.addAttribute("board", findBoard);
+        model.addAttribute("reviewForm", new ReviewForm());
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
+        model.addAttribute("nickname", findMember.getNickname());
+
+        return "review/CreateReviewFormToSeller";
     }
 
 
     @PostMapping("/review/{boardId}/toPurchaser")
-    public String SendReview(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
+    public String sendReviewToPurchaser(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
         Long senderId = principalUserDetails.getMember().getId();
         Member sender = memberService.findMember(senderId); //sender
         Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
@@ -77,25 +91,77 @@ public class ReviewController {
         return "redirect:/";
     }
 
+    @PostMapping("/review/{boardId}/toSeller")
+    public String sendReviewToSeller(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
+        Long senderId = principalUserDetails.getMember().getId();
+        Member sender = memberService.findMember(senderId); //sender
+        Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
+        Board findBoard = boardService.findBoard(boardId);
+
+        reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.PURCHASER_REVIEW);
+
+        return "redirect:/";
+
+    }
+
     @GetMapping("/reviewList/all")
     public String inquireReviewList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
         Member receiver = memberService.findMember(memberId);
 
         List<ReviewResponse> reviewList = reviewService.inquireAllReviewList(receiver);
-        long reviewAllCount = reviewService.getReviewAllCount(receiver);
-        long reviewSellerCount = reviewService.getReviewTypeCount(receiver, ReviewType.SELLER_REVIEW);
-        long reviewPurchaserCount = reviewService.getReviewTypeCount(receiver, ReviewType.PURCHASER_REVIEW);
-
         model.addAttribute("reviewList", reviewList);
-        model.addAttribute("reviewAllCount", reviewAllCount);
-        model.addAttribute("reviewSellerCount", reviewSellerCount);
-        model.addAttribute("reviewPurchaserCount", reviewPurchaserCount);
+
+        putCategorizeReviewCount(receiver, model);
 
         model.addAttribute("certifyYn", receiver.getCertifyYn());
         model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquireAllReviewList";
+    }
+
+    private void putCategorizeReviewCount(Member receiver, Model model) {
+        long reviewAllCount = reviewService.getReviewAllCount(receiver);
+        long reviewSellerCount = reviewService.getReviewTypeCount(receiver, ReviewType.SELLER_REVIEW);
+        long reviewPurchaserCount = reviewService.getReviewTypeCount(receiver, ReviewType.PURCHASER_REVIEW);
+        model.addAttribute("reviewAllCount", reviewAllCount);
+        model.addAttribute("reviewSellerCount", reviewSellerCount);
+        model.addAttribute("reviewPurchaserCount", reviewPurchaserCount);
+    }
+
+    @GetMapping("/reviewList/seller")
+    public String inquireSellerReviewList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member receiver = memberService.findMember(memberId);
+
+        List<ReviewResponse> reviewList = reviewService.inquireReviewList(receiver, ReviewType.SELLER_REVIEW);
+        model.addAttribute("reviewList", reviewList);
+
+        putCategorizeReviewCount(receiver, model);
+
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
+        model.addAttribute("nickname", receiver.getNickname());
+
+        return "review/InquireSellerReviewList";
+
+    }
+
+
+    @GetMapping("/reviewList/purchaser")
+    public String inquirePurchaserReviewList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member receiver = memberService.findMember(memberId);
+
+        List<ReviewResponse> reviewList = reviewService.inquireReviewList(receiver, ReviewType.PURCHASER_REVIEW);
+        model.addAttribute("reviewList", reviewList);
+
+        putCategorizeReviewCount(receiver, model);
+
+        model.addAttribute("certifyYn", receiver.getCertifyYn());
+        model.addAttribute("nickname", receiver.getNickname());
+
+        return "review/InquirePurchaserReviewList";
+
     }
 
     @GetMapping("/reviewList/{reviewId}")

@@ -8,9 +8,11 @@ import lombok.Data;
 public class PurchaseResponse {
 
     private Board board;
+    private boolean isSentReview;
 
     @Builder
-    public PurchaseResponse(Board board) {
+    public PurchaseResponse(Board board, boolean isSentReview) {
         this.board = board;
+        this.isSentReview = isSentReview;
     }
 }
