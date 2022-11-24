@@ -42,7 +42,7 @@ public class AttentionEventListener {
         activityAlarmService.load(newActivityAlarm);
 
         Activity newActivity = Activity.builder()
-                .message("님이 등록한 상품에 관심을 가졌습니다.")
+                .message("등록한 상품에 관심을 가졌습니다.")
                 .content(attention.getBoard().getTitle())
                 .link("/board/" + attention.getBoard().getId())
                 .activityType(ActivityType.ATTENTION_CREATE)

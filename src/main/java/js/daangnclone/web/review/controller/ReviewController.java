@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -80,7 +81,8 @@ public class ReviewController {
 
 
     @PostMapping("/review/{boardId}/toPurchaser")
-    public String sendReviewToPurchaser(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
+    public String sendReviewToPurchaser(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                                        @ModelAttribute ReviewForm reviewForm, RedirectAttributes redirectAttributes) {
         Long senderId = principalUserDetails.getMember().getId();
         Member sender = memberService.findMember(senderId); //sender
         Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
@@ -88,11 +90,14 @@ public class ReviewController {
 
         reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.SELLER_REVIEW);
 
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("successMsg", "후기 등록 성공!!");
+
+        return "redirect:/boardList";
     }
 
     @PostMapping("/review/{boardId}/toSeller")
-    public String sendReviewToSeller(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute ReviewForm reviewForm) {
+    public String sendReviewToSeller(@PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails,
+                                     @ModelAttribute ReviewForm reviewForm, RedirectAttributes redirectAttributes) {
         Long senderId = principalUserDetails.getMember().getId();
         Member sender = memberService.findMember(senderId); //sender
         Member receiver = memberService.findMember(reviewForm.getReceiverId()); //receiver
@@ -100,7 +105,9 @@ public class ReviewController {
 
         reviewService.writeReview(reviewForm, sender, receiver, findBoard, ReviewType.PURCHASER_REVIEW);
 
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute("successMsg", "후기 등록 성공!!");
+
+        return "redirect:/boardList";
 
     }
 

@@ -37,11 +37,14 @@ public class ActivityController {
     }
 
     private void putCategorizeActivityList(Model model, List<ActivityResponse> activityList) {
+
         ArrayList<ActivityResponse> newBoardActivityList = new ArrayList<>();
         ArrayList<ActivityResponse> newAttentionActivityList = new ArrayList<>();
         ArrayList<ActivityResponse> newCommentActivityList = new ArrayList<>();
         ArrayList<ActivityResponse> newLikesActivityList = new ArrayList<>();
         ArrayList<ActivityResponse> newChatActivityList  = new ArrayList<>();
+        ArrayList<ActivityResponse> newReviewActivityList = new ArrayList<>();
+
         for (ActivityResponse activity : activityList) {
             switch (activity.getActivityType()) {
                 case BOARD_CREATE:
@@ -59,6 +62,8 @@ public class ActivityController {
                 case CHAT_CREATE:
                     newChatActivityList.add(activity);
                     break;
+                case REVIEW_CREATE:
+                    newReviewActivityList.add(activity);
             }
         }
 
@@ -69,6 +74,7 @@ public class ActivityController {
         model.addAttribute("newCommentActivityList", newCommentActivityList);
         model.addAttribute("newLikesActivityList", newLikesActivityList);
         model.addAttribute("newChatActivityList", newChatActivityList);
+        model.addAttribute("newReviewActivityList", newReviewActivityList);
     }
 
 }

@@ -123,6 +123,14 @@ public class BoardServiceImpl implements BoardService{
     public BoardSingleResponse inquireBoard(Long id) {
         Board findBoard = boardRepository.findBoard(id).orElseThrow(() -> new CustomException(BOARD_NOT_FOUND));
 
+        Long purchaserId = null;
+        String purchaserNickname = null;
+
+        if (findBoard.getPurchaser() != null) {
+            purchaserId = findBoard.getPurchaser().getId();
+            purchaserNickname = findBoard.getPurchaser().getNickname();
+        }
+
         return BoardSingleResponse.builder()
                 .id(findBoard.getId())
                 .title(findBoard.getTitle())
@@ -137,8 +145,8 @@ public class BoardServiceImpl implements BoardService{
                 .city(findBoard.getMember().getArea().getAreaName())
                 .view(findBoard.getView())
                 .boardStatus(findBoard.getBoardStatus())
-                .purchaserId(findBoard.getPurchaser().getId())
-                .purchaserNickname(findBoard.getPurchaser().getNickname())
+                .purchaserId(purchaserId)
+                .purchaserNickname(purchaserNickname)
                 .build();
     }
 

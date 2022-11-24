@@ -237,6 +237,7 @@ public class BoardController {
 
         boardService.updateView(boardId);
         BoardSingleResponse boardResponse = boardService.inquireBoard(boardId);
+
         List<CommentResponse> commentResponseList = commentService.inquireCommentList(boardId, memberId);
 
         Member findMember = memberService.findMember(memberId);

@@ -7,10 +7,12 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.review.Review;
 import js.daangnclone.domain.review.ReviewRepository;
 import js.daangnclone.domain.review.ReviewType;
+import js.daangnclone.domain.review.event.ReviewCreatedEvent;
 import js.daangnclone.web.review.dto.ReviewDetailResponse;
 import js.daangnclone.web.review.dto.ReviewForm;
 import js.daangnclone.web.review.dto.ReviewResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,13 +31,14 @@ import static js.daangnclone.Exception.ErrorCode.REVIEW_NOT_FOUND;
 public class ReviewServiceImpl implements ReviewService{
 
     private final ReviewRepository reviewRepository;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Override
     @Transactional
     public Review writeReview(ReviewForm reviewForm, Member sender, Member receiver, Board board, ReviewType reviewType) {
         String reviews = String.join("|", reviewForm.getReviews());
 
-        Review newReview = Review.builder()
+        Review reviewBuild = Review.builder()
                 .reviewType(reviewType)
                 .sender(sender)
                 .receiver(receiver)
@@ -45,7 +48,9 @@ public class ReviewServiceImpl implements ReviewService{
                 .content(reviewForm.getContent())
                 .build();
 
-        return reviewRepository.save(newReview);
+        Review review = reviewRepository.save(reviewBuild);
+        eventPublisher.publishEvent(new ReviewCreatedEvent(review));
+        return review;
     }
 
     @Override

@@ -40,7 +40,7 @@ public class CommentEventListener {
         activityAlarmService.load(newActivityAlarm);
 
         Activity newActivity = Activity.builder()
-                .message("님이 등록한 상품에 댓글을 등록했습니다.")
+                .message("등록한 상품에 댓글을 등록했습니다.")
                 .content(comment.getBoard().getTitle())
                 .link("/board/" + comment.getBoard().getId())
                 .activityType(ActivityType.COMMENT_CREATE)

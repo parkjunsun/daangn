@@ -6,6 +6,7 @@ public enum ActivityType {
     COMMENT_CREATE,
     ATTENTION_CREATE,
     LIKES_CREATE,
-    CHAT_CREATE
+    CHAT_CREATE,
+    REVIEW_CREATE
 
 }

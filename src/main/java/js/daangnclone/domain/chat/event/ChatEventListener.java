@@ -25,7 +25,7 @@ public class ChatEventListener {
         Chat chat = event.getChat();
 
         Activity newActivity = Activity.builder()
-                .message("님이 등록한 상품에 채팅을 오픈했습니다.")
+                .message("등록한 상품에 채팅을 오픈했습니다.")
                 .content(chat.getBoard().getTitle())
                 .link("/board/" + chat.getBoard().getId())
                 .activityType(ActivityType.CHAT_CREATE)
