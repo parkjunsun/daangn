@@ -36,20 +36,4 @@ public class ChatNotificationController {
 
         return "chat/InquireChatList";
     }
-
-    @GetMapping("/chatList/board/{boardId}")
-    public String inquireChatListInBoard(Model model, @PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
-        Board findBoard = boardService.findBoard(boardId);
-
-        List<ChatListResponse> chatList = chatService.findChatRoomInBoard(findMember, findBoard);
-
-        model.addAttribute("chatList", chatList);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
-
-        return "chat/InquireChatList";
-    }
-
 }

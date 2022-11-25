@@ -16,6 +16,7 @@ import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.board.dto.BoardForm;
 import js.daangnclone.web.board.dto.BoardMultiResponse;
 import js.daangnclone.web.board.dto.BoardSingleResponse;
+import js.daangnclone.web.chatNotification.dto.ChatListResponse;
 import js.daangnclone.web.comment.dto.CommentResponse;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import lombok.RequiredArgsConstructor;
@@ -257,6 +258,21 @@ public class BoardController {
         model.addAttribute("chatRoomCnt", chatRoomCnt);
 
         return "board/InquireBoard";
+    }
+
+    @GetMapping("board/{boardId}/chatList")
+    public String inquireChatListInBoard(Model model, @PathVariable Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
+        Long memberId = principalUserDetails.getMember().getId();
+        Member findMember = memberService.findMember(memberId);
+        Board findBoard = boardService.findBoard(boardId);
+
+        List<ChatListResponse> chatList = chatService.findChatRoomInBoard(findMember, findBoard);
+
+        model.addAttribute("chatList", chatList);
+        model.addAttribute("certifyYn", findMember.getCertifyYn());
+        model.addAttribute("nickname", findMember.getNickname());
+
+        return "chat/InquireChatList";
     }
 
     @PostMapping("/board/{id}/change.do")

@@ -122,7 +122,7 @@
         let encryptBoardId = btoa(boardId.toString() + loginMemberId.toString() + boardMemberId.toString());
         $("#chatBtn").click(function () {
             if (loginMemberId === boardMemberId) {
-                $(location).attr("href", `/chatList/board/${boardId}`);
+                $(location).attr("href", `/board/${boardId}/chatList`);
             } else {
                 $(location).attr("href", `/board/${boardId}/chat?roomNum=${encryptBoardId}`);
             }
