@@ -19,6 +19,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     @Query("select c from Chat c where c.seller = :member or c.buyer = :member order by c.createdAt desc")
     List<Chat> findBySellerOrBuyer(@Param("member") Member member);
 
+    List<Chat> findBySellerAndBoard(Member seller, Board board);
+
     List<Chat> findByBoard(Board board);
 
 }

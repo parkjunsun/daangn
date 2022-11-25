@@ -12,6 +12,7 @@ import js.daangnclone.web.chatNotification.dto.ChatListResponse;
 import js.daangnclone.web.sale.dto.PurchaserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -103,6 +104,39 @@ public class ChatServiceImpl implements ChatService{
         }
 
         return newChatList;
+    }
+
+    @Override
+    public List<ChatListResponse> findChatRoomInBoard(Member member, Board board) {
+        List<Chat> chatList = chatRepository.findBySellerAndBoard(member, board);
+        List<ChatListResponse> newChatList = new ArrayList<>();
+
+        for(Chat chat : chatList) {
+            List<ChatNotification> chatNotificationList = chatNotificationRepository.findByRoomNumAndReceiver(chat.getRoomNum(), chat.getSeller());
+            String checkedYn = "Y";
+            for (ChatNotification chatNotification : chatNotificationList) {
+                if (chatNotification.getCheckedYn().equals("N")) {
+                    checkedYn = "N";
+                    break;
+                }
+            }
+
+            newChatList.add(
+                    ChatListResponse.builder()
+                            .link("/board/" + chat.getBoard().getId() + "/chat?roomNum=" + chat.getRoomNum())
+                            .opponentName(chat.getBuyer().getNickname())
+                            .opponentAddress(chat.getBuyer().getArea().getAreaName())
+                            .boardTitle(chat.getBoard().getTitle())
+                            .boardImage(chat.getBoard().getImage())
+                            .boardStatus(chat.getBoard().getBoardStatus())
+                            .lastComment(chat.getLastComment())
+                            .checkedYn(checkedYn)
+                            .diffCreatedAt(DateUtil.diffDate(chat.getCreatedAt()))
+                            .build());
+        }
+
+        return newChatList;
+
     }
 
     @Override

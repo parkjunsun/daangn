@@ -15,6 +15,7 @@ public interface ChatService {
     Optional<Chat> findChatRoom(String roomNum);
     long getCountChatRoom(Board board);
     List<ChatListResponse> findAllChatRoom(Member member);
+    List<ChatListResponse> findChatRoomInBoard(Member member, Board board);
     void updateLastComment(Chat chat, String comment);
     List<PurchaserResponse> findChatList(Board board);
 }
