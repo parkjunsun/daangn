@@ -25,6 +25,8 @@ public class BoardSingleResponse {
     private Long purchaserId;
     private String purchaserNickname;
 
+    private int reviewScore;
+
 //    private List<CommentResponse> commentList;
 
 
@@ -32,7 +34,7 @@ public class BoardSingleResponse {
     @Builder
     private BoardSingleResponse(Long id, String title, String image, int price, String content, String detail,
                                 Long memberId, String nickname, String category, String city, String diffCreatedAt,
-                                int view, BoardStatus boardStatus, Long purchaserId, String purchaserNickname) {
+                                int view, BoardStatus boardStatus, Long purchaserId, String purchaserNickname, int reviewScore) {
         this.id = id;
         this.title = title;
         this.image = image;
@@ -48,6 +50,7 @@ public class BoardSingleResponse {
         this.boardStatus = boardStatus;
         this.purchaserId = purchaserId;
         this.purchaserNickname = purchaserNickname;
+        this.reviewScore = reviewScore;
 //        this.commentList = commentList.stream()
 //                .map(comment -> CommentResponse.builder()
 //                        .id(comment.getId())

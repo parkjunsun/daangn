@@ -48,6 +48,8 @@ public class ReviewServiceImpl implements ReviewService{
                 .content(reviewForm.getContent())
                 .build();
 
+        receiver.calcReviewScore(reviewForm.getReviewScore());
+
         Review review = reviewRepository.save(reviewBuild);
         eventPublisher.publishEvent(new ReviewCreatedEvent(review));
         return review;

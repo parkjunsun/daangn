@@ -27,13 +27,14 @@ public class Member extends TimeEntity {
     private String password;
     private String email;
     private String certifyYn;
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int reviewScore;
 
     @Enumerated(EnumType.STRING)
     private Area area;
 
     @Enumerated(EnumType.STRING)
     private MemberRole memberRole;
-
 
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL)
@@ -49,7 +50,7 @@ public class Member extends TimeEntity {
     private List<Likes> likeList = new ArrayList<>();
 
     @Builder
-    public Member(String provider, String username, String password, String nickname, String email, Area area, MemberRole memberRole, String certifyYn)
+    public Member(String provider, String username, String password, String nickname, String email, Area area, MemberRole memberRole, String certifyYn, int reviewScore)
     {
         this.provider = provider;
         this.username = username;
@@ -59,6 +60,11 @@ public class Member extends TimeEntity {
         this.area = area;
         this.memberRole = memberRole;
         this.certifyYn = certifyYn;
+        this.reviewScore = reviewScore;
+    }
+
+    public void calcReviewScore(int reviewScore) {
+        this.reviewScore += reviewScore;
     }
 
 }

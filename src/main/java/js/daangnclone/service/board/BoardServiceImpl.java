@@ -147,6 +147,7 @@ public class BoardServiceImpl implements BoardService{
                 .boardStatus(findBoard.getBoardStatus())
                 .purchaserId(purchaserId)
                 .purchaserNickname(purchaserNickname)
+                .reviewScore(findBoard.getMember().getReviewScore())
                 .build();
     }
 

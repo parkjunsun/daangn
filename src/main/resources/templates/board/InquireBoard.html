@@ -12,6 +12,7 @@
             </div>
             <div class="card-header bg-transparent">
                 <span class="card-title" th:text="${board.nickname}" style="font-weight: bold"></span>
+                <small class="text-muted" style="margin-left: 10px;">매너점수: </small><span th:text="|${board.reviewScore}점|" style="font-family: 'Jua', sans-serif; color: orange"></span>
                 <th:block th:if="${board.memberId == memberId}">
                     <select class="form-select" id="boardStatus" style="float: right; width: 120px;">
                         <option th:each="status : ${T(js.daangnclone.domain.board.BoardStatus).values()}" th:value="${status.getKey()}" th:text="${status.getValue()}" th:selected="${board.boardStatus.getKey() eq status.getKey()}"></option>
