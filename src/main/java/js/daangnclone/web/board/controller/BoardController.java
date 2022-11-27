@@ -86,7 +86,9 @@ public class BoardController {
     }
 
     @GetMapping("/boardList/search")
-    public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam String keyword, @RequestParam(required = false) Integer offset) {
+    public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model,
+                                     @RequestParam String keyword, @RequestParam(required = false) Integer offset) {
+
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);

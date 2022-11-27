@@ -88,7 +88,13 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<BoardMultiResponse> inquireAllBoardList(Pageable pageable) {
         List<Board> findBoardList = boardRepository.findAll(pageable).getContent();
-        return ConvertToBoardList(findBoardList);
+        return convertToBoardList(findBoardList);
+    }
+
+    @Override
+    public List<BoardMultiResponse> inquireBoardList(Pageable pageable, BoardStatus boardStatus) {
+        List<Board> findBoardList = boardRepository.findByBoardStatus(pageable, boardStatus).getContent();
+        return convertToBoardList(findBoardList);
     }
 
     @Override
@@ -110,13 +116,13 @@ public class BoardServiceImpl implements BoardService{
     @Override
     public List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord) {
         List<Board> findBoardList = boardRepository.findByTitleContains(pageable, searchWord).getContent();
-        return ConvertToBoardList(findBoardList);
+        return convertToBoardList(findBoardList);
     }
 
     @Override
     public List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category) {
         List<Board> findBoardList = boardRepository.findByCategory(pageable, category).getContent();
-        return ConvertToBoardList(findBoardList);
+        return convertToBoardList(findBoardList);
     }
 
     @Override
@@ -233,7 +239,7 @@ public class BoardServiceImpl implements BoardService{
     }
 
 
-    private List<BoardMultiResponse> ConvertToBoardList(List<Board> findBoardList) {
+    private List<BoardMultiResponse> convertToBoardList(List<Board> findBoardList) {
         return findBoardList.stream()
                 .map(board -> BoardMultiResponse.builder()
                         .id(board.getId())

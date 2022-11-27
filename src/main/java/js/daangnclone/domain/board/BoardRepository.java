@@ -22,6 +22,9 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("select b from Board b order by b.createdAt desc")
     Page<Board> findAll(Pageable pageable);
 
+    @Query("select b from Board b where b.boardStatus = :boardStatus order by b.createdAt desc")
+    Page<Board> findByBoardStatus(Pageable pageable, @Param("boardStatus") BoardStatus boardStatus);
+
     @Query("select b from Board b where b.id = :id")
     Optional<Board> findBoard(@Param("id") Long id);
 

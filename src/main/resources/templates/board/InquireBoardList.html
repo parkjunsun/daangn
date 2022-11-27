@@ -30,106 +30,108 @@
     <span style="color: orange; font-family: 'Jua', sans-serif; font-size: 30px; font-weight: bold;" th:if="${searchType eq 'KEYWORD'}">"[[${keyword}]]"</span> <small th:if="${searchType eq 'KEYWORD'}">에 대한 검색결과 입니다.</small>
     <span style="color: orange; font-family: 'Jua', sans-serif; font-size: 30px; font-weight: bold;" th:if="${searchType eq 'CATEGORY'}">"[[${category}]]"</span>
 </div>
-<div style="margin-left: 1440px; margin-bottom: 20px;">
-    <li class="nav-item dropdown" style="list-style: none">
-        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" style="display: inline-block">
-            <img src="https://img.icons8.com/plumpy/24/null/menu-rounded.png"/>
-        </a>
-        <ul class="dropdown-menu" style="width: 330px;">
-            <li style="text-align: center">중고거래 카테고리</li>
-            <li><hr class="dropdown-divider"></li>
+<div style="margin-bottom: 20px;">
+    <div style="margin-left: 1440px;">
+        <li class="nav-item dropdown" style="list-style: none;">
+            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" style="display: inline-block">
+                <img src="https://img.icons8.com/plumpy/24/null/menu-rounded.png" alt="menu"/>
+            </a>
+            <ul class="dropdown-menu" style="width: 330px;">
+                <li style="text-align: center">중고거래 카테고리</li>
+                <li><hr class="dropdown-divider"></li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="101000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/ios-filled/24/null/imac.png"/> 디지털기기
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="101000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/ios-filled/24/null/imac.png"/> 디지털기기
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="101001">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/ios-glyphs/24/null/vacuum-cleaner.png"/> 생활가전
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="101001">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/ios-glyphs/24/null/vacuum-cleaner.png"/> 생활가전
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="102000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/windows/24/null/sofa.png"/> 가구/인테리어
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="102000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/windows/24/null/sofa.png"/> 가구/인테리어
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="103000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/windows/24/null/teapot.png"/> 생활/주방
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="103000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/windows/24/null/teapot.png"/> 생활/주방
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="104000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/windows/24/null/baby-bottle.png"/> 유아동
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="104000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/windows/24/null/baby-bottle.png"/> 유아동
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="105000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/windows/24/null/comic-book.png"/> 유아도서
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="105000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/windows/24/null/comic-book.png"/> 유아도서
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="106000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/fluency-systems-regular/24/null/slip-dress.png"/> 여성의류
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="106000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/fluency-systems-regular/24/null/slip-dress.png"/> 여성의류
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="106001">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/windows/24/null/suit.png"/> 남성의류
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="106001">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/windows/24/null/suit.png"/> 남성의류
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="107000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/wired/24/null/tennis.png"/> 스포츠/레져
-                    </button>
-                </form>
-            </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="107000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/wired/24/null/tennis.png"/> 스포츠/레져
+                        </button>
+                    </form>
+                </li>
 
-            <li style="display: inline-block; width: 156px;">
-                <form action="/boardList/category" class="d-flex" role="search" method="get">
-                    <input type="hidden" name="categoryCd" value="108000">
-                    <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
-                        <img src="https://img.icons8.com/ios-glyphs/24/null/literature--v1.png"/> 도서
-                    </button>
-                </form>
-            </li>
-        </ul>
-    </li>
+                <li style="display: inline-block; width: 156px;">
+                    <form action="/boardList/category" class="d-flex" role="search" method="get">
+                        <input type="hidden" name="categoryCd" value="108000">
+                        <button class="dropdown-item" type="submit" style="border:0; outline: 0; background-color: transparent;">
+                            <img src="https://img.icons8.com/ios-glyphs/24/null/literature--v1.png"/> 도서
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </li>
+    </div>
 </div>
 <div class="container">
     <div class="row d-flex justify-content-center align-items-center h-100">

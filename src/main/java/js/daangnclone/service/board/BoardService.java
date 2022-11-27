@@ -19,8 +19,8 @@ public interface BoardService {
     Board registerItem(BoardForm boardForm, Member member);
     void updateItem(Long boardId, BoardForm boardForm);
     void deleteItem(Long boardId);
-//    List<BoardMultiResponse> inquireAllBoardList();
     List<BoardMultiResponse> inquireAllBoardList(Pageable pageable);
+    List<BoardMultiResponse> inquireBoardList(Pageable pageable, BoardStatus boardStatus);
     String hasNextPage(SearchType searchType, Pageable pageable, Object condition);
     List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord);
     List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category);
