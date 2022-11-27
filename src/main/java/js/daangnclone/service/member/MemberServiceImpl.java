@@ -2,18 +2,18 @@ package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
 import js.daangnclone.cmn.area.Area;
+import js.daangnclone.domain.board.BoardRepository;
+import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
-import js.daangnclone.web.member.dto.AddressForm;
-import js.daangnclone.web.member.dto.MemberDetailsForm;
-import js.daangnclone.web.member.dto.MemberForm;
-import js.daangnclone.web.member.dto.ProfileForm;
+import js.daangnclone.web.member.dto.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static js.daangnclone.Exception.ErrorCode.*;
@@ -24,6 +24,7 @@ import static js.daangnclone.Exception.ErrorCode.*;
 public class MemberServiceImpl implements MemberService{
 
     private final MemberRepository memberRepository;
+    private final BoardRepository boardRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -115,5 +116,22 @@ public class MemberServiceImpl implements MemberService{
 
         findMember.setCertifyYn("N");
         findMember.setArea(Area.of(addressForm.getCity()));
+    }
+
+    @Override
+    public ProfileResponse inquireProfile(Long id) {
+        Member findMember = memberRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        long numberOfSales = boardRepository.countByMemberAndBoardStatus(findMember, BoardStatus.SALE_COMP);
+        long amountOfSales = boardRepository.sumByBoardStatusGroupByMember(findMember, BoardStatus.SALE_COMP);
+        long numberOfPurchases = boardRepository.countByPurchaserAndBoardStatus(findMember, BoardStatus.SALE_COMP);
+        long amountOfPurchases = boardRepository.sumByBoardStatusGroupByPurchaser(findMember, BoardStatus.SALE_COMP);
+
+        return ProfileResponse.builder()
+                .reviewScore(findMember.getReviewScore())
+                .numberOfSales(numberOfSales)
+                .amountOfSales(amountOfSales)
+                .numberOfPurchases(numberOfPurchases)
+                .amountOfPurchases(amountOfPurchases)
+                .build();
     }
 }

@@ -31,6 +31,11 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findByMemberAndBoardStatusOrderByCreatedAt(Member member, BoardStatus boardStatus);
 
     long countByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
+    @Query("select sum(b.price) from Board b where b.boardStatus = :boardStatus group by b.member having b.member = :member")
+    long sumByBoardStatusGroupByMember(@Param("member") Member member, @Param("boardStatus") BoardStatus boardStatus);
+    long countByPurchaserAndBoardStatus(Member purchaser, BoardStatus boardStatus);
+    @Query("select sum(b.price) from Board b where b.boardStatus = :boardStatus group by b.purchaser having b.purchaser = :purchaser")
+    long sumByBoardStatusGroupByPurchaser(@Param("purchaser") Member purchaser, @Param("boardStatus") BoardStatus boardStatus);
 
     List<Board> findByPurchaser(Member purchaser);
 
@@ -39,5 +44,6 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Page<Board> findByTitleContains(Pageable pageable, String searchWord);
 
     Page<Board> findByCategory(Pageable pageable, Category category);
+
 
 }

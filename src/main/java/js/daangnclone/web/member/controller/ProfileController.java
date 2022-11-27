@@ -4,6 +4,7 @@ import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.member.dto.ProfileForm;
+import js.daangnclone.web.member.dto.ProfileResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -28,8 +29,10 @@ public class ProfileController {
         profileForm.setNickname(findMember.getNickname());
         profileForm.setEmail(findMember.getEmail());
 
+        ProfileResponse profileInfo = memberService.inquireProfile(memberId);
+
+        model.addAttribute("profileInfo", profileInfo);
         model.addAttribute("profileForm", profileForm);
-        model.addAttribute("provider", findMember.getProvider());
         model.addAttribute("nickname", findMember.getNickname());
         model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "settings/UpdateProfileForm";

@@ -9,7 +9,22 @@
 <div class="container">
     <div class="input-form-background row">
         <div class="input-form mx-auto">
-            <h4 class="mb-3">회원정보</h4>
+            <h4 class="mb-3">회원정보</h4><br>
+
+            <h5><img src="https://img.icons8.com/fluency/32/null/rating.png"/> 나의 평가</h5>
+            <small class="text-muted" style="margin-left: 10px;">매너점수: </small><span th:text="|${profileInfo.reviewScore}점|" style="font-family: 'Jua', sans-serif; color: orange"></span><br><br><br>
+            <h5><img src="https://img.icons8.com/arcade/32/null/purchase-order.png" alt="sale"/> 2022년에는 이렇게 판매했어요</h5>
+            <small class="text-muted" style="margin-left: 10px;">▪ 판매건수: </small><span th:text="|${profileInfo.numberOfSales}건|" style="font-family: 'Jua', sans-serif; color: orange"></span><br>
+            <small class="text-muted" style="margin-left: 10px;">▪ 판매액: </small><span th:text="|${#numbers.formatInteger(profileInfo.amountOfSales, 0, 'COMMA')}원||" style="font-family: 'Jua', sans-serif; color: orange"></span><br><br>
+            <h5><img src="https://img.icons8.com/arcade/32/null/shopping-cart--v1.png" alt="purchase"/> 2022년에는 이렇게 구매했어요</h5>
+            <small class="text-muted" style="margin-left: 10px;">▪ 구매건수: </small><span th:text="|${profileInfo.numberOfPurchases}건|" style="font-family: 'Jua', sans-serif; color: orange"></span><br>
+            <small class="text-muted" style="margin-left: 10px;">▪ 구매액: </small><span th:text="|${#numbers.formatInteger(profileInfo.amountOfPurchases, 0, 'COMMA')}원|" style="font-family: 'Jua', sans-serif; color: orange"></span>
+        </div>
+    </div>
+
+    <div class="input-form-background row" style="margin-top: 50px;">
+        <div class="input-form mx-auto">
+            <h4 class="mb-3">회원정보 변경</h4>
             <form class="validation-form" novalidate th:action="@{/profile}" th:method="post" th:object="${profileForm}">
 
                 <div class="mb-5">
