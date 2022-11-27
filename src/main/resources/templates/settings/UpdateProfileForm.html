@@ -13,10 +13,10 @@
 
             <h5><img src="https://img.icons8.com/fluency/32/null/rating.png"/> 나의 평가</h5>
             <small class="text-muted" style="margin-left: 10px;">매너점수: </small><span th:text="|${profileInfo.reviewScore}점|" style="font-family: 'Jua', sans-serif; color: orange"></span><br><br><br>
-            <h5><img src="https://img.icons8.com/arcade/32/null/purchase-order.png" alt="sale"/> 2022년에는 이렇게 판매했어요</h5>
+            <h5><img src="https://img.icons8.com/arcade/32/null/purchase-order.png" alt="sale"/> [[${#calendars.format(#calendars.createNow(), 'yyyy')}]]년에는 이렇게 판매했어요.</h5>
             <small class="text-muted" style="margin-left: 10px;">▪ 판매건수: </small><span th:text="|${profileInfo.numberOfSales}건|" style="font-family: 'Jua', sans-serif; color: orange"></span><br>
             <small class="text-muted" style="margin-left: 10px;">▪ 판매액: </small><span th:text="|${#numbers.formatInteger(profileInfo.amountOfSales, 0, 'COMMA')}원||" style="font-family: 'Jua', sans-serif; color: orange"></span><br><br>
-            <h5><img src="https://img.icons8.com/arcade/32/null/shopping-cart--v1.png" alt="purchase"/> 2022년에는 이렇게 구매했어요</h5>
+            <h5><img src="https://img.icons8.com/arcade/32/null/shopping-cart--v1.png" alt="purchase"/> [[${#calendars.format(#calendars.createNow(), 'yyyy')}]]년에는 이렇게 구매했어요.</h5>
             <small class="text-muted" style="margin-left: 10px;">▪ 구매건수: </small><span th:text="|${profileInfo.numberOfPurchases}건|" style="font-family: 'Jua', sans-serif; color: orange"></span><br>
             <small class="text-muted" style="margin-left: 10px;">▪ 구매액: </small><span th:text="|${#numbers.formatInteger(profileInfo.amountOfPurchases, 0, 'COMMA')}원|" style="font-family: 'Jua', sans-serif; color: orange"></span>
         </div>
