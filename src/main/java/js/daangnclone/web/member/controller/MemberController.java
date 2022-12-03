@@ -107,8 +107,8 @@ public class MemberController {
         Member findMember = memberService.findMember(id);
 
         model.addAttribute("city", findMember.getArea().getAreaName());
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "member/CertifyMemberAddress";
     }
 

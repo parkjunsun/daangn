@@ -29,8 +29,8 @@ public class PurchaseController {
         List<PurchaseResponse> purchaseList = boardService.inquirePurchaseList(findMember);
 
         model.addAttribute("purchaseList", purchaseList);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "purchase/InquirePurchaseList";
     }

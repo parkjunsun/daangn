@@ -31,8 +31,8 @@ public class ChatNotificationController {
 
         List<ChatListResponse> chatList = chatService.findAllChatRoom(findMember);
         model.addAttribute("chatList", chatList);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "chat/InquireChatList";
     }

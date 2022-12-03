@@ -33,7 +33,7 @@ public class ActivityAlarmController {
         List<ActivityAlarmResponse> alarmList = activityAlarmService.inquireAlarmList(receiver, "N");
         putCategorizeAlarmList(model, alarmList, numberOfChecked, alarmList.size());
         model.addAttribute("isNew", true);
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
         return "alarm/InquireActivityAlarmList";
 
     }
@@ -69,7 +69,7 @@ public class ActivityAlarmController {
         long numberOfNotChecked = activityAlarmRepository.countByReceiverAndCheckedYn(receiver, "N");
         putCategorizeAlarmList(model, alarmList, alarmList.size(), numberOfNotChecked);
         model.addAttribute("isNew", false);
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
         return "alarm/InquireActivityAlarmList";
     }
 

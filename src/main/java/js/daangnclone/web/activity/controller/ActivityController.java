@@ -30,8 +30,8 @@ public class ActivityController {
         List<ActivityResponse> activityList = activityService.inquireActivityList(findMember);
 
         putCategorizeActivityList(model, activityList);
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
 
         return "activity/InquireActivityList";
     }

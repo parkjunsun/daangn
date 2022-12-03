@@ -58,15 +58,15 @@ public class BoardController {
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
-            model.addAttribute("certifyYn", findMember.getCertifyYn());
+//            model.addAttribute("certifyYn", findMember.getCertifyYn());
 
             if (findMember.getArea() == null) {
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
                 return "member/AddDetailsMemberForm";
             }
 
-            model.addAttribute("provider", findMember.getProvider());
-            model.addAttribute("nickname", findMember.getNickname());
+//            model.addAttribute("provider", findMember.getProvider());
+//            model.addAttribute("nickname", findMember.getNickname());
         }
 
         PageRequest pageable = null;
@@ -92,15 +92,15 @@ public class BoardController {
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
-            model.addAttribute("certifyYn", findMember.getCertifyYn());
+//            model.addAttribute("certifyYn", findMember.getCertifyYn());
 
             if (findMember.getArea() == null) {
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
                 return "member/AddDetailsMemberForm";
             }
 
-            model.addAttribute("provider", findMember.getProvider());
-            model.addAttribute("nickname", findMember.getNickname());
+//            model.addAttribute("provider", findMember.getProvider());
+//            model.addAttribute("nickname", findMember.getNickname());
         }
 
         PageRequest pageable = null;
@@ -129,15 +129,15 @@ public class BoardController {
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
-            model.addAttribute("certifyYn", findMember.getCertifyYn());
+//            model.addAttribute("certifyYn", findMember.getCertifyYn());
 
             if (findMember.getArea() == null) {
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
                 return "member/AddDetailsMemberForm";
             }
 
-            model.addAttribute("provider", findMember.getProvider());
-            model.addAttribute("nickname", findMember.getNickname());
+//            model.addAttribute("provider", findMember.getProvider());
+//            model.addAttribute("nickname", findMember.getNickname());
         }
 
         PageRequest pageable = null;
@@ -176,8 +176,8 @@ public class BoardController {
 
         model.addAttribute("boardForm", new BoardForm());
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
         return "board/BoardForm";
     }
 
@@ -214,8 +214,8 @@ public class BoardController {
 
         model.addAttribute("boardForm", boardForm);
         model.addAttribute("categoryList", categoryList);
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
 
         return "/board/BoardUpdateForm";
     }
@@ -254,8 +254,8 @@ public class BoardController {
         model.addAttribute("commentList", commentResponseList);
         model.addAttribute("attentionInpYn", attentionInpYn);
         model.addAttribute("attentionCnt", attentionCnt);
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
         model.addAttribute("memberId", findMember.getId());
         model.addAttribute("chatRoomCnt", chatRoomCnt);
 
@@ -271,8 +271,8 @@ public class BoardController {
         List<ChatListResponse> chatList = chatService.findChatRoomInBoard(findMember, findBoard);
 
         model.addAttribute("chatList", chatList);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "chat/InquireChatList";
     }

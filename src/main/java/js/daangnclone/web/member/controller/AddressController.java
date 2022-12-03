@@ -34,9 +34,9 @@ public class AddressController {
         addressForm.setCity(findArea.getAreaCd());
 
         model.addAttribute("addressForm", addressForm);
-        model.addAttribute("provider", findMember.getProvider());
-        model.addAttribute("nickname", findMember.getNickname());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("provider", findMember.getProvider());
+//        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
 
         return "settings/UpdateAddressForm";
     }

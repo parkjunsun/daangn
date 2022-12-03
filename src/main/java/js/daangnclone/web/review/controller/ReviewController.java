@@ -60,8 +60,8 @@ public class ReviewController {
 
         model.addAttribute("board", findBoard);
         model.addAttribute("reviewForm", new ReviewForm());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
         return "review/CreateReviewFormToPurchaser";
     }
 
@@ -73,8 +73,8 @@ public class ReviewController {
 
         model.addAttribute("board", findBoard);
         model.addAttribute("reviewForm", new ReviewForm());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "review/CreateReviewFormToSeller";
     }
@@ -121,8 +121,8 @@ public class ReviewController {
 
         putCategorizeReviewCount(receiver, model);
 
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
-        model.addAttribute("nickname", receiver.getNickname());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquireAllReviewList";
     }
@@ -146,8 +146,8 @@ public class ReviewController {
 
         putCategorizeReviewCount(receiver, model);
 
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
-        model.addAttribute("nickname", receiver.getNickname());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquireSellerReviewList";
 
@@ -164,8 +164,8 @@ public class ReviewController {
 
         putCategorizeReviewCount(receiver, model);
 
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
-        model.addAttribute("nickname", receiver.getNickname());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquirePurchaserReviewList";
 
@@ -179,8 +179,8 @@ public class ReviewController {
         ReviewDetailResponse review = reviewService.inquireReview(reviewId);
 
         model.addAttribute("review", review);
-        model.addAttribute("certifyYn", receiver.getCertifyYn());
-        model.addAttribute("nickname", receiver.getNickname());
+//        model.addAttribute("certifyYn", receiver.getCertifyYn());
+//        model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquireReview";
     }

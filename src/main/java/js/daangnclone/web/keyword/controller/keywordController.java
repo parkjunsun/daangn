@@ -31,8 +31,8 @@ public class keywordController {
         Long memberId = principalUserDetails.getMember().getId();
         Member findMember = memberService.findMember(memberId);
         model.addAttribute("keywordForm", new KeywordForm());
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         List<KeywordResponse> keywordList = keywordService.inquireKeywordList(findMember);
         model.addAttribute("keywordList", keywordList);
@@ -48,8 +48,8 @@ public class keywordController {
         Member findMember = memberService.findMember(memberId);
 
         if (result.hasErrors()) {
-            model.addAttribute("certifyYn", findMember.getCertifyYn());
-            model.addAttribute("nickname", findMember.getNickname());
+//            model.addAttribute("certifyYn", findMember.getCertifyYn());
+//            model.addAttribute("nickname", findMember.getNickname());
             return "keyword/KeywordForm";
         }
 

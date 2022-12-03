@@ -47,8 +47,8 @@ public class AttentionController {
         List<AttentionResponse> attentionList = attentionService.inquireAttentionList(findMember);
 
         model.addAttribute("attentionList", attentionList);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "attention/InquireAttentionList";
     }

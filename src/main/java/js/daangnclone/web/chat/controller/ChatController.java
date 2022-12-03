@@ -105,8 +105,8 @@ public class ChatController {
         chatNotificationService.markAsRead(chatNotificationList);
 
         model.addAttribute("chatInfo", chatInfo);
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "chat/chat";
     }

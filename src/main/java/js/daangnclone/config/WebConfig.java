@@ -3,6 +3,7 @@ package js.daangnclone.config;
 import js.daangnclone.domain.alarm.activityAlarm.interceptor.ActivityAlarmInterceptor;
 import js.daangnclone.domain.alarm.keywordAlarm.interceptor.KeywordAlarmInterceptor;
 import js.daangnclone.domain.chatNotification.interceptor.ChatNotificationInterceptor;
+import js.daangnclone.handler.GlobalHandlerInterceptor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.StaticResourceLocation;
 import org.springframework.context.annotation.Configuration;
@@ -17,6 +18,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
+    private final GlobalHandlerInterceptor globalHandlerInterceptor;
     private final ActivityAlarmInterceptor activityAlarmInterceptor;
     private final ChatNotificationInterceptor chatNotificationInterceptor;
     private final KeywordAlarmInterceptor keywordAlarmInterceptor;
@@ -30,8 +32,10 @@ public class WebConfig implements WebMvcConfigurer {
         staticResourcePath.add("/resources/**");
         staticResourcePath.add("/error");
 
+        registry.addInterceptor(globalHandlerInterceptor).excludePathPatterns(staticResourcePath);
         registry.addInterceptor(activityAlarmInterceptor).excludePathPatterns(staticResourcePath);
         registry.addInterceptor(chatNotificationInterceptor).excludePathPatterns(staticResourcePath);
         registry.addInterceptor(keywordAlarmInterceptor).excludePathPatterns(staticResourcePath);
+
     }
 }

@@ -43,8 +43,8 @@ public class SaleController {
         model.addAttribute("numberOfSaleOn", numberOfSaleOn);
         model.addAttribute("numberOfSaleComp", numberOfSaleComp);
 
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "sale/InquireSaleOnList";
     }
@@ -63,8 +63,8 @@ public class SaleController {
         model.addAttribute("numberOfSaleOn", numberOfSaleOn);
         model.addAttribute("numberOfSaleComp", numberOfSaleComp);
 
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "sale/InquireSaleCompList";
     }
@@ -92,8 +92,8 @@ public class SaleController {
         model.addAttribute("sale", sale);
         model.addAttribute("chatList", chatList);
 
-        model.addAttribute("certifyYn", findMember.getCertifyYn());
-        model.addAttribute("nickname", findMember.getNickname());
+//        model.addAttribute("certifyYn", findMember.getCertifyYn());
+//        model.addAttribute("nickname", findMember.getNickname());
 
         return "sale/AddPurchaserForm";
     }
