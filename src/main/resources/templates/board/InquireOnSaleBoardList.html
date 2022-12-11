@@ -32,13 +32,13 @@
 </div>
 <div style="margin-bottom: 20px;">
     <div th:if="${searchType eq 'ALL'}" style="margin-left: 420px;">
-        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='/boardList/sale-on'|">거래가능 상품만보기</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='/boardList'|">전체상품보기</button>
     </div>
     <div th:if="${searchType eq 'KEYWORD'}" style="margin-left: 420px;">
-        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='@{/boardList/sale-on/search(keyword=${keyword})}'|">거래가능 상품만보기</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='@{/boardList/search(keyword=${keyword})}'|">전체상품보기</button>
     </div>
     <div th:if="${searchType eq 'CATEGORY'}" style="margin-left: 420px;">
-        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='@{/boardList/sale-on/category(categoryCd=${categoryCd})}'|">거래가능 상품만보기</button>
+        <button type="submit" class="btn btn-primary btn-lg" style="background-color: orange; color: white; border: 1px solid orange" th:onclick="|location.href='@{/boardList/category(categoryCd=${categoryCd})}'|">전체상품보기</button>
     </div>
     <div style="margin-left: 1440px;">
         <li class="nav-item dropdown" style="list-style: none;">
@@ -149,24 +149,24 @@
                 <div th:if="${i % 4 eq 0}" class="row">
                     <th:block th:each="j : ${#numbers.sequence(i, i+3)}">
                         <div th:if="${j le boardList.size() - 1}" class="card border-info mb-3" style="width: 14rem; cursor: pointer; padding-top: 12px; margin-left: 40px;" th:onclick="|location.href='/board/${boardList[j].id}'|">
-                                <small th:if="${boardList[j].boardStatus.getKey() == '01'}" style="margin-bottom: 10px;; color: orange" th:text="${boardList[j].boardStatus.getValue()}"></small>
-                                <small th:if="${boardList[j].boardStatus.getKey() == '02'}" style="margin-bottom: 10px; color: red" th:text="${boardList[j].boardStatus.getValue()}"></small>
-                                <small th:if="${boardList[j].boardStatus.getKey() == '03'}" style="margin-bottom: 10px; color: green" th:text="${boardList[j].boardStatus.getValue()}"></small>
-                                <img class="card-img-top" th:src="${boardList[j].image}" alt="Card image cap" style="width: 200px; height: 150px;">
-                                <div class="card-body">
-                                    <h6 class="card-title" style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold" th:text="${boardList[j].title}">Card title</h6>
-                                    <p class="card-text">
-                                        <small class="text-muted" th:text="${boardList[j].city}"></small> ·
-                                        <small class="text-muted" th:text="${boardList[j].diffCreatedAt}"></small>
-                                    </p>
-                                    <span class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</span>
-                                    <div style="float: right;">
-                                        <img src="https://img.icons8.com/external-anggara-detail-outline-anggara-putra/20/000000/external-chatting-support-anggara-detail-outline-anggara-putra-2.png"/>
-                                        <small id="chatCnt" th:class="text-muted" th:text="${boardList[j].chatRoomCnt}"></small>&nbsp;
-                                        <img id="heart-white" src="https://img.icons8.com/ios/20/000000/novel--v1.png"/>
-                                        <small id="attentionCnt" th:class="text-muted" th:text="${boardList[j].attentionCnt}"></small>
-                                    </div>
+                            <small th:if="${boardList[j].boardStatus.getKey() == '01'}" style="margin-bottom: 10px;; color: orange" th:text="${boardList[j].boardStatus.getValue()}"></small>
+                            <small th:if="${boardList[j].boardStatus.getKey() == '02'}" style="margin-bottom: 10px; color: red" th:text="${boardList[j].boardStatus.getValue()}"></small>
+                            <small th:if="${boardList[j].boardStatus.getKey() == '03'}" style="margin-bottom: 10px; color: green" th:text="${boardList[j].boardStatus.getValue()}"></small>
+                            <img class="card-img-top" th:src="${boardList[j].image}" alt="Card image cap" style="width: 200px; height: 150px;">
+                            <div class="card-body">
+                                <h6 class="card-title" style="white-space:nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold" th:text="${boardList[j].title}">Card title</h6>
+                                <p class="card-text">
+                                    <small class="text-muted" th:text="${boardList[j].city}"></small> ·
+                                    <small class="text-muted" th:text="${boardList[j].diffCreatedAt}"></small>
+                                </p>
+                                <span class="card-text" th:text="|${#numbers.formatInteger(boardList[j].price, 0, 'COMMA')}￦|">750,000원</span>
+                                <div style="float: right;">
+                                    <img src="https://img.icons8.com/external-anggara-detail-outline-anggara-putra/20/000000/external-chatting-support-anggara-detail-outline-anggara-putra-2.png"/>
+                                    <small id="chatCnt" th:class="text-muted" th:text="${boardList[j].chatRoomCnt}"></small>&nbsp;
+                                    <img id="heart-white" src="https://img.icons8.com/ios/20/000000/novel--v1.png"/>
+                                    <small id="attentionCnt" th:class="text-muted" th:text="${boardList[j].attentionCnt}"></small>
                                 </div>
+                            </div>
                         </div>
                     </th:block>
                 </div>
@@ -175,7 +175,7 @@
     </div>
     <div th:if="${searchType eq 'ALL'}" style="text-align: center; margin-top: 20px;">
         <th:block th:if="${hasNextPageYn eq 'Y'}">
-            <form action="/boardList" method="get">
+            <form action="/boardList/sale-on" method="get">
                 <input type="hidden" name="offset" th:value="${boardList.size()}" />
                 <button type="submit" class="btn btn-primary btn-lg btn-block lastPage" style="background-color: orange; color: white; border: 1px solid orange">등록 상품 더보기</button>
             </form>
@@ -187,7 +187,7 @@
 
     <div th:if="${searchType eq 'KEYWORD'}" style="text-align: center; margin-top: 20px;">
         <th:block th:if="${hasNextPageYn eq 'Y'}">
-            <form action="/boardList/search" method="get">
+            <form action="/boardList/sale-on/search" method="get">
                 <input type="hidden" name="keyword" th:value="${keyword}">
                 <input type="hidden" name="offset" th:value="${boardList.size()}" />
                 <button type="submit" class="btn btn-primary btn-lg btn-block lastPage" style="background-color: orange; color: white; border: 1px solid orange">등록 상품 더보기</button>
@@ -200,7 +200,7 @@
 
     <div th:if="${searchType eq 'CATEGORY'}" style="text-align: center; margin-top: 20px;">
         <th:block th:if="${hasNextPageYn eq 'Y'}">
-            <form action="/boardList/category" method="get">
+            <form action="/boardList/sale-on/category" method="get">
                 <input type="hidden" name="categoryCd" th:value="${categoryCd}">
                 <input type="hidden" name="offset" th:value="${boardList.size()}" />
                 <button type="submit" class="btn btn-primary btn-lg btn-block lastPage" style="background-color: orange; color: white; border: 1px solid orange">등록 상품 더보기</button>

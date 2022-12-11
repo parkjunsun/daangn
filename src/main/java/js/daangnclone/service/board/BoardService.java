@@ -21,9 +21,9 @@ public interface BoardService {
     void deleteItem(Long boardId);
     List<BoardMultiResponse> inquireAllBoardList(Pageable pageable);
     List<BoardMultiResponse> inquireBoardList(Pageable pageable, BoardStatus boardStatus);
-    String hasNextPage(SearchType searchType, Pageable pageable, Object condition);
-    List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord);
-    List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category);
+    String hasNextPage(BoardStatus boardStatus, SearchType searchType, Pageable pageable, Object condition);
+    List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord, BoardStatus boardStatus);
+    List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category, BoardStatus boardStatus);
     BoardSingleResponse inquireBoard(Long id);
     void updateView(Long id);
     Board updateBoardStatus(Long id, BoardStatus boardStatus);

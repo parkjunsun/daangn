@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum BoardStatus {
 
+    SALE_ALL("04", "전체"),
     SALE_ON("01", "판매중"),
     SALE_COMP("02", "판매완료"),
     SALE_RSRVT("03", "예약완료");

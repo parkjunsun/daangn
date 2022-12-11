@@ -98,30 +98,66 @@ public class BoardServiceImpl implements BoardService{
     }
 
     @Override
-    public String hasNextPage(SearchType searchType, Pageable pageable, Object condition) {
-        if (searchType.getKey().equals("01")) {
-            if (!boardRepository.findAll(pageable).hasNext()) return "N";
-            else return "Y";
-        } else if (searchType.getKey().equals("02")) {
-            if (!boardRepository.findByTitleContains(pageable, (String) condition).hasNext()) return "N";
-            else return "Y";
+    public String hasNextPage(BoardStatus boardStatus, SearchType searchType, Pageable pageable, Object condition) {
 
-        } else {
-            if (!boardRepository.findByCategory(pageable, (Category) condition).hasNext()) return "N";
-            else return "Y";
+        String hasNextPageYn = null;
+
+        //판매상태 전체
+        if (boardStatus.getKey().equals("04")) {
+            if (searchType.getKey().equals("01")) {
+                if (!boardRepository.findAll(pageable).hasNext()) hasNextPageYn =  "N";
+                else hasNextPageYn =  "Y";
+            } else if (searchType.getKey().equals("02")) {
+                if (!boardRepository.findByTitleContains(pageable, (String) condition).hasNext()) hasNextPageYn = "N";
+                else hasNextPageYn = "Y";
+
+            } else {
+                if (!boardRepository.findByCategory(pageable, (Category) condition).hasNext()) hasNextPageYn = "N";
+                else hasNextPageYn = "Y";
+            }
         }
+        //판매상태 판매중
+        else if (boardStatus.getKey().equals("01")) {
+            if (searchType.getKey().equals("01")) {
+                if (!boardRepository.findByBoardStatus(pageable, BoardStatus.SALE_ON).hasNext()) hasNextPageYn = "N";
+                else hasNextPageYn = "Y";
+            } else if (searchType.getKey().equals("02")) {
+                if (!boardRepository.findByTitleContainsAndBoardStatus(pageable, (String) condition, boardStatus).hasNext()) hasNextPageYn = "N";
+                else hasNextPageYn = "Y";
+            } else {
+                if (!boardRepository.findByCategoryAndBoardStatus(pageable, (Category) condition, boardStatus).hasNext()) hasNextPageYn = "N";
+                else hasNextPageYn = "Y";
+            }
+        }
+
+        return hasNextPageYn;
     }
 
 
     @Override
-    public List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord) {
-        List<Board> findBoardList = boardRepository.findByTitleContains(pageable, searchWord).getContent();
+    public List<BoardMultiResponse> inquireSearchBoardList(Pageable pageable, String searchWord, BoardStatus boardStatus) {
+
+        List<Board> findBoardList = null;
+
+        if (boardStatus == null) {
+            findBoardList = boardRepository.findByTitleContains(pageable, searchWord).getContent();
+        } else {
+            findBoardList = boardRepository.findByTitleContainsAndBoardStatus(pageable, searchWord, boardStatus).getContent();
+        }
         return convertToBoardList(findBoardList);
     }
 
     @Override
-    public List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category) {
-        List<Board> findBoardList = boardRepository.findByCategory(pageable, category).getContent();
+    public List<BoardMultiResponse> inquireCategoryBoardList(Pageable pageable, Category category, BoardStatus boardStatus) {
+
+        List<Board> findBoardList = null;
+
+        if (boardStatus == null) {
+            findBoardList = boardRepository.findByCategory(pageable, category).getContent();
+        } else {
+            findBoardList = boardRepository.findByCategoryAndBoardStatus(pageable, category, boardStatus).getContent();
+        }
+
         return convertToBoardList(findBoardList);
     }
 

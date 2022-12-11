@@ -77,7 +77,7 @@ public class BoardController {
         }
 
         List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList(pageable);
-        String hasNextPageYn = boardService.hasNextPage(SearchType.ALL, pageable, null);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ALL, SearchType.ALL, pageable, null);
 
         model.addAttribute("boardList", boardResponsesList);
         model.addAttribute("hasNextPageYn", hasNextPageYn);
@@ -85,22 +85,52 @@ public class BoardController {
         return "board/InquireBoardList";
     }
 
+    @GetMapping("/boardList/sale-on")
+    public String inquireOnSaleBoardList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam(required = false) Integer offset) {
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+
+            if (findMember.getArea() == null) {
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
+                return "member/AddDetailsMemberForm";
+            }
+        }
+
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireBoardList(pageable, BoardStatus.SALE_ON);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ON, SearchType.ALL, pageable, null);
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
+        model.addAttribute("searchType", SearchType.ALL.getValue());
+        return "board/InquireOnSaleBoardList";
+
+    }
+
     @GetMapping("/boardList/search")
     public String inquireBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model,
                                      @RequestParam String keyword, @RequestParam(required = false) Integer offset) {
 
+        if (keyword == null || keyword.equals("")) {
+            return "redirect:/boardList";
+        }
+
         if (principalUserDetails != null) {
             Long memberId = principalUserDetails.getMember().getId();
             Member findMember = memberService.findMember(memberId);
-//            model.addAttribute("certifyYn", findMember.getCertifyYn());
 
             if (findMember.getArea() == null) {
                 model.addAttribute("memberDetailsForm", new MemberDetailsForm());
                 return "member/AddDetailsMemberForm";
             }
 
-//            model.addAttribute("provider", findMember.getProvider());
-//            model.addAttribute("nickname", findMember.getNickname());
         }
 
         PageRequest pageable = null;
@@ -110,8 +140,8 @@ public class BoardController {
             pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
-        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword);
-        String hasNextPageYn = boardService.hasNextPage(SearchType.KEYWORD, pageable, keyword);
+        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword, null);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ALL, SearchType.KEYWORD, pageable, keyword);
 
 
         model.addAttribute("boardList", boardList);
@@ -121,6 +151,43 @@ public class BoardController {
         model.addAttribute("keyword", keyword);
         return "board/InquireBoardList";
 
+    }
+
+    @GetMapping("/boardList/sale-on/search")
+    public String inquireOnSaleBoardSearch(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model,
+                                     @RequestParam String keyword, @RequestParam(required = false) Integer offset) {
+
+        if (keyword == null || keyword.equals("")) {
+            return "redirect:/boardList";
+        }
+
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+
+            if (findMember.getArea() == null) {
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
+                return "member/AddDetailsMemberForm";
+            }
+
+        }
+
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword, BoardStatus.SALE_ON);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ON, SearchType.KEYWORD, pageable, keyword);
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
+
+        model.addAttribute("searchType", SearchType.KEYWORD.getValue());
+        model.addAttribute("keyword", keyword);
+        return "board/InquireOnSaleBoardList";
     }
 
 
@@ -147,8 +214,8 @@ public class BoardController {
             pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
-        List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd));
-        String hasNextPageYn = boardService.hasNextPage(SearchType.CATEGORY, pageable, Category.of(categoryCd));
+        List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd), null);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ALL, SearchType.CATEGORY, pageable, Category.of(categoryCd));
 
         model.addAttribute("boardList", boardList);
         model.addAttribute("hasNextPageYn", hasNextPageYn);
@@ -157,6 +224,38 @@ public class BoardController {
         model.addAttribute("category", Category.of(categoryCd).getCategoryName());
         model.addAttribute("categoryCd", categoryCd);
         return "board/InquireBoardList";
+    }
+
+
+    @GetMapping("/boardList/sale-on/category")
+    public String inquireOnSaleBoardCategory(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model, @RequestParam Long categoryCd, @RequestParam(required = false) Integer offset) {
+        if (principalUserDetails != null) {
+            Long memberId = principalUserDetails.getMember().getId();
+            Member findMember = memberService.findMember(memberId);
+
+            if (findMember.getArea() == null) {
+                model.addAttribute("memberDetailsForm", new MemberDetailsForm());
+                return "member/AddDetailsMemberForm";
+            }
+        }
+
+        PageRequest pageable = null;
+        if (offset == null) {
+            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        } else {
+            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+        }
+
+        List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd), BoardStatus.SALE_ON);
+        String hasNextPageYn = boardService.hasNextPage(BoardStatus.SALE_ON, SearchType.CATEGORY, pageable, Category.of(categoryCd));
+
+        model.addAttribute("boardList", boardList);
+        model.addAttribute("hasNextPageYn", hasNextPageYn);
+
+        model.addAttribute("searchType", SearchType.CATEGORY.getValue());
+        model.addAttribute("category", Category.of(categoryCd).getCategoryName());
+        model.addAttribute("categoryCd", categoryCd);
+        return "board/InquireOnSaleBoardList";
     }
 
 
