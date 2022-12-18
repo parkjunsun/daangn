@@ -4,6 +4,7 @@ import js.daangnclone.cmn.area.Area;
 import js.daangnclone.cmn.area.AreaDto;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
+import js.daangnclone.service.mail.MailService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.member.dto.MemberDetailsForm;
 import js.daangnclone.web.member.dto.MemberForm;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 public class MemberController {
 
     private final MemberService memberService;
+    private final MailService mailService;
 
     @GetMapping("/signup")
     public String ShowMemberForm(Model model) {
@@ -142,6 +144,18 @@ public class MemberController {
         }
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/forget")
+    public String findAccountForm() {
+        return "member/FindAccountForm";
+    }
+
+    @PostMapping("/forget/find.do")
+    @ResponseBody
+    public String sendEmail(@RequestParam String email) {
+        mailService.sendMail(email);
+        return "비밀번호를 초기화 하는 방법을 이메일 주소로 전송했습니다. 가입한 적이 없는 이메일 주소나 올바르지 않은 이메일 주소를 입력하신 경우에는 메일을 받을 수 없습니다.";
     }
 
 }
