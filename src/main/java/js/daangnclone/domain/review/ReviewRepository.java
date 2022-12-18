@@ -3,6 +3,7 @@ package js.daangnclone.domain.review;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

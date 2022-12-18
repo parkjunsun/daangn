@@ -19,4 +19,5 @@ public interface ReviewService {
     long getReviewAllCount(Member receiver);
     long getReviewTypeCount(Member receiver, ReviewType reviewType);
     void validateDuplicateReview(Member sender, Board board);
+    void validateMyReview(Member member, Long reviewId);
 }

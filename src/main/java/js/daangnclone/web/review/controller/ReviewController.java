@@ -1,5 +1,6 @@
 package js.daangnclone.web.review.controller;
 
+import js.daangnclone.Exception.CustomException;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.review.ReviewScore;
@@ -16,10 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.LinkedHashMap;
@@ -174,14 +172,19 @@ public class ReviewController {
     @GetMapping("/reviewList/{reviewId}")
     public String inquireReview(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @PathVariable Long reviewId, Model model) {
         Long memberId = principalUserDetails.getMember().getId();
-        Member receiver = memberService.findMember(memberId);
+        Member loginMember = memberService.findMember(memberId);
+
+        reviewService.validateMyReview(loginMember, reviewId);
 
         ReviewDetailResponse review = reviewService.inquireReview(reviewId);
-
         model.addAttribute("review", review);
-//        model.addAttribute("certifyYn", receiver.getCertifyYn());
-//        model.addAttribute("nickname", receiver.getNickname());
 
         return "review/InquireReview";
+    }
+
+    @ExceptionHandler
+    public String NotValidateVerifiableReviewExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
+        return "redirect:/boardList";
     }
 }

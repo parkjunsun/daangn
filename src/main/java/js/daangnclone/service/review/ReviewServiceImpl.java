@@ -19,10 +19,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.DUPLICATE_REVIEW;
-import static js.daangnclone.Exception.ErrorCode.REVIEW_NOT_FOUND;
+import static js.daangnclone.Exception.ErrorCode.*;
 
 
 @Service
@@ -139,4 +139,17 @@ public class ReviewServiceImpl implements ReviewService{
         }
     }
 
+    @Override
+    public void validateMyReview(Member member, Long reviewId) {
+        Review findReview = reviewRepository.findById(reviewId).orElseThrow(() -> new CustomException(REVIEW_NOT_FOUND));
+        Member receiver = findReview.getReceiver();
+        Member sender = findReview.getSender();
+
+        if (member == receiver || member == sender) {
+
+        } else {
+            throw new CustomException(NOT_VERIFIABLE_REVIEW);
+        }
+
+    }
 }

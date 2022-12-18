@@ -71,9 +71,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardResponsesList = boardService.inquireAllBoardList(pageable);
@@ -99,9 +99,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardList = boardService.inquireBoardList(pageable, BoardStatus.SALE_ON);
@@ -135,9 +135,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword, null);
@@ -174,9 +174,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardList = boardService.inquireSearchBoardList(pageable, keyword, BoardStatus.SALE_ON);
@@ -209,9 +209,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd), null);
@@ -241,9 +241,9 @@ public class BoardController {
 
         PageRequest pageable = null;
         if (offset == null) {
-            pageable = PageRequest.of(0, 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         } else {
-            pageable = PageRequest.of(0, offset + 4, Sort.by(Sort.Direction.DESC, "createdAt"));
+            pageable = PageRequest.of(0, offset + 20, Sort.by(Sort.Direction.DESC, "createdAt"));
         }
 
         List<BoardMultiResponse> boardList = boardService.inquireCategoryBoardList(pageable, Category.of(categoryCd), BoardStatus.SALE_ON);
