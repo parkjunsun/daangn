@@ -1,5 +1,6 @@
 package js.daangnclone.web.member.controller;
 
+import js.daangnclone.cmn.AESCryptoUtil;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.cmn.area.AreaDto;
 import js.daangnclone.domain.member.Member;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,8 @@ public class MemberController {
 
     private final MemberService memberService;
     private final MailService mailService;
+
+    private static final String ALERT_MESSAGE = "비밀번호를 초기화 하는 방법을 이메일 주소로 전송했습니다. 가입한 적이 없는 이메일 주소나 올바르지 않은 이메일 주소를 입력하신 경우에는 메일을 받을 수 없습니다.";
 
     @GetMapping("/signup")
     public String ShowMemberForm(Model model) {
@@ -151,11 +155,27 @@ public class MemberController {
         return "member/FindAccountForm";
     }
 
+
+
     @PostMapping("/forget/find.do")
     @ResponseBody
-    public String sendEmail(@RequestParam String email) {
+    public String sendEmail(@RequestParam String email) throws Exception {
         mailService.sendMail(email);
-        return "비밀번호를 초기화 하는 방법을 이메일 주소로 전송했습니다. 가입한 적이 없는 이메일 주소나 올바르지 않은 이메일 주소를 입력하신 경우에는 메일을 받을 수 없습니다.";
+        return ALERT_MESSAGE;
+    }
+
+    @GetMapping("/password/reset/{encryptedUsername}")
+    public String resetPasswordForm(@PathVariable String encryptedUsername, Model model) {
+        model.addAttribute("encryptedUsername", encryptedUsername);
+        return "member/ResetPasswordForm";
+    }
+
+    @PostMapping("/password/reset/{encryptedUsername}")
+    public String resetPassword(@PathVariable String encryptedUsername, @RequestParam String password, RedirectAttributes redirectAttributes) throws Exception {
+        String username = AESCryptoUtil.decrypt(encryptedUsername);
+        memberService.updateMemberPassword(username, password);
+        redirectAttributes.addFlashAttribute("successMsg", "비밀번호 변경 성공!!");
+        return "redirect:/login";
     }
 
 }

@@ -1,6 +1,7 @@
 package js.daangnclone.service.member;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.board.BoardStatus;
@@ -9,6 +10,7 @@ import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
 import js.daangnclone.web.member.dto.*;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.asm.Advice;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,5 +135,12 @@ public class MemberServiceImpl implements MemberService{
                 .numberOfPurchases(numberOfPurchases)
                 .amountOfPurchases(amountOfPurchases)
                 .build();
+    }
+
+    @Override
+    @Transactional
+    public void updateMemberPassword(String username, String password) {
+        Member findMember = memberRepository.findByUsername(username).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
+        findMember.setPassword(passwordEncoder.encode(password));
     }
 }

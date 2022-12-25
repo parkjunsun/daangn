@@ -8,7 +8,9 @@
     <div class="input-form-background row">
         <div class="input-form mx-auto">
             <h4 class="mb-3">계정 찾기</h4>
-<!--            <form class="validation-form" novalidate th:action="@{/forget}" th:method="post">-->
+
+            <div id="add-alert"></div>
+
 
             <div class="mb-5">
                 <label th:for="email">이메일</label>
@@ -19,7 +21,6 @@
 
             <div class="mb-4"></div>
             <button id="submitBtn" class="btn btn-primary btn-lg btn-block" type="button">찾기</button>
-<!--            </form>-->
         </div>
     </div>
 </div>
@@ -33,10 +34,25 @@
             data: {"email" : $("#email").val()},
             sync: false,
             success: function (message) {
-                alert(message);
+                $("#add-alert").empty().append(
+                    "            <div class=\"col-md-12\">\n" +
+                    "                <div class=\"alert alert-success alert-dismissible fade in\" style=\"margin-top: 10px;\">\n" +
+                    "                    <button id='close-btn' type=\"button\" class=\"close\" aria-hidden=\"true\">×</button>\n" +
+                    "                    <div class=\"alert-body\">\n" +
+                                                message +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>"
+                );
             }
         })
     });
+
+
+    $(document).on('click', '#close-btn', function () {
+        $("#add-alert").empty();
+    });
+
     /*]]>*/
 </script>
 

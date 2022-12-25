@@ -17,4 +17,5 @@ public interface MemberService {
     void updateMemberProfile(Long id, ProfileForm profileForm);
     void updateMemberAddress(Long id, AddressForm addressForm);
     ProfileResponse inquireProfile(Long id);
+    void updateMemberPassword(String username, String password);
 }

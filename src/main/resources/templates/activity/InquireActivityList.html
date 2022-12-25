@@ -92,7 +92,7 @@
                 <ul class="list-group list-group-flush">
                     <a th:href="@{${likesActivity.link}}" th:each="likesActivity : ${newLikesActivityList}" class="list-group-item list-group-item-action">
                         <div>
-                            <small class="text-muted" style="float: left"><span th:text="|${likesActivity.receiverName}|" style="color: #0090F9"></span>님이 [[${likesActivity.message}]]</small>
+                            <small class="text-muted" style="float: left"><span th:text="|${likesActivity.receiverName}|" style="color: #0090F9"></span>님이 [[${likesActivity.message}]]</small><br>
                             <span style="float: left" th:text="${likesActivity.content}"></span>
                             <small style="float: right" class="fromNow text-muted" th:text="${likesActivity.diffCreatedAt}"></small>
                         </div>

@@ -41,7 +41,8 @@ public enum ErrorCode {
     OVERSIZE_KEYWORD(HttpStatus.CONFLICT, "E404", "키워드 등록 제한수를 초과했습니다."),
     HAS_NOT_NEXT_PAGE(HttpStatus.CONFLICT, "E405", "다음 페이지가 없습니다"),
     DUPLICATE_REVIEW(HttpStatus.CONFLICT, "E406", "이미 존재하는 REVIEW 입니다."),
-    NOT_VERIFIABLE_REVIEW(HttpStatus.CONFLICT, "E407", "확인 불가능한 REVIEW 입니다.");
+    NOT_VERIFIABLE_REVIEW(HttpStatus.CONFLICT, "E407", "확인 불가능한 REVIEW 입니다."),
+    EXPIRED_LINK_ADDRESS(HttpStatus.CONFLICT, "E408", "만료된 링크입니다.");
 
 
     ;

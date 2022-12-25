@@ -1,6 +1,7 @@
 package js.daangnclone.service.mail;
 
 import js.daangnclone.Exception.CustomException;
+import js.daangnclone.cmn.AESCryptoUtil;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +21,9 @@ public class MailService {
     private final MemberRepository memberRepository;
 
     @Value("${spring.mail.username}")
-    private final String FROM_EMAIL;
+    private String FROM_EMAIL;
 
-    public void sendMail(String TO_EMAIL) {
+    public void sendMail(String TO_EMAIL) throws Exception {
 
         Member findMember = memberRepository.findByEmail(TO_EMAIL).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         String username = findMember.getUsername();
@@ -34,7 +35,7 @@ public class MailService {
         message.setText("안녕하세요.\n\n +" +
                         "회원님의 아이디는 [" + username + "] 입니다.\n\n" +
                         "혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\n" +
-                        "http://localhost:8080/password/reset/" + username);
+                        "http://localhost:8080/password/reset/" + AESCryptoUtil.encrypt(username));
         javaMailSender.send(message);
 
     }

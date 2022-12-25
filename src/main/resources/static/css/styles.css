@@ -77,5 +77,8 @@ html, body {
     line-height:150px;
 }
 
+.fade.in {
+    opacity: 1;
+}
 
 
