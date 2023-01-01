@@ -4,6 +4,28 @@
 
 <header th:replace="fragments/header::header"></header>
 <body>
+
+<script th:inline="javascript">
+    /* <![CDATA[ */
+    var errorMessage = /*[[${errorMsg}]]*/
+    var successMessage = /*[[${successMsg}]]*/
+    /* ]]> */
+
+    if (errorMessage != null) {
+        Swal.fire({
+            title: 'Error',
+            html: errorMessage,
+            icon: "error"
+        });
+    } else if (successMessage != null) {
+        Swal.fire({
+            title: 'Success',
+            html: successMessage,
+            icon: 'success'
+        })
+    }
+</script>
+
 <div class="container">
     <div class="input-form-background row">
         <div class="input-form mx-auto">
@@ -28,6 +50,18 @@
     /*<![CDATA[*/
 
     $("#submitBtn").on('click', function () {
+
+        $("#add-alert").empty().append(
+            "            <div class=\"col-md-12\">\n" +
+            "                <div class=\"alert alert-success alert-dismissible fade in\" style=\"margin-top: 10px;\">\n" +
+            "                    <button id='close-btn' type=\"button\" class=\"close\" aria-hidden=\"true\">×</button>\n" +
+            "                    <div class=\"alert-body\">\n" +
+                                        "입력한 이메일 주소로 비밀번호 초기화 방법을 보내고 있는 중입니다." +
+            "                    </div>\n" +
+            "                </div>\n" +
+            "            </div>"
+        );
+
         $.ajax({
             url: "/forget/find.do",
             type: "post",

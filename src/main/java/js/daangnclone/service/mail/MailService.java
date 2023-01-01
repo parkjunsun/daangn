@@ -2,6 +2,7 @@ package js.daangnclone.service.mail;
 
 import js.daangnclone.Exception.CustomException;
 import js.daangnclone.cmn.AESCryptoUtil;
+import js.daangnclone.cmn.Base64CryptoUtil;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,13 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+
+import static java.nio.charset.StandardCharsets.*;
 import static js.daangnclone.Exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
@@ -27,6 +35,7 @@ public class MailService {
 
         Member findMember = memberRepository.findByEmail(TO_EMAIL).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         String username = findMember.getUsername();
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(TO_EMAIL);
@@ -35,7 +44,7 @@ public class MailService {
         message.setText("안녕하세요.\n\n +" +
                         "회원님의 아이디는 [" + username + "] 입니다.\n\n" +
                         "혹시 비밀번호를 모르시겠으면, 아래 링크를 이용해서 초기화 해주세요.\n" +
-                        "http://localhost:8080/password/reset/" + AESCryptoUtil.encrypt(username));
+                        "http://localhost:8080/password/reset/" + Base64CryptoUtil.encrypt(username));
         javaMailSender.send(message);
 
     }

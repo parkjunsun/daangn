@@ -1,6 +1,9 @@
 package js.daangnclone.web.member.controller;
 
+import js.daangnclone.Exception.CustomException;
+import js.daangnclone.Exception.ErrorCode;
 import js.daangnclone.cmn.AESCryptoUtil;
+import js.daangnclone.cmn.Base64CryptoUtil;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.cmn.area.AreaDto;
 import js.daangnclone.domain.member.Member;
@@ -23,9 +26,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static java.nio.charset.StandardCharsets.*;
+import static js.daangnclone.Exception.ErrorCode.EXPIRED_LINK_ADDRESS;
 
 @Controller
 @RequiredArgsConstructor
@@ -35,7 +44,7 @@ public class MemberController {
     private final MemberService memberService;
     private final MailService mailService;
 
-    private static final String ALERT_MESSAGE = "비밀번호를 초기화 하는 방법을 이메일 주소로 전송했습니다. 가입한 적이 없는 이메일 주소나 올바르지 않은 이메일 주소를 입력하신 경우에는 메일을 받을 수 없습니다.";
+    private static final String ALERT_MESSAGE = "비밀번호를 초기화 하는 방법을 이메일 주소로 전송완료 했습니다. 가입한 적이 없는 이메일 주소나 올바르지 않은 이메일 주소를 입력하신 경우에는 메일을 받을 수 없습니다.";
 
     @GetMapping("/signup")
     public String ShowMemberForm(Model model) {
@@ -164,18 +173,32 @@ public class MemberController {
         return ALERT_MESSAGE;
     }
 
-    @GetMapping("/password/reset/{encryptedUsername}")
-    public String resetPasswordForm(@PathVariable String encryptedUsername, Model model) {
-        model.addAttribute("encryptedUsername", encryptedUsername);
+    @GetMapping("/password/reset/{encryptedData}")
+    public String resetPasswordForm(@PathVariable String encryptedData, Model model) throws Exception {
+        String[] data = Base64CryptoUtil.decrypt(encryptedData).split("\\|");
+        long expiredTime = Long.parseLong(data[1]) + 300L;
+        long now = Long.parseLong(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+
+        if (now > expiredTime) { //메일 보내고 5분 지났을 경우 에러 띄움
+            throw new CustomException(EXPIRED_LINK_ADDRESS);
+        }
+
+        model.addAttribute("encryptedData", encryptedData);
         return "member/ResetPasswordForm";
     }
 
-    @PostMapping("/password/reset/{encryptedUsername}")
-    public String resetPassword(@PathVariable String encryptedUsername, @RequestParam String password, RedirectAttributes redirectAttributes) throws Exception {
-        String username = AESCryptoUtil.decrypt(encryptedUsername);
+    @PostMapping("/password/reset/{encryptedData}")
+    public String resetPassword(@PathVariable String encryptedData, @RequestParam String password, RedirectAttributes redirectAttributes) throws Exception {
+        String username = Base64CryptoUtil.decrypt(encryptedData).split("\\|")[0];
         memberService.updateMemberPassword(username, password);
-        redirectAttributes.addFlashAttribute("successMsg", "비밀번호 변경 성공!!");
+        redirectAttributes.addFlashAttribute("successMsg", "비밀번호 변경가 변경되었습니다.\n변경된 비밀번호로 로그인 해주세요.");
         return "redirect:/login";
+    }
+
+    @ExceptionHandler
+    public String ExpiredLinkAddressExceptionHandler(CustomException e, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("errorMsg", e.getErrorCode().getDetail());
+        return "redirect:/forget";
     }
 
 }
