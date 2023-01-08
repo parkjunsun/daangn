@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,6 +30,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     Optional<Board> findBoard(@Param("id") Long id);
 
     List<Board> findByMemberAndBoardStatusOrderByCreatedAt(Member member, BoardStatus boardStatus);
+
 
     long countByMemberAndBoardStatus(Member member, BoardStatus boardStatus);
     @Query("select sum(b.price) from Board b where b.boardStatus = :boardStatus group by b.member having b.member = :member")

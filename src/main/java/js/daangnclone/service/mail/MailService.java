@@ -1,7 +1,6 @@
 package js.daangnclone.service.mail;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.cmn.AESCryptoUtil;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.Base64CryptoUtil;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
@@ -12,14 +11,10 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
-import static java.nio.charset.StandardCharsets.*;
-import static js.daangnclone.Exception.ErrorCode.USER_NOT_FOUND;
+import static js.daangnclone.exception.ErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

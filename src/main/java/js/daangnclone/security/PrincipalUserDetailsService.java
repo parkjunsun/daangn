@@ -1,7 +1,6 @@
 package js.daangnclone.security;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.member.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import static js.daangnclone.Exception.ErrorCode.*;
+import static js.daangnclone.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor

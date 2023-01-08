@@ -1,6 +1,5 @@
 package js.daangnclone.service.chatNotification;
 
-import js.daangnclone.Exception.CustomException;
 import js.daangnclone.domain.chatNotification.ChatNotification;
 import js.daangnclone.domain.chatNotification.ChatNotificationRepository;
 import js.daangnclone.domain.member.Member;
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static js.daangnclone.Exception.ErrorCode.CHAT_NOTIFICATION_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package js.daangnclone.web.keyword.controller;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.keyword.KeywordService;
@@ -8,7 +8,6 @@ import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.keyword.dto.KeywordForm;
 import js.daangnclone.web.keyword.dto.KeywordResponse;
 import lombok.RequiredArgsConstructor;
-import lombok.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

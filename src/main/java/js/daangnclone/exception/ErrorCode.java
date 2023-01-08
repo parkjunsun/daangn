@@ -1,4 +1,4 @@
-package js.daangnclone.Exception;
+package js.daangnclone.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

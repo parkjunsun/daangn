@@ -1,11 +1,9 @@
 package js.daangnclone.service.alarm.keywordAlarm;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.alarm.keywordAlarm.KeywordAlarm;
 import js.daangnclone.domain.alarm.keywordAlarm.KeywordAlarmRepository;
-import js.daangnclone.domain.keyword.KeywordRepository;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.web.alarm.keywordAlarm.dto.KeywordAlarmResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.KEYWORD_ALARM_NOT_FOUND;
+import static js.daangnclone.exception.ErrorCode.KEYWORD_ALARM_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

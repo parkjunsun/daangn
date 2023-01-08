@@ -1,6 +1,6 @@
 package js.daangnclone.service.keyword;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.keyword.Keyword;
 import js.daangnclone.domain.keyword.KeywordRepository;
 import js.daangnclone.domain.member.Member;
@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.KEYWORD_NOT_FOUND;
-import static js.daangnclone.Exception.ErrorCode.OVERSIZE_KEYWORD;
+import static js.daangnclone.exception.ErrorCode.KEYWORD_NOT_FOUND;
+import static js.daangnclone.exception.ErrorCode.OVERSIZE_KEYWORD;
 
 @Service
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package js.daangnclone;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.domain.board.Board;
@@ -15,7 +15,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static js.daangnclone.Exception.ErrorCode.USER_NOT_FOUND;
+import static js.daangnclone.exception.ErrorCode.USER_NOT_FOUND;
 
 @Component
 @RequiredArgsConstructor

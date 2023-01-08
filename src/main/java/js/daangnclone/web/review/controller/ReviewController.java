@@ -1,6 +1,6 @@
 package js.daangnclone.web.review.controller;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.review.ReviewScore;

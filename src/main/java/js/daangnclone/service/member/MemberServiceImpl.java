@@ -1,7 +1,6 @@
 package js.daangnclone.service.member;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.board.BoardRepository;
 import js.daangnclone.domain.board.BoardStatus;
@@ -10,15 +9,15 @@ import js.daangnclone.domain.member.MemberRepository;
 import js.daangnclone.domain.member.MemberRole;
 import js.daangnclone.web.member.dto.*;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.asm.Advice;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 
-import static js.daangnclone.Exception.ErrorCode.*;
+import static js.daangnclone.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -122,6 +121,7 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public ProfileResponse inquireProfile(Long id) {
+
         Member findMember = memberRepository.findById(id).orElseThrow(() -> new CustomException(USER_NOT_FOUND));
         long numberOfSales = boardRepository.countByMemberAndBoardStatus(findMember, BoardStatus.SALE_COMP);
         long amountOfSales = boardRepository.sumByBoardStatusGroupByMember(findMember, BoardStatus.SALE_COMP);

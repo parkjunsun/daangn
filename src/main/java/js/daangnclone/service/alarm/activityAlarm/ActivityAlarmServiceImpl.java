@@ -1,6 +1,6 @@
 package js.daangnclone.service.alarm.activityAlarm;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarm;
 import js.daangnclone.domain.alarm.activityAlarm.ActivityAlarmRepository;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.ALARM_NOT_FOUND;
+import static js.daangnclone.exception.ErrorCode.ALARM_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

@@ -1,6 +1,6 @@
 package js.daangnclone.web.chat.controller;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.chat.Chat;
 import js.daangnclone.domain.chatNotification.ChatNotification;

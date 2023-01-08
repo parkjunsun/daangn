@@ -1,7 +1,6 @@
 package js.daangnclone.service.review;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.domain.review.Review;
@@ -16,13 +15,11 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.*;
+import static js.daangnclone.exception.ErrorCode.*;
 
 
 @Service

@@ -1,6 +1,6 @@
 package js.daangnclone.web.board.controller;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.cmn.category.CategoryDto;
 import js.daangnclone.domain.board.Board;
@@ -22,7 +22,6 @@ import js.daangnclone.web.member.dto.MemberDetailsForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

@@ -1,8 +1,7 @@
 package js.daangnclone.service.like;
 
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.comment.Comment;
 import js.daangnclone.domain.comment.CommentRepository;
 import js.daangnclone.domain.like.Likes;
@@ -17,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-import static js.daangnclone.Exception.ErrorCode.*;
+import static js.daangnclone.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor

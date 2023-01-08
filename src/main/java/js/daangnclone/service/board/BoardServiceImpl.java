@@ -1,6 +1,6 @@
 package js.daangnclone.service.board;
 
-import js.daangnclone.Exception.CustomException;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.category.Category;
 import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.attention.AttentionRepository;
@@ -27,7 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static js.daangnclone.Exception.ErrorCode.*;
+import static js.daangnclone.exception.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,6 @@
 package js.daangnclone.web.member.controller;
 
-import js.daangnclone.Exception.CustomException;
-import js.daangnclone.Exception.ErrorCode;
-import js.daangnclone.cmn.AESCryptoUtil;
+import js.daangnclone.exception.CustomException;
 import js.daangnclone.cmn.Base64CryptoUtil;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.cmn.area.AreaDto;
@@ -26,15 +24,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static java.nio.charset.StandardCharsets.*;
-import static js.daangnclone.Exception.ErrorCode.EXPIRED_LINK_ADDRESS;
+import static js.daangnclone.exception.ErrorCode.EXPIRED_LINK_ADDRESS;
 
 @Controller
 @RequiredArgsConstructor
