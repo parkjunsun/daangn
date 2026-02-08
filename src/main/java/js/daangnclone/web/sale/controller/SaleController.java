@@ -1,16 +1,15 @@
 package js.daangnclone.web.sale.controller;
 
+import js.daangnclone.cmn.CurrentMember;
 import js.daangnclone.domain.board.Board;
 import js.daangnclone.domain.board.BoardStatus;
 import js.daangnclone.domain.member.Member;
-import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.board.BoardService;
 import js.daangnclone.service.chat.ChatService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.sale.dto.PurchaserResponse;
 import js.daangnclone.web.sale.dto.SaleResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,45 +25,34 @@ import java.util.List;
 public class SaleController {
 
     private final BoardService boardService;
-    private final MemberService memberService;
     private final ChatService chatService;
+    private final MemberService memberService;
 
     @GetMapping("/saleList/saleOn")
-    public String inquireSaleOnList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
+    public String inquireSaleOnList(@CurrentMember Member currentMember, Model model) {
+        List<SaleResponse> saleOnList = boardService.inquireSaleList(currentMember, BoardStatus.SALE_ON);
 
-        List<SaleResponse> saleOnList = boardService.inquireSaleList(findMember, BoardStatus.SALE_ON);
-
-        long numberOfSaleOn = boardService.getCount(findMember, BoardStatus.SALE_ON);
-        long numberOfSaleComp = boardService.getCount(findMember, BoardStatus.SALE_COMP);
+        long numberOfSaleOn = boardService.getCount(currentMember, BoardStatus.SALE_ON);
+        long numberOfSaleComp = boardService.getCount(currentMember, BoardStatus.SALE_COMP);
 
         model.addAttribute("saleOnList", saleOnList);
         model.addAttribute("numberOfSaleOn", numberOfSaleOn);
         model.addAttribute("numberOfSaleComp", numberOfSaleComp);
 
-//        model.addAttribute("certifyYn", findMember.getCertifyYn());
-//        model.addAttribute("nickname", findMember.getNickname());
-
         return "sale/InquireSaleOnList";
     }
 
     @GetMapping("/saleList/saleComp")
-    public String inquireSaleCompList(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
+    public String inquireSaleCompList(@CurrentMember Member currentMember, Model model) {
+        List<SaleResponse> saleCompList = boardService.inquireSaleList(currentMember, BoardStatus.SALE_COMP);
 
-        List<SaleResponse> saleCompList = boardService.inquireSaleList(findMember, BoardStatus.SALE_COMP);
-
-        long numberOfSaleOn = boardService.getCount(findMember, BoardStatus.SALE_ON);
-        long numberOfSaleComp = boardService.getCount(findMember, BoardStatus.SALE_COMP);
+        long numberOfSaleOn = boardService.getCount(currentMember, BoardStatus.SALE_ON);
+        long numberOfSaleComp = boardService.getCount(currentMember, BoardStatus.SALE_COMP);
 
         model.addAttribute("saleCompList", saleCompList);
         model.addAttribute("numberOfSaleOn", numberOfSaleOn);
         model.addAttribute("numberOfSaleComp", numberOfSaleComp);
 
-//        model.addAttribute("certifyYn", findMember.getCertifyYn());
-//        model.addAttribute("nickname", findMember.getNickname());
 
         return "sale/InquireSaleCompList";
     }
@@ -82,9 +70,7 @@ public class SaleController {
 
     //거래자 선택 화면 controller
     @GetMapping("/saleList/{boardId}/purchaser")
-    public String PurchaserForm(@PathVariable("boardId") Long boardId, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
+    public String PurchaserForm(@PathVariable("boardId") Long boardId, @CurrentMember Member currentMember, Model model) {
         Board findBoard = boardService.findBoard(boardId);
         SaleResponse sale = boardService.inquireSale(boardId);
         List<PurchaserResponse> chatList = chatService.findChatList(findBoard);
@@ -92,8 +78,6 @@ public class SaleController {
         model.addAttribute("sale", sale);
         model.addAttribute("chatList", chatList);
 
-//        model.addAttribute("certifyYn", findMember.getCertifyYn());
-//        model.addAttribute("nickname", findMember.getNickname());
 
         return "sale/AddPurchaserForm";
     }

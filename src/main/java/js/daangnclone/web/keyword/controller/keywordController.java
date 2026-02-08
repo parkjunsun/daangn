@@ -1,14 +1,13 @@
 package js.daangnclone.web.keyword.controller;
 
+import js.daangnclone.cmn.CurrentMember;
 import js.daangnclone.exception.CustomException;
 import js.daangnclone.domain.member.Member;
-import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.keyword.KeywordService;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.keyword.dto.KeywordForm;
 import js.daangnclone.web.keyword.dto.KeywordResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,17 +22,12 @@ import java.util.List;
 public class keywordController {
 
     private final KeywordService keywordService;
-    private final MemberService memberService;
 
     @GetMapping("/keyword/new")
-    public String showKeywordForm(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
+    public String showKeywordForm(@CurrentMember Member currentMember, Model model) {
         model.addAttribute("keywordForm", new KeywordForm());
-//        model.addAttribute("certifyYn", findMember.getCertifyYn());
-//        model.addAttribute("nickname", findMember.getNickname());
 
-        List<KeywordResponse> keywordList = keywordService.inquireKeywordList(findMember);
+        List<KeywordResponse> keywordList = keywordService.inquireKeywordList(currentMember);
         model.addAttribute("keywordList", keywordList);
 
         return "keyword/KeywordForm";
@@ -41,19 +35,13 @@ public class keywordController {
 
     @PostMapping("/keyword/new")
     public String registerKeywordForm(@Valid @ModelAttribute KeywordForm keywordForm, BindingResult result,
-                                      @AuthenticationPrincipal PrincipalUserDetails principalUserDetails, Model model) {
-
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
-
+                                      @CurrentMember Member currentMember, Model model) {
         if (result.hasErrors()) {
-//            model.addAttribute("certifyYn", findMember.getCertifyYn());
-//            model.addAttribute("nickname", findMember.getNickname());
             return "keyword/KeywordForm";
         }
 
-        keywordService.validateKeywordMaxCnt(findMember);
-        keywordService.registerKeyword(keywordForm, findMember);
+        keywordService.validateKeywordMaxCnt(currentMember);
+        keywordService.registerKeyword(keywordForm, currentMember);
 
         return "redirect:/keyword/new";
     }
