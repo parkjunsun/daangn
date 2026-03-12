@@ -1,6 +1,5 @@
 package js.daangnclone.web.activity.controller;
 
-import js.daangnclone.cmn.DateUtil;
 import js.daangnclone.domain.member.Member;
 import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.activity.ActivityService;

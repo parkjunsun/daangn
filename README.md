@@ -1,112 +1,98 @@
-## ✨ 당근 마켓 따라하기
-🤷‍♂️당근 마켓 기본적인 기능을 따라해보자.
+## daangn-clone
 
-<br><br>
+당근마켓의 핵심 플로우를 학습 목적으로 구현한 Spring Boot 웹 애플리케이션입니다.  
+게시글 거래, 채팅, 관심/알림, 리뷰, 소셜 로그인 흐름을 포함합니다.
 
-## ⚒ 기술스택
-* ### Backend
-  * Java
-  * Spring boot
-  * Spring Security
-  * Thymeleaf
+## 주요 기능
 
-* ### DB & ORM
-  * PostgreSQL
-  * JPA
+- 회원가입/로그인/로그아웃
+- OAuth2 소셜 로그인 (Kakao, Naver, Google)
+- 동네(지역) 설정 및 인증
+- 게시글 등록/조회/검색/카테고리 필터
+- 관심 등록, 댓글, 활동 알림
+- 1:1 채팅 및 채팅 알림
+- 거래 완료 처리 및 구매자 지정
+- 판매자/구매자 리뷰 작성 및 조회
+- 비밀번호 재설정 메일 발송
 
-* ### Frontend
-  * HTML, CSS, Javascript
-  * jQuery
+## 기술 스택
 
-<br><br>
+- Language: Java 11
+- Framework: Spring Boot 2.7.2
+- Build: Gradle
+- View: Thymeleaf
+- Security: Spring Security, OAuth2 Client
+- RDB: PostgreSQL + Spring Data JPA
+- Chat Storage/Stream: MongoDB Reactive + WebFlux(Flux/Mono, SSE)
+- Mail: Spring Mail
 
-## 💾 ERD 설계
+## 프로젝트 구조
 
-<img src="https://user-images.githubusercontent.com/50009692/202901096-4e61f658-4bd0-43f8-abcc-6801c3d58c69.png">
+```text
+src/main/java/js/daangnclone
+|- config          # Security, Web(MVC), MongoDB 설정
+|- domain          # 엔티티/리포지토리 (board, member, chat, review, alarm...)
+|- service         # 비즈니스 로직
+|- web             # Controller + DTO
+|- security        # UserDetails/OAuth2 사용자 처리
+|- handler         # 공통 핸들러/인터셉터
+\- SetUpDataLoader # 초기 샘플 데이터 적재
+```
 
-<br><br>
+## 실행 전 준비
 
+- JDK 11
+- PostgreSQL (기본 예시: `localhost:5432/daangnDB`)
+- MongoDB (기본 DB: `chatdb`, `MongoDBConfig` 기준)
+- OAuth2 앱 키(Kakao/Naver/Google)
+- 메일 발송 계정(SMTP)
 
-## ⚙ 환경설정
+## 설정
 
-* #### application.yml
-```application.yml
+현재 `src/main/resources/application.yml`에 DB/OAuth/메일 관련 값이 직접 들어가 있습니다.  
+협업/배포용으로는 민감정보를 반드시 외부화하세요.
+
+권장 방식:
+
+- `application-local.yml` 분리 후 Git 추적 제외
+- 환경변수 또는 시크릿 매니저 사용
+- 이미 노출된 키/비밀번호는 즉시 폐기(rotate)
+
+예시(`application.yml`):
+
+```yaml
 spring:
-  application:
-    name: main-server
   datasource:
-    driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/****
-    username: ****
-    password: ****
-  jpa:
-    hibernate:
-      ddl-auto: create
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-  data:
-    mongodb:
-      host: localhost
-      port: 27017
-      database: ****
-  thymeleaf:
-    cache: false
-  messages:
-    basename: messages, errors
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
   security:
     oauth2:
       client:
         registration:
           kakao:
-            client-id: ****
-            client-name: Kakao
-            scope:
-              - profile_nickname
-              - account_email
-              - profile_image
-            authorization-grant-type: authorization_code
-            redirect-uri: ****
-            client-authorization-method: POST
-          naver:
-            client-id: ****
-            client-secret: ****
-            scope:
-              - name
-              - email
-            client-name: Naver
-            authorization-grant-type: authorization_code
-            redirect-uri: ****
-          google:
-            client-id: ****
-            client-secret: ****
-            scope:
-              - profile
-              - email
-        provider:
-          kakao:
-            authorization-uri: https://kauth.kakao.com/oauth/authorize
-            token-uri: https://kauth.kakao.com/oauth/token
-            user-info-uri: https://kapi.kakao.com/v2/user/me
-            user-name-attribute: id
-          naver:
-            authorization-uri: https://nid.naver.com/oauth2.0/authorize
-            token-uri: https://nid.naver.com/oauth2.0/token
-            user-info-uri: https://openapi.naver.com/v1/nid/me
-            user-name-attribute: response
-
-
-
-logging.level:
-  org.hibernate.SQL: debug
-
-
+            client-id: ${KAKAO_CLIENT_ID}
 ```
 
+## 로컬 실행
 
+```powershell
+./gradlew.bat clean build
+./gradlew.bat bootRun
+```
 
+기본 접속 주소: `http://localhost:8080`
 
+## 테스트
 
+현재 테스트 코드는 `src/test/java/js/daangnclone/DaangnCloneApplicationTests.java`의 컨텍스트 로딩 테스트가 포함되어 있습니다.
 
+```powershell
+./gradlew.bat test
+```
 
+## 참고 사항
+
+- `SetUpDataLoader`가 실행 시 샘플 회원/게시글을 생성합니다.
+- 채팅 메시지는 MongoDB 컬렉션을 통해 Reactive 스트림으로 처리합니다.
+- 뷰 템플릿은 `src/main/resources/templates` 하위 도메인별 폴더로 구성되어 있습니다.
