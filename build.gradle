@@ -48,3 +48,14 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// bootRun 전에 자동으로 clean 수행
+tasks.named('bootRun') {
+    dependsOn 'clean'
+}
+
+// 컴파일 전에 이전 빌드 출력 정리
+tasks.named('compileJava') {
+    options.incremental = true
+}
+

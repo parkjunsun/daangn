@@ -1,13 +1,12 @@
 package js.daangnclone.web.member.controller;
 
+import js.daangnclone.cmn.CurrentMember;
 import js.daangnclone.cmn.area.Area;
 import js.daangnclone.domain.member.Member;
-import js.daangnclone.security.PrincipalUserDetails;
 import js.daangnclone.service.member.MemberService;
 import js.daangnclone.web.member.dto.AddressForm;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,28 +22,21 @@ public class AddressController {
     private final MemberService memberService;
 
     @GetMapping("/address")
-    public String showAddressForm(Model model, @AuthenticationPrincipal PrincipalUserDetails principalUserDetails) {
-        Long memberId = principalUserDetails.getMember().getId();
-        Member findMember = memberService.findMember(memberId);
-
-        Area findArea = findMember.getArea();
+    public String showAddressForm(Model model, @CurrentMember Member currentMember) {
+        Area findArea = currentMember.getArea();
         AddressForm addressForm = new AddressForm();
-        addressForm.setCertifyYn(findMember.getCertifyYn());
+        addressForm.setCertifyYn(currentMember.getCertifyYn());
         addressForm.setState(findArea.getParent().getAreaCd());
         addressForm.setCity(findArea.getAreaCd());
 
         model.addAttribute("addressForm", addressForm);
-//        model.addAttribute("provider", findMember.getProvider());
-//        model.addAttribute("nickname", findMember.getNickname());
-//        model.addAttribute("certifyYn", findMember.getCertifyYn());
 
         return "settings/UpdateAddressForm";
     }
 
     @PostMapping("/address")
-    public String updateAddress(@AuthenticationPrincipal PrincipalUserDetails principalUserDetails, @ModelAttribute AddressForm addressForm, RedirectAttributes redirectAttributes) {
-        Long memberId = principalUserDetails.getMember().getId();
-        memberService.updateMemberAddress(memberId, addressForm);
+    public String updateAddress(@CurrentMember Member currentMember, @ModelAttribute AddressForm addressForm, RedirectAttributes redirectAttributes) {
+        memberService.updateMemberAddress(currentMember.getId(), addressForm);
         redirectAttributes.addFlashAttribute("successMsg", "주소 변경 성공!!");
 
         return "redirect:/boardList";
